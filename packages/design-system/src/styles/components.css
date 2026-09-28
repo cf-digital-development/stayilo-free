@@ -1,0 +1,7 @@
+/*
+ * App entry: import `@stayilo/design-system/styles/styles.css`
+ *
+ * Shared `.stayilo-*` component primitives live in that file's
+ * `@layer components` block (required for wp-scripts + Tailwind @apply).
+ * This path is kept for package export / Vite alias compatibility.
+ */

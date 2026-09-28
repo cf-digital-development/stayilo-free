@@ -1,0 +1,145 @@
+@layer components {
+	.portal-account-cards {
+		@apply flex flex-wrap gap-5 rounded-3xl bg-[#FFFFFF] p-5 sm:p-6;
+	}
+	.portal-account-card {
+		@apply w-full rounded-3xl border border-[#1010101A] bg-white p-4 sm:p-5 md:w-[48%];
+	}
+	.portal-account-card-title {
+		@apply m-0 text-base font-semibold leading-[100%] text-[#101010] sm:text-xl sm:leading-[30px];
+	}
+	.portal-account-avatar {
+		@apply mt-4 flex flex-wrap items-center gap-2;
+	}
+	.portal-account-avatar-photo {
+		@apply inline-flex h-[70px] w-[70px] shrink-0 overflow-hidden rounded-full;
+	}
+	.portal-account-avatar-fallback {
+		@apply flex h-[70px] w-[70px] shrink-0 cursor-pointer items-center justify-center rounded-full bg-[#E8E2D6] text-xl font-semibold;
+		color: var(--stayilo-primary);
+	}
+	.portal-account-avatar-label {
+		@apply hidden;
+	}
+	.portal-account-avatar-actions {
+		@apply flex flex-wrap gap-2;
+	}
+	.portal-account-chip {
+		@apply inline-flex items-center gap-1 rounded-[40px] border-[.5px] border-[#EFEADA] bg-[#FAF8F2] px-3 py-1 text-sm font-medium leading-5 text-[#101010CC] transition-colors hover:bg-stayilo-chip;
+	}
+	.portal-subscription-manage {
+		@apply relative mt-4 items-center justify-between gap-8 overflow-hidden rounded-3xl border border-[#1010101A] bg-portal-delivery p-4 sm:flex sm:p-6;
+	}
+	.portal-subscription-manage::before {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		border-top-left-radius: 150px;
+		width: 303px;
+		height: 139px;
+		background: #fff;
+	}
+
+	.portal-shell[data-template='classic'] .portal-account-info {
+		@apply flex flex-col gap-6;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage {
+		@apply order-first mt-0 mb-0 gap-[60px] rounded-[8px] border-0 bg-[#FFF7EF] py-6 px-0 sm:py-6 sm:px-0 justify-start;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage::before {
+		display: none;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage__copy {
+		@apply max-w-[520px];
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage__art {
+		@apply !relative !left-auto !right-auto !mt-0 !mb-0 flex items-center sm:!static sm:!order-first;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage__art > div {
+		@apply h-auto w-[372px];
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage__art svg {
+		width: 160px;
+		height: auto;
+	}
+	.portal-subscription-manage__art img {
+		display: block;
+		max-width: 100%;
+		height: auto;
+		object-fit: contain;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage__headline {
+		@apply hidden;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage__heading {
+		@apply flex flex-wrap items-center gap-3;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage__title {
+		@apply text-xl font-bold leading-6 sm:text-[22px] sm:leading-7;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage__body {
+		@apply mt-2 max-w-xl text-sm font-normal leading-5 text-[#10101099] opacity-100;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-manage__action {
+		@apply mt-5;
+	}
+	.portal-shell[data-template='classic'] .portal-btn{
+		@apply !rounded-[4px];
+		padding: 10px 20px 10px 32px !important;
+	}
+	@media (max-width: 768px) {
+		.portal-shell[data-template='classic'] .portal-btn{
+			padding: 7px 4px 6px 14px !important;
+		}
+	}
+	.portal-shell[data-template='classic'] .portal-btn.portal-subscription-manage__btn {
+		@apply !w-full !max-w-none py-3 !text-sm !font-semibold !leading-5 sm:!w-full;
+		background: var(--stayilo-button, #007943);
+		color: #ffffff;
+	}
+	.portal-shell[data-template='classic'] .portal-account-cards {
+		@apply gap-6 rounded-none bg-transparent p-0 flex-nowrap;
+	}
+	.portal-shell[data-template='classic'] .portal-account-card {
+		@apply !rounded-[8px] border-0 p-0 max-w-[550px] w-full overflow-hidden;
+	}
+	.portal-shell[data-template='classic'] .portal-account-card-title {
+		@apply text-base font-semibold p-4 bg-[#FFF7EF] leading-6 sm:text-lg sm:leading-6;
+	}
+	.portal-shell[data-template='classic'] .portal-account-avatar {
+		@apply mt-6 px-6 items-center gap-3;
+	}
+	.portal-shell[data-template='classic'] .portal-account-card form {
+		@apply p-6 !mt-0;
+	}
+	.portal-shell[data-template='classic'] .portal-account-avatar-photo,
+	.portal-shell[data-template='classic'] .portal-account-avatar-fallback {
+		@apply h-14 w-14;
+	}
+	.portal-shell[data-template='classic'] .portal-account-avatar-label {
+		@apply mb-2 block text-sm font-medium leading-5 text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-account-chip--upload {
+		order: 1;
+	}
+	.portal-shell[data-template='classic'] .portal-account-chip--remove {
+		order: 2;
+	}
+	.portal-shell[data-template='classic'] .portal-account-chip {
+		@apply rounded-[4px] border bg-white px-3 py-1.5 text-sm font-semibold leading-5;
+		border-color: var(--stayilo-secondary, #002515);
+		color: var(--stayilo-secondary, #002515);
+	}
+	.portal-shell[data-template='classic'] .portal-account-info .portal-account-field {
+		@apply rounded-[2px] border-[#10101033] py-2.5 text-sm font-normal;
+	}
+	.portal-shell[data-template='classic'] .portal-account-card--profile .portal-btn.form_btn {
+		@apply !w-full !rounded-[4px] !border-0 !py-3 !text-sm !font-semibold !leading-5;
+		background: var(--stayilo-button, #007943);
+		color: #ffffff;
+	}
+	.portal-shell[data-template='classic'] .portal-account-card--password .portal-btn.form_btn {
+		@apply !w-auto !rounded-[4px] !border-[#101010] !py-2 !text-sm !font-semibold !leading-5;
+	}
+}

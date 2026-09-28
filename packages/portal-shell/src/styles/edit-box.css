@@ -1,0 +1,111 @@
+@layer components {
+	.portal-shell[data-template='classic'] .portal-edit-box {
+		@apply mx-auto w-full !max-w-[1200px];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__grid {
+		@apply grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_420px];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__items {
+		@apply rounded-[8px] bg-white p-5 sm:p-6;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__items-header {
+		@apply mb-4 items-start sm:items-start;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__items-header h2,
+	.portal-shell[data-template='classic'] .portal-edit-box__items-header .portal-title {
+		@apply m-0 text-[24px] !font-[700] leading-normal;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__items-header p {
+		@apply !mt-1.5 text-[16px] font-normal leading-6 text-[#10101099];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line {
+		@apply flex-row flex-wrap items-center gap-4 py-4 sm:flex-nowrap;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line--divided {
+		@apply border-[#EAE5DD] py-7;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__items-header + .portal-cart-line {
+		@apply border-t border-[#EAE5DD];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line:not(.portal-cart-line--divided) {
+		@apply pt-7 pb-0;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line-media {
+		@apply h-12 w-12 rounded-[8px] bg-[#F3EDE4] sm:h-12 sm:w-12 md:h-12 md:w-12;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line__info {
+		@apply min-w-0 flex-1;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line__info h3 {
+		@apply text-[16px] font-semibold leading-6 md:text-[16px] md:leading-6;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line__subtitle {
+		@apply mt-1 m-0 text-sm font-normal leading-5 text-[#10101099];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line__tags {
+		@apply mt-2 mb-0 flex list-none flex-wrap gap-1.5 p-0;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line__tag {
+		@apply rounded-[4px] border border-[#10101033] bg-white px-2 py-0.5 text-xs font-medium leading-4 text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line__meta {
+		@apply mt-1 m-0 text-sm font-normal leading-5 text-[#10101099];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-qty-stepper {
+		@apply mt-0 h-9 rounded-[8px] border-[#10101033] bg-white;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-qty-stepper__btn {
+		@apply h-9 w-9 p-0;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-qty-stepper__value {
+		@apply h-9 w-9 border-[#10101033] bg-white p-0 text-sm font-semibold leading-5 sm:text-sm sm:leading-5;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line__prices {
+		@apply items-end;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line__total {
+		@apply text-sm font-semibold leading-5 md:text-sm md:leading-5;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box .portal-cart-line__unit {
+		@apply text-xs font-normal leading-4 text-[#10101099];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__summary {
+		@apply rounded-[8px] bg-white p-5 sm:p-6;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__summary-title {
+		@apply m-0 text-[18px] font-[800] leading-6;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__summary-lines {
+		@apply m-0 mt-4 list-none space-y-3 p-0;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__summary-line {
+		@apply flex items-center justify-between gap-4 text-[16px] font-[500] leading-6 text-[#615E59];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__summary-line--discount {
+		color: #e11d2a;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__summary-line--total {
+		@apply pt-1 text-[18px] font-[800] leading-6 text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-btn.portal-edit-box__save {
+		@apply mt-5 !w-full !rounded-[4px] !border-0 !bg-[#007943] !py-3 !text-[18px] !font-[800] !leading-6 !text-white hover:!bg-[#006636];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__save-status {
+		@apply mt-3 mb-0 text-sm font-medium leading-5 text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box__save-status--error {
+		@apply text-[#b42318];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box-banner .portal-banner-tab {
+		@apply rounded-[8px] border-[#10101033] px-4 py-2 text-sm font-semibold leading-5 sm:text-sm sm:leading-5;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box-banner .portal-banner-tab--active {
+		@apply border-transparent bg-white font-bold;
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box-banner .portal-content .portal-banner-title {
+		@apply !mt-2 !text-[32px] !font-bold leading-[33px] text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-edit-box-body {
+		@apply mx-auto !px-0 !py-6;
+	}
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Stayilo Free Setup (local dev only)</title>
+	</head>
+	<body>
+		<script>
+			window.stayiloAdmin = {
+				storeUrl: 'https://cfdigital.co.uk',
+				siteUrl: 'https://cfdigital.co.uk',
+				subscriberCount: 49,
+				dashboardUrl: '/wp-admin/admin.php?page=stayilo',
+				plansUrl: 'https://stayilo.com/pricing',
+				upgradeUrl: 'https://stayilo.com/pricing',
+			};
+		</script>
+		<div id="stayilo-free-wizard-root"></div>
+		<script type="module" src="/src/setup-entry.jsx"></script>
+	</body>
+</html>

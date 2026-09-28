@@ -1,0 +1,120 @@
+/*
+ * Toggle switch mechanics only (track + knob + transitions).
+ * Kept as CSS: the sliding knob transform and pseudo-state layering
+ * are clearer and safer here than as inline arbitrary Tailwind values.
+ */
+.stayilo-setting-toggle-card__toggle {
+	position: relative;
+	flex: 0 0 auto;
+	width: 22.5px;
+	height: 13.5px;
+	padding: 0;
+	border-radius: 999px;
+	background: transparent;
+	border: 1.5px solid #cbced4;
+	box-sizing: border-box;
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.stayilo-setting-toggle-card__toggle--checked {
+	background: #16a34a;
+	border: 1.5px solid #16a34a;
+}
+
+.stayilo-setting-toggle-card__toggle:focus-visible {
+	outline: 2px solid #0d1117;
+	outline-offset: 2px;
+}
+
+.stayilo-setting-toggle-card__toggle:disabled {
+	cursor: not-allowed;
+	opacity: 0.45;
+}
+
+.stayilo-setting-toggle-card__toggle-knob {
+	position: absolute;
+	top: 3px;
+	left: 2px;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: transparent;
+	border: 1.5px solid #cbced4;
+	box-sizing: border-box;
+	transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.stayilo-setting-toggle-card__toggle--checked
+	.stayilo-setting-toggle-card__toggle-knob {
+	transform: translateX(10px);
+	background: #fff;
+	border: 1.5px solid #fff;
+}
+
+/* WP admin button resets */
+#stayilo-react-root button.stayilo-setting-toggle-card__toggle,
+button.stayilo-setting-toggle-card__toggle {
+	width: 22.5px !important;
+	height: 13.5px !important;
+	min-width: 22.5px !important;
+	min-height: 13.5px !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	box-shadow: none !important;
+	line-height: 0 !important;
+	font-size: 0 !important;
+	appearance: none !important;
+}
+
+#stayilo-react-root
+	button.stayilo-setting-toggle-card__toggle:not(
+		.stayilo-setting-toggle-card__toggle--checked
+	),
+button.stayilo-setting-toggle-card__toggle:not(
+		.stayilo-setting-toggle-card__toggle--checked
+	) {
+	background: transparent !important;
+	background-color: transparent !important;
+	border: 1.5px solid #cbced4 !important;
+}
+
+#stayilo-react-root
+	button.stayilo-setting-toggle-card__toggle--checked,
+button.stayilo-setting-toggle-card__toggle--checked {
+	background: #16a34a !important;
+	background-color: #16a34a !important;
+	border: 1.5px solid #16a34a !important;
+}
+
+#stayilo-react-root
+	button.stayilo-setting-toggle-card__toggle
+	.stayilo-setting-toggle-card__toggle-knob,
+button.stayilo-setting-toggle-card__toggle .stayilo-setting-toggle-card__toggle-knob {
+	display: block !important;
+	box-shadow: none !important;
+}
+
+#stayilo-react-root
+	button.stayilo-setting-toggle-card__toggle:not(
+		.stayilo-setting-toggle-card__toggle--checked
+	)
+	.stayilo-setting-toggle-card__toggle-knob,
+button.stayilo-setting-toggle-card__toggle:not(
+		.stayilo-setting-toggle-card__toggle--checked
+	)
+	.stayilo-setting-toggle-card__toggle-knob {
+	background: transparent !important;
+	background-color: transparent !important;
+	border: 1.5px solid #cbced4 !important;
+}
+
+#stayilo-react-root
+	button.stayilo-setting-toggle-card__toggle--checked
+	.stayilo-setting-toggle-card__toggle-knob,
+button.stayilo-setting-toggle-card__toggle--checked
+	.stayilo-setting-toggle-card__toggle-knob {
+	background: #fff !important;
+	background-color: #fff !important;
+	border: 1.5px solid #fff !important;
+}

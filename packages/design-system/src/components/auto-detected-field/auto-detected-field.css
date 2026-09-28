@@ -1,0 +1,38 @@
+/*
+ * Visible chrome lives on the wrapper so WordPress input[type=color]
+ * styles cannot keep a border around a filled swatch.
+ */
+.stayilo-color-swatch {
+	box-sizing: border-box;
+	position: relative;
+	width: 3rem;
+	height: 3rem;
+	overflow: hidden;
+	border-radius: 0.75rem;
+	border: 2px solid #0d111714;
+	background-color: #ffffff;
+	padding: 0;
+	cursor: pointer;
+}
+
+.stayilo-color-swatch--filled {
+	border: none;
+}
+
+.stayilo-auto-detected-field__picker {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	opacity: 0;
+	cursor: pointer;
+	appearance: none;
+	-webkit-appearance: none;
+}
+
+.stayilo-auto-detected-field__picker:disabled {
+	cursor: not-allowed;
+}

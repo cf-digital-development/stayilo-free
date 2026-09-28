@@ -1,0 +1,21 @@
+{
+  "name": "@stayilo/admin-shell",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-router-dom": "^6.0.0 || ^7.0.0"
+  },
+  "dependencies": {
+    "@stayilo/design-system": "*",
+    "@stayilo/extension-sdk": "*",
+    "@stayilo/preview": "*"
+  },
+  "scripts": {
+    "build": "node -e \"console.log('@stayilo/admin-shell: source package, no bundle yet')\""
+  }
+}

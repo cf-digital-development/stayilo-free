@@ -1,0 +1,77 @@
+@layer components {
+	.portal-shell[data-template='classic'] .portal-subscription-actions {
+		@apply bg-transparent;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-actions__header {
+		@apply mb-8 text-center sm:mb-10;
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-actions__title {
+		@apply m-0 text-[28px] font-[700] leading-[34px] text-[#252421] sm:text-[40px] sm:leading-[48px];
+	}
+	.portal-shell[data-template='classic'] .portal-subscription-actions__subtitle {
+		@apply mx-auto mt-3 max-w-[560px] text-sm font-normal leading-normal text-[#615E59] sm:text-base sm:leading-6;
+	}
+	.portal-shell[data-template='classic'] .portal-action-prompt-grid {
+		@apply mx-auto grid w-full max-w-[960px] grid-cols-1 items-stretch gap-5 md:grid-cols-2 lg:grid-cols-2;
+	}
+	.portal-shell[data-template='classic'] .portal-action-prompt {
+		@apply items-start rounded-[8px] px-5 py-5 text-left sm:px-6 sm:py-6;
+	}
+	.portal-shell[data-template='classic'] .portal-action-prompt__icon {
+		@apply mb-4 justify-start text-[#101010] transition-colors duration-200 ease-in-out;
+	}
+	.portal-shell[data-template='classic'] .portal-action-prompt:hover .portal-action-prompt__icon {
+		color: var(--stayilo-primary, #e33b12);
+	}
+	.portal-shell[data-template='classic'] .portal-action-prompt__icon svg {
+		width: 48px;
+		height: 48px;
+	}
+	.portal-shell[data-template='classic'] .portal-action-prompt__icon svg path[stroke] {
+		stroke: currentColor;
+		transition: stroke 200ms ease-in-out;
+	}
+	.portal-shell[data-template='classic'] .portal-action-prompt__icon svg g path[fill]:not([fill='none']) {
+		fill: currentColor;
+		transition: fill 200ms ease-in-out;
+	}
+	.portal-shell[data-template='classic'] .portal-action-prompt__title {
+		@apply !text-[20px] font-bold !leading-[26px] sm:text-lg sm:leading-6;
+	}
+	.portal-shell[data-template='classic'] .portal-action-prompt__body {
+		@apply mt-2 max-w-none text-sm font-normal leading-[24px] tracking-[0.04px] text-[#10101099] sm:text-base sm:leading-6;
+	}
+	.portal-shell[data-template='classic'] .portal-action-prompt__action-wrap {
+		@apply pt-[32px];
+	}
+	.portal-shell[data-template='classic'] .portal-btn.portal-action-prompt__action {
+		@apply !w-full !rounded-[4px] !py-2.5 !text-sm !font-semibold !leading-5 duration-200 ease-in-out;
+		transition-property: background-color, border-color, color;
+	}
+	.portal-shell[data-template='classic'] .portal-btn--success.portal-action-prompt__action,
+	.portal-shell[data-template='classic'] .portal-btn--secondary.portal-action-prompt__action {
+		@apply !border !border-[#101010] !bg-white !text-[#101010] !text-[18px] !leading-[24px] !font-[700];
+	}
+}
+
+/* Card hover uses Primary color. Kept outside the layer so theme button styles cannot block it. */
+.portal-shell[data-template='classic'] .portal-action-prompt:hover button.portal-action-prompt__action {
+	background: var(--stayilo-primary, #e33b12) !important;
+	border-color: var(--stayilo-primary, #e33b12) !important;
+	color: var(--stayilo-primary-contrast, #ffffff) !important;
+}
+.portal-shell[data-template='classic'] .portal-action-prompt:hover button.portal-action-prompt__action svg {
+	color: var(--stayilo-primary-contrast, #ffffff) !important;
+}
+
+.portal-shell[data-template='classic'] .portal-action-prompt-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	align-items: stretch;
+	gap: 1.25rem;
+}
+@media (min-width: 768px) {
+	.portal-shell[data-template='classic'] .portal-action-prompt-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}

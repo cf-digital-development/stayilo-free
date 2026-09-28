@@ -1,0 +1,153 @@
+/**
+ * Inject shared month-calendar CSS once.
+ * Needed when MonthCalendar is used from live-fetched portal-core / admin-core,
+ * where theme/Woo button styles would otherwise override muted days.
+ */
+const STYLE_ID = 'stayilo-month-calendar-styles';
+
+const CALENDAR_CSS = `
+.portal-month-calendar {
+	margin-top: 1.5rem;
+	width: 100%;
+	text-align: left;
+}
+.portal-month-calendar__header {
+	margin-bottom: 1.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+}
+.portal-month-calendar__title {
+	margin: 0;
+	flex: 1;
+	text-align: center;
+	font-size: 1rem;
+	font-weight: 600;
+	line-height: 1.5rem;
+}
+@media (min-width: 640px) {
+	.portal-month-calendar__title {
+		font-size: 1.125rem;
+	}
+}
+.portal-month-calendar__nav {
+	display: inline-flex;
+	height: 2rem;
+	width: 2rem;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	border-radius: 0.375rem;
+	border: 0;
+	background: transparent;
+	padding: 0;
+	transition: opacity 0.15s;
+	cursor: pointer;
+}
+.portal-month-calendar__nav:hover {
+	opacity: 0.7;
+}
+.portal-month-calendar__nav:disabled {
+	cursor: not-allowed;
+	opacity: 0.25;
+}
+.portal-month-calendar__weekdays,
+.portal-month-calendar__grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	row-gap: 0.5rem;
+}
+.portal-month-calendar__weekday {
+	padding: 0.25rem 0;
+	text-align: center;
+	font-size: 0.75rem;
+	font-weight: 500;
+	line-height: 1rem;
+}
+@media (min-width: 640px) {
+	.portal-month-calendar__weekday {
+		font-size: 0.875rem;
+	}
+}
+.portal-month-calendar__cell {
+	margin-left: auto;
+	margin-right: auto;
+	display: inline-flex;
+	height: 2.25rem;
+	width: 2.25rem;
+	align-items: center;
+	justify-content: center;
+	border-radius: 9999px;
+	border: 0 !important;
+	background: transparent !important;
+	box-shadow: none;
+	font-size: 0.875rem !important;
+	font-weight: 600 !important;
+	line-height: 1.25rem;
+	color: #101010;
+	transition: background-color 0.15s, color 0.15s;
+	opacity: 1 !important;
+}
+button.portal-month-calendar__cell {
+	cursor: pointer;
+}
+@media (min-width: 640px) {
+	.portal-month-calendar__cell {
+		height: 2.5rem;
+		width: 2.5rem;
+		font-size: 1rem !important;
+	}
+}
+.portal-month-calendar:not([data-accent="black"]) button.portal-month-calendar__cell:not(:disabled):not(.portal-month-calendar__cell--selected):hover {
+	background: rgba(4, 121, 70, 0.1) !important;
+}
+.portal-month-calendar[data-accent="black"] button.portal-month-calendar__cell:not(:disabled):not(.portal-month-calendar__cell--selected-black):hover {
+	background: rgba(16, 16, 16, 0.08) !important;
+}
+.portal-month-calendar__cell--muted {
+	color: rgba(11, 31, 51, 0.28) !important;
+	background: transparent !important;
+	cursor: default !important;
+	pointer-events: none;
+}
+button.portal-month-calendar__cell.portal-month-calendar__cell--today:not(.portal-month-calendar__cell--selected) {
+	box-shadow: inset 0 0 0 1px rgba(4, 121, 70, 0.4);
+}
+button.portal-month-calendar__cell.portal-month-calendar__cell--selected {
+	background: #047946 !important;
+	font-weight: 600 !important;
+	color: #fff !important;
+}
+button.portal-month-calendar__cell.portal-month-calendar__cell--selected:hover {
+	background: #047946 !important;
+}
+button.portal-month-calendar__cell.portal-month-calendar__cell--selected-black {
+	background: #101010 !important;
+	font-weight: 600 !important;
+	color: #fff !important;
+}
+button.portal-month-calendar__cell.portal-month-calendar__cell--selected-black:hover {
+	background: #101010 !important;
+}
+button.portal-month-calendar__cell.portal-month-calendar__cell--today-black:not(.portal-month-calendar__cell--selected-black) {
+	box-shadow: inset 0 0 0 1px rgba(16, 16, 16, 0.4);
+}
+button.portal-month-calendar__cell:disabled {
+	cursor: default !important;
+}
+`;
+
+export function ensureCalendarStyles() {
+	if ( typeof document === 'undefined' ) {
+		return;
+	}
+	let style = document.getElementById( STYLE_ID );
+	if ( ! style ) {
+		style = document.createElement( 'style' );
+		style.id = STYLE_ID;
+	}
+	style.textContent = CALENDAR_CSS;
+	// Always move to end of <head> so this wins over theme stylesheets.
+	document.head.appendChild( style );
+}
