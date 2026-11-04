@@ -50,12 +50,19 @@
 	.portal-shell[data-template='classic'] .portal-card-chip-icon path {
 		stroke: currentColor;
 	}
+	/* Keep next-delivery strip flush with the CTA at the card bottom. */
+	.portal-shell[data-template='classic'] .portal-card-chip-footer {
+		@apply mt-auto flex w-full flex-col;
+	}
 	.portal-shell[data-template='classic'] .portal-card-chip-actions {
-		@apply mt-auto w-full;
+		@apply w-full;
 	}
 	.portal-shell[data-template='classic'] .portal-card--chip .portal-delivery-strip,
 	.portal-shell[data-template='classic'] .portal-card--chip .portal-card-chip-actions .portal-btn {
 		@apply mx-0 w-full max-w-full;
+	}
+	.portal-shell[data-template='classic'] .portal-card--chip .portal-delivery-strip {
+		@apply mb-[10px];
 	}
 	.portal-shell[data-template='classic'] .portal-card--chip .portal-card-title {
 		@apply font-bold;

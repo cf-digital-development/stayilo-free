@@ -61,11 +61,10 @@ export function savePortalSettings( settings ) {
 	const payload = {
 		skipDelivery: settings.skipDelivery ? '1' : '0',
 		updateAddress: settings.updateAddress ? '1' : '0',
-		storefrontCartDrawer: settings.storefrontCartDrawer !== false ? '1' : '0',
 	};
 
 	// Only send Core+ toggles when the caller actually provided them — Free
-	// Settings only edits skip/update/drawer and must not wipe allowReactivation etc.
+	// Settings only edits skip/update and must not wipe allowReactivation etc.
 	const optionalKeys = [
 		'showOrderHistory',
 		'allowReactivation',

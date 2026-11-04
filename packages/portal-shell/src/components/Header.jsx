@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import defaultLogoUrl from '@stayilo/design-system/assets/svg/Logo.svg';
 import { DEFAULT_NAV_ITEMS } from '../data/navItems.js';
 import { MY_SUBSCRIPTION_PATH } from '../routes.js';
-import { useWcCart } from '../store/useWcCart.js';
 import { lockBodyScroll } from '../utils/lockBodyScroll.js';
-import { CartDrawer } from './CartDrawer.jsx';
+import { openWcMiniCart } from '../utils/openWcMiniCart.js';
+import { useWcCart } from '../store/useWcCart.js';
 import { HeaderActions } from './HeaderActions.jsx';
 import { NavMenu } from './NavMenu.jsx';
 import { __ } from '@stayilo/design-system/i18n';
@@ -18,7 +18,6 @@ export function Header( {
 	onNavChange,
 	avatarUrl,
 	avatarAlt = 'Account',
-	onCartClick,
 	showNotification = true,
 	showCart = true,
 	showDesktopNav = true,
@@ -26,10 +25,9 @@ export function Header( {
 } ) {
 	const [ menuOpen, setMenuOpen ] = useState( false );
 	const [ menuOverlay, setMenuOverlay ] = useState( false );
-	const [ cartOpen, setCartOpen ] = useState( false );
-	const wcCart = useWcCart( { enabled: showCart } );
-	const itemCount = wcCart.itemCount;
 	const resolvedLogoUrl = logoUrl || defaultLogoUrl;
+	const wcCart = useWcCart( { enabled: showCart } );
+	const { itemCount, refresh: refreshCart } = wcCart;
 
 	useEffect( () => {
 		const media = window.matchMedia( '(min-width: 1024px)' );
@@ -53,8 +51,24 @@ export function Header( {
 		return lockBodyScroll();
 	}, [ menuOverlay ] );
 
+	useEffect( () => {
+		if ( ! showCart || ! refreshCart ) {
+			return undefined;
+		}
+
+		const onCartChange = () => {
+			refreshCart().catch( () => {} );
+		};
+
+		document.body.addEventListener( 'wc-blocks_added_to_cart', onCartChange );
+		document.body.addEventListener( 'wc-blocks_removed_from_cart', onCartChange );
+		return () => {
+			document.body.removeEventListener( 'wc-blocks_added_to_cart', onCartChange );
+			document.body.removeEventListener( 'wc-blocks_removed_from_cart', onCartChange );
+		};
+	}, [ showCart, refreshCart ] );
+
 	const openMenu = () => {
-		setCartOpen( false );
 		setMenuOverlay( true );
 		setMenuOpen( true );
 	};
@@ -66,13 +80,7 @@ export function Header( {
 	const openCart = () => {
 		closeMenu();
 		setMenuOverlay( false );
-		setCartOpen( true );
-		wcCart.refresh?.().catch( () => {} );
-		onCartClick?.();
-	};
-
-	const closeCart = () => {
-		setCartOpen( false );
+		openWcMiniCart();
 	};
 
 	const handleMobileNavTransitionEnd = ( event ) => {
@@ -87,7 +95,6 @@ export function Header( {
 
 	const handleNavChange = ( navId ) => {
 		closeMenu();
-		closeCart();
 		onNavChange?.( navId );
 	};
 
@@ -119,10 +126,7 @@ export function Header( {
 								to={ MY_SUBSCRIPTION_PATH }
 								className="portal-header-logo-link"
 								aria-label={ brandName }
-								onClick={ () => {
-									closeMenu();
-									closeCart();
-								} }
+								onClick={ closeMenu }
 							>
 								{ resolvedLogoUrl ? (
 									<img
@@ -154,7 +158,6 @@ export function Header( {
 						showNotification={ showNotification }
 						showCart={ showCart }
 						onCartClick={ openCart }
-						cartOpen={ cartOpen }
 						cartCount={ itemCount }
 						avatarUrl={ avatarUrl }
 						avatarAlt={ avatarAlt }
@@ -178,13 +181,6 @@ export function Header( {
 					</div>
 				</div>
 			</header>
-			{ showCart ? (
-				<CartDrawer
-					open={ cartOpen }
-					onClose={ closeCart }
-					cart={ wcCart }
-				/>
-			) : null }
 		</>
 	);
 }

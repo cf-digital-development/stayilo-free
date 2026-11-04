@@ -31,7 +31,6 @@ function CloseIcon() {
 	);
 }
 
-
 export function HeaderActions( {
 	menuOpen,
 	onOpenMenu,
@@ -39,7 +38,6 @@ export function HeaderActions( {
 	showNotification = true,
 	showCart = true,
 	onCartClick,
-	cartOpen = false,
 	cartCount = 0,
 	avatarUrl,
 	avatarAlt = 'Account',
@@ -61,8 +59,6 @@ export function HeaderActions( {
 							? sprintf( _n( 'Cart, %d item', 'Cart, %d items', cartCount, 'stayilo' ), cartCount )
 							: __( 'Cart', 'stayilo' )
 					}
-					aria-expanded={ cartOpen }
-					aria-controls="portal-cart-drawer"
 					onClick={ onCartClick }
 				>
 					<BrandedIcon name="cart" width={ 24 } height={ 24 } className="portal-header-tool-icon">

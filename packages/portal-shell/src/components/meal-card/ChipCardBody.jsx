@@ -47,13 +47,15 @@ export function ChipCardBody( {
 				title={ title }
 				subtitle={ description }
 			/>
-			<NextDeliveryBanner
-				variant="summary"
-				embedded
-				onOpen={ onOpenDelivery }
-				{ ...nextDelivery }
-			/>
-			<div className="portal-card-chip-actions">{ actions }</div>
+			<div className="portal-card-chip-footer">
+				<NextDeliveryBanner
+					variant="summary"
+					embedded
+					onOpen={ onOpenDelivery }
+					{ ...nextDelivery }
+				/>
+				<div className="portal-card-chip-actions">{ actions }</div>
+			</div>
 		</div>
 	);
 }

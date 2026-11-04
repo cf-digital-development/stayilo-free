@@ -66,7 +66,6 @@ export function normalizePortalSettings( settings = {} ) {
 		updateAddress: flag( 'updateAddress' ),
 		showOrderHistory: flag( 'showOrderHistory' ),
 		allowReactivation: flag( 'allowReactivation' ),
-		storefrontCartDrawer: flag( 'storefrontCartDrawer' ),
 		subscriptionMode:
 			hasSettings && settings.subscriptionMode === 'multiple'
 				? 'multiple'

@@ -67,6 +67,10 @@ export function getShopUrl() {
 	return getStorefrontUrl( 'shopUrl', '/shop/' );
 }
 
+export function getCartUrl() {
+	return getStorefrontUrl( 'cartUrl', '/cart/' );
+}
+
 export function getCheckoutUrl() {
 	return getStorefrontUrl( 'checkoutUrl', '/checkout/' );
 }

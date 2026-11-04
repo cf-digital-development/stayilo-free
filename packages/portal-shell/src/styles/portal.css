@@ -121,7 +121,7 @@
 		background: #ffffff;
 		color: #101010;
 	}
-	@media (min-width: 1024px) {
+	@media (min-width: 1400px) {
 		.portal-shell[data-template] .portal-header {
 			@apply px-[120px];
 		}
@@ -413,13 +413,6 @@
 		.portal-cart-drawer__panel {
 			transition-duration: 0.01ms;
 		}
-	}
-
-	/* Hide Woo mini-cart drawers when Stayilo cart override is active. */
-	body.stayilo-cart-override .wc-block-mini-cart__drawer,
-	body.stayilo-cart-override .widget_shopping_cart,
-	body.stayilo-portal .wc-block-mini-cart__drawer {
-		display: none !important;
 	}
 
 	/* ---- Surfaces ---- */
