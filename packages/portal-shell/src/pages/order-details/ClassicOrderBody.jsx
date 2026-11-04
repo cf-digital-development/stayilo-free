@@ -185,24 +185,26 @@ export function ClassicOrderBody( {
 							</li>
 						) ) }
 					</ul>
-					<Button
-						label={
-							againBusy
-								? __( 'Starting checkout…', 'stayilo' )
-								: __( 'Order again', 'stayilo' )
-						}
-						variant="success"
-						className="portal-order-details__again"
-						disabled={ checkoutBusy || ! orderId }
-						loading={ againBusy }
-						onClick={ () =>
-							redirectToOrderCheckout(
-								orderAgainCheckout,
-								orderId,
-								setAgainBusy
-							)
-						}
-					/>
+					{ order?.orderAgainUrl ? (
+						<Button
+							label={
+								againBusy
+									? __( 'Starting checkout…', 'stayilo' )
+									: __( 'Order again', 'stayilo' )
+							}
+							variant="success"
+							className="portal-order-details__again"
+							disabled={ checkoutBusy || ! orderId }
+							loading={ againBusy }
+							onClick={ () =>
+								redirectToOrderCheckout(
+									orderAgainCheckout,
+									orderId,
+									setAgainBusy
+								)
+							}
+						/>
+					) : null }
 				</section>
 			</div>
 		</div>

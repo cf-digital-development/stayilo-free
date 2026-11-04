@@ -76,6 +76,19 @@ export function SettingsPage( { tier: tierProp } ) {
 								showStatus
 								className="!rounded-none !border-x-0 !px-5 !border-b-0"
 							/>
+							<SettingToggleCard
+								title="Storefront cart drawer"
+								description="Show Stayilo’s mini-cart drawer on shop, product and cart pages for logged-in customers. On by default."
+								checked={ settings.storefrontCartDrawer !== false }
+								onChange={ ( checked ) =>
+									setSettings( ( prev ) => ( {
+										...prev,
+										storefrontCartDrawer: checked,
+									} ) )
+								}
+								showStatus
+								className="!rounded-none !border-x-0 !px-5 !border-b-0"
+							/>
 						</div>
 					) : (
 						<p className=" !mt-3 !px-5 text-sm text-stayilo-muted">Loading portal settings...</p>
