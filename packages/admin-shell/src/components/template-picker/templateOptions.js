@@ -36,6 +36,25 @@ export const PORTAL_TEMPLATE_OPTIONS = [
 	},
 ];
 
+/**
+ * Templates the merchant may activate. PHP localizes availableTemplates
+ * (Classic on Free; Classic + Minimal when Core/Growth is licensed).
+ *
+ * @returns {typeof PORTAL_TEMPLATE_OPTIONS}
+ */
+export function getSelectableTemplateOptions() {
+	const admin = typeof window !== 'undefined' ? window.stayiloAdmin || {} : {};
+	const allowed = Array.isArray( admin.availableTemplates )
+		? admin.availableTemplates.map( ( id ) => String( id ).toLowerCase() )
+		: [ 'classic' ];
+
+	const selected = PORTAL_TEMPLATE_OPTIONS.filter( ( option ) =>
+		allowed.includes( option.value )
+	);
+
+	return selected.length ? selected : PORTAL_TEMPLATE_OPTIONS.filter( ( o ) => o.value === 'classic' );
+}
+
 export function getTemplateDemoUrl( template ) {
 	const admin = typeof window !== 'undefined' ? window.stayiloAdmin || {} : {};
 	return (

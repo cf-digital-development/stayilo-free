@@ -51,7 +51,11 @@
 		stroke: currentColor;
 	}
 	.portal-shell[data-template='classic'] .portal-card-chip-actions {
-		@apply mt-auto;
+		@apply mt-auto w-full;
+	}
+	.portal-shell[data-template='classic'] .portal-card--chip .portal-delivery-strip,
+	.portal-shell[data-template='classic'] .portal-card--chip .portal-card-chip-actions .portal-btn {
+		@apply mx-0 w-full max-w-full;
 	}
 	.portal-shell[data-template='classic'] .portal-card--chip .portal-card-title {
 		@apply font-bold;

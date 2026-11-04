@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useUpgradeBannerDismiss } from '../hooks/useUpgradeBannerDismiss.js';
 import { PageHeader } from '../components/PageHeader.jsx';
 import { StatCard } from '../components/StatCard.jsx';
 import { UpgradeBanner } from '../components/UpgradeBanner.jsx';
@@ -15,6 +16,7 @@ import { useDashboardData } from '../hooks/useAdminData.js';
 import { buildPeriodMetrics, formatCurrency } from '../domain/metrics.js';
 import { buildDashboardNotifications } from '../domain/notifications.js';
 import { buildRetentionTrend, resolveRetentionRange } from '../domain/retention.js';
+import { openUpgrade } from '../utils/upgradeUrl.js';
 
 function formatDate() {
 	return new Date().toLocaleDateString( 'en-GB', {
@@ -89,7 +91,7 @@ export function DashboardPage( { tier: tierProp } ) {
 	const tier = tierProp ?? merchantTier;
 	const isFree = tier === 'free';
 	const hasGrowth = hasTierAccess( tier, 'growth' );
-	const [ bannerDismissed, setBannerDismissed ] = useState( false );
+	const [ bannerDismissed, dismissBanner ] = useUpgradeBannerDismiss();
 	const [ dateRange, setDateRange ] = useState( '30d' );
 	const {
 		metrics,
@@ -165,10 +167,15 @@ export function DashboardPage( { tier: tierProp } ) {
 
 			{ isFree && ! bannerDismissed ? (
 				<UpgradeBanner
-					title={ `You're on the Free plan · ${ cap } subscriber cap` }
+					title={
+						cap > 0
+							? `You're on the Free plan · ${ cap } subscriber cap`
+							: "You're on the Free plan"
+					}
 					description="Upgrade to Core for the full subscriber UI, email notifications, and cancellation flow — or Growth for analytics, rules, and integrations."
 					actionLabel="View plans"
-					onDismiss={ () => setBannerDismissed( true ) }
+					onAction={ () => openUpgrade( 'dashboard_banner' ) }
+					onDismiss={ dismissBanner }
 				/>
 			) : ! hasGrowth && ! bannerDismissed ? (
 				<UpgradeBanner
@@ -176,7 +183,8 @@ export function DashboardPage( { tier: tierProp } ) {
 					description="Upgrade to Growth for the full reporting dashboard, retention analytics, rules engine, event timeline, and Klaviyo + webhook integrations."
 					actionLabel="Upgrade to growth"
 					variant="growth"
-					onDismiss={ () => setBannerDismissed( true ) }
+					onAction={ () => openUpgrade( 'dashboard_growth_banner' ) }
+					onDismiss={ dismissBanner }
 				/>
 			) : hasGrowth ? (
 				<SetupChecklist />
@@ -247,7 +255,12 @@ export function DashboardPage( { tier: tierProp } ) {
 				</div>
 			</div>
 
-			{ ! hasGrowth ? <GrowthUpsellCards tier={ tier } /> : null }
+			{ ! hasGrowth ? (
+				<GrowthUpsellCards
+					tier={ tier }
+					onUpgrade={ () => openUpgrade( 'dashboard_upsell' ) }
+				/>
+			) : null }
 		</div>
 		</>
 	);

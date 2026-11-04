@@ -45,6 +45,7 @@ export function useShippingAddress( shipping = {} ) {
 		shipping.address_2,
 		shipping.city,
 		shipping.postcode,
+		shipping.country,
 	] );
 
 	const addressLines = useMemo(
@@ -63,6 +64,7 @@ export function useShippingAddress( shipping = {} ) {
 					addressLine2: values.addressLine2,
 					city: values.city,
 					postcode: values.postcode,
+					country: values.country || address.country || '',
 				},
 			} );
 		} catch ( err ) {

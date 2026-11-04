@@ -4,7 +4,7 @@ import { AdminCenterModal } from '../AdminCenterModal.jsx';
 import { ReactComponent as ArrowRightIcon } from '../../assets/svg/ArrowRight.svg';
 import { TemplateThumb } from './TemplateThumb.jsx';
 import {
-	PORTAL_TEMPLATE_OPTIONS,
+	getSelectableTemplateOptions,
 	getTemplateDemoUrl,
 } from './templateOptions.js';
 
@@ -42,7 +42,7 @@ export function ChooseTemplateModal( {
 			}
 		>
 			<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-				{ PORTAL_TEMPLATE_OPTIONS.map( ( option ) => (
+				{ getSelectableTemplateOptions().map( ( option ) => (
 					<LayoutCard
 						key={ option.value }
 						title={ option.title }

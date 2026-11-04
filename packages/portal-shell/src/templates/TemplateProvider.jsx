@@ -8,6 +8,10 @@ import { getRecipe } from './recipes.js';
 
 const TEMPLATE_PARAM = 'stayilo_template';
 
+function merchantTier() {
+	return String( getPortal().tier || 'free' ).toLowerCase();
+}
+
 export function readTemplateId() {
 	const branding = readPortalBranding();
 	const preview = readPreviewBranding();
@@ -19,6 +23,12 @@ export function readTemplateId() {
 			return fromUrl;
 		}
 	}
+
+	// Free merchants always use Classic — ignore sticky DOM / leftover branding.
+	if ( merchantTier() === 'free' ) {
+		return 'classic';
+	}
+
 	if ( typeof document !== 'undefined' ) {
 		const fromDom = document
 			.querySelector( '.portal-shell' )
@@ -33,17 +43,13 @@ export function readTemplateId() {
 	if ( branding.template ) {
 		return branding.template;
 	}
-	if ( getPortal().tier === 'free' ) {
-		return 'classic';
-	}
-	return undefined;
+	return 'classic';
 }
 
-const TemplateContext = createContext( getRecipe() );
+const TemplateContext = createContext( getRecipe( 'classic' ) );
 
 /**
- * Exposes the active portal recipe. Unknown / unimplemented ids still
- * resolve to Minimal (top-nav + stacked).
+ * Exposes the active portal recipe.
  *
  * @param {{ children: import('react').ReactNode }} props
  */

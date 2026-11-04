@@ -1,14 +1,26 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import defaultLogoUrl from '@stayilo/design-system/assets/svg/Logo.svg';
 import './styles/admin-modals.css';
 import { ProBadge } from '@stayilo/design-system';
+import { getStayiloRegistry } from '@stayilo/extension-sdk';
 import { readAdminBranding } from './branding.js';
 import { isNavItemLocked, navItemLabel, NAV_ITEMS } from './nav-config.js';
 import { SidebarNavIcon } from './nav-icons.jsx';
 import { SidebarPlanCard } from './components/SidebarPlanCard.jsx';
-import { DevTierSwitch } from './components/DevTierSwitch.jsx';
-import { ensureGrowthPreviewBundle } from './premium.js';
+import { getMerchantTier, subscribePremium } from './premium.js';
+import { openUpgrade } from './utils/upgradeUrl.js';
+
+const SIDEBAR_TIER_PREVIEW_SLOT = 'sidebar-tier-preview';
+
+/** Pro registers the Core/Growth preview switch into this slot. Free ships nothing. */
+function SidebarTierPreview( { tier } ) {
+	useSyncExternalStore( subscribePremium, getMerchantTier, () => 'free' );
+	const Registered = getStayiloRegistry().getDashboardWidget(
+		SIDEBAR_TIER_PREVIEW_SLOT
+	);
+	return Registered ? <Registered tier={ tier } /> : null;
+}
 
 function getWpAdminUrl() {
 	if ( typeof window === 'undefined' ) {
@@ -93,10 +105,6 @@ export function AppShell( { tier = 'growth', storeName = 'Stayilo' } ) {
 	const [ hasAdminNotices, setHasAdminNotices ] = useState( false );
 
 	useEffect( () => {
-		ensureGrowthPreviewBundle();
-	}, [] );
-
-	useEffect( () => {
 		// Core's common.js moves .notice/.error/.updated to after the first h1.
 		// below-h2 opts out of that move. Do not add the class "inline":
 		// the admin bundle's .inline utility is display:inline and pulls the
@@ -175,17 +183,8 @@ export function AppShell( { tier = 'growth', storeName = 'Stayilo' } ) {
 	const isWpEmbed =
 		typeof window !== 'undefined' && Boolean( window.stayiloAdmin );
 	const wpAdminUrl = getWpAdminUrl();
-	const upgradeUrl =
-		typeof window !== 'undefined'
-			? window.stayiloAdmin?.upgradeUrl || window.stayiloAdmin?.accountUrl
-			: '';
-
 	const handleUpgrade = () => {
-		if ( upgradeUrl ) {
-			window.location.assign( upgradeUrl );
-			return;
-		}
-		navigate( '/account' );
+		openUpgrade( 'sidebar' );
 	};
 
 	return (
@@ -314,7 +313,7 @@ export function AppShell( { tier = 'growth', storeName = 'Stayilo' } ) {
 				</nav>
 
 				<div className="mt-auto shrink-0 p-5">
-					<DevTierSwitch tier={ tier } />
+					<SidebarTierPreview tier={ tier } />
 					<SidebarPlanCard tier={ tier } onUpgrade={ handleUpgrade } />
 				</div>
 			</aside>

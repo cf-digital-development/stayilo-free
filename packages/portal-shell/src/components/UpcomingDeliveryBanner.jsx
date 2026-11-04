@@ -1,21 +1,9 @@
 import { ContentHeader } from './ContentHeader.jsx';
 import { NavArrowIcon } from './NavArrowIcon.jsx';
-import patternSrc from '../assets/images/lemoonboots-pattern-6854140.ai.png';
 import { __ } from '@stayilo/design-system/i18n';
 
-function DeliveryDecoration() {
-	return (
-		<img
-			src={ patternSrc }
-			alt=""
-			aria-hidden="true"
-			className="h-auto w-[360px] object-cover sm:w-[360px] md:w-[465px]"
-		/>
-	);
-}
-
 /**
- * Upcoming delivery status banner with edit action and botanical decoration.
+ * Upcoming delivery status banner with edit action.
  *
  * @param {object} props
  * @param {string} [props.eyebrow='Upcoming']
@@ -26,7 +14,6 @@ function DeliveryDecoration() {
  * @param {boolean} [props.actionsEnabled] - Active plan + products/orders → ready (white) style.
  * @param {string} [props.backgroundColor]
  * @param {string} [props.eyebrowColor]
- * @param {import('react').ReactNode} [props.decoration]
  * @param {string} [props.className]
  * @param {string} [props.titleClassName] - Extra classes on the ContentHeader title.
  */
@@ -39,7 +26,6 @@ export function UpcomingDeliveryBanner( {
 	actionsEnabled = false,
 	backgroundColor,
 	eyebrowColor,
-	decoration,
 	className = '',
 	titleClassName = '',
 } ) {
@@ -55,13 +41,6 @@ export function UpcomingDeliveryBanner( {
 			style={ backgroundColor ? { backgroundColor } : undefined }
 			aria-label={ eyebrow }
 		>
-			{/* <div
-				className="pointer-events-none absolute bottom-0 right-0 z-0 hidden md:block"
-				aria-hidden="true"
-			>
-				{ decoration ?? <DeliveryDecoration /> }
-			</div> */}
-
 			<div className="px-6">
 				<div
 					className={ [

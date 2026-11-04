@@ -6,7 +6,7 @@ import { TextField } from '@stayilo/design-system/text-field';
 import { SuccessBadgeIcon } from '@stayilo/design-system/status-card';
 import { ReactComponent as CheckIcon } from '@stayilo/design-system/assets/svg/Check.svg';
 import { ReactComponent as AtEmailIcon } from '@stayilo/design-system/assets/svg/@email.svg';
-import { FREE_PLAN_SUBSCRIBER_LIMIT } from '../config/constants';
+import { getFreePlanSubscriberLimit } from '../config/constants';
 import {
 	getFieldError,
 	getStoreUrlError,
@@ -160,7 +160,7 @@ export default function ConnectStoreStep( {
 									? ' ' + sprintf(
 										/* translators: %s: Free plan subscriber limit. */
 										__( 'The Free plan manages up to %s.', 'stayilo' ),
-										String( FREE_PLAN_SUBSCRIBER_LIMIT )
+										String( getFreePlanSubscriberLimit() )
 									)
 									: '' }
 							</p>

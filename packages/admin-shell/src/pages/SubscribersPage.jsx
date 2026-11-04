@@ -10,7 +10,9 @@ import { UpgradeBanner } from '../components/UpgradeBanner.jsx';
 import { hasTierAccess } from '../utils/tier.js';
 import { buildCsv, downloadCsv } from '../utils/downloadCsv.js';
 import { useMerchantTier } from '../premium.js';
+import { useUpgradeBannerDismiss } from '../hooks/useUpgradeBannerDismiss.js';
 import { useSubscribers } from '../hooks/useAdminData.js';
+import { openUpgrade } from '../utils/upgradeUrl.js';
 import { ReactComponent as PaginationArrowIcon } from '../assets/svg/pagination-arrow.svg';
 import { ReactComponent as ArrowRightIcon } from '../assets/svg/ArrowRight.svg';
 
@@ -66,7 +68,7 @@ export function SubscribersPage( { tier: tierProp } ) {
 	const tier = tierProp ?? merchantTier;
 	const isFree = tier === 'free';
 	const hasCore = hasTierAccess( tier, 'core' );
-	const [ bannerDismissed, setBannerDismissed ] = useState( false );
+	const [ bannerDismissed, dismissBanner ] = useUpgradeBannerDismiss();
 	const [ search, setSearch ] = useState( '' );
 	const [ status, setStatus ] = useState( 'all' );
 	const [ page, setPage ] = useState( 1 );
@@ -157,8 +159,9 @@ export function SubscribersPage( { tier: tierProp } ) {
 					title="You're seeing the native WooCommerce subscriber list"
 					description="Upgrade to unlock Stayilo's subscriber management UI — with rich profiles, event timelines, manual overrides, and filtering."
 					actionLabel="Upgrade now"
-					actionClassName="bg-[#9810FA]" 
-					onDismiss={ () => setBannerDismissed( true ) }
+					actionClassName="bg-[#9810FA]"
+					onAction={ () => openUpgrade( 'subscribers_banner' ) }
+					onDismiss={ dismissBanner }
 				/>
 			) : null }
 

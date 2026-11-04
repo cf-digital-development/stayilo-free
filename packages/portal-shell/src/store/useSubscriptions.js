@@ -2,16 +2,12 @@ import { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	cancelPortalSubscription,
-	changePortalSubscriptionDate,
-	changePortalSubscriptionFrequency,
 	fetchPortalBootstrap,
-	pausePortalSubscription,
 	reactivatePortalSubscription,
-	resumePortalSubscription,
 	skipPortalDelivery,
 	syncWindowBootstrap,
-	updatePortalBox,
 } from '../api/portal.js';
+import { callPaidPortalApi } from '../utils/paidPortalApi.js';
 import { loadFromSubscription as loadCartFromSubscription, clearSubscriptionLines, hydrateFromSubscriptions } from './cartSlice.js';
 import { startCreateSubscription } from '../utils/createSubscription.js';
 import {
@@ -140,7 +136,7 @@ export function useSubscriptions() {
 			if ( ! subscriptionId ) {
 				return;
 			}
-			const data = await updatePortalBox( subscriptionId, lines );
+			const data = await callPaidPortalApi( 'updateBox', subscriptionId, lines );
 			if ( data?.subscription ) {
 				dispatch( upsertSubscription( data.subscription ) );
 				dispatch( loadCartFromSubscription( data.subscription ) );
@@ -192,7 +188,8 @@ export function useSubscriptions() {
 				throw new Error( __( 'Please choose a valid order date.', 'stayilo' ) );
 			}
 
-			const data = await changePortalSubscriptionDate(
+			const data = await callPaidPortalApi(
+				'changeSubscriptionDate',
 				subscriptionId,
 				normalized.dateId
 			);
@@ -238,7 +235,8 @@ export function useSubscriptions() {
 			const existing = subscriptions.find(
 				( card ) => card.id === String( subscriptionId )
 			);
-			const data = await changePortalSubscriptionFrequency(
+			const data = await callPaidPortalApi(
+				'changeSubscriptionFrequency',
 				subscriptionId,
 				interval,
 				period
@@ -270,7 +268,7 @@ export function useSubscriptions() {
 			const existing = subscriptions.find(
 				( card ) => card.id === String( subscriptionId )
 			);
-			const data = await pausePortalSubscription( subscriptionId );
+			const data = await callPaidPortalApi( 'pauseSubscription', subscriptionId );
 			dispatch(
 				upsertSubscription( {
 					...existing,
@@ -291,7 +289,7 @@ export function useSubscriptions() {
 			const existing = subscriptions.find(
 				( card ) => card.id === String( subscriptionId )
 			);
-			const data = await resumePortalSubscription( subscriptionId );
+			const data = await callPaidPortalApi( 'resumeSubscription', subscriptionId );
 			const next = {
 				...existing,
 				status: 'active',

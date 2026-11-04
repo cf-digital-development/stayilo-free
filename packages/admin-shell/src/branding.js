@@ -194,7 +194,16 @@ export function normalizeHex( value, fallback = '#000000' ) {
 		return fallback;
 	}
 
-	const raw = value.trim();
+	let raw = value.trim();
+	if ( ! raw ) {
+		return fallback;
+	}
+
+	// Accept pasted values without a leading # (e.g. FF0000 or ff0000).
+	if ( raw[ 0 ] !== '#' ) {
+		raw = `#${ raw.replace( /^#/, '' ) }`;
+	}
+
 	if ( ! HEX.test( raw ) ) {
 		return fallback;
 	}

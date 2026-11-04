@@ -44,6 +44,8 @@ export function createStayiloRegistry() {
 		wizardSteps: {},
 		portalRoutes: {},
 		portalActionCards: [],
+		portalApis: {},
+		portalRecipes: {},
 
 		registerDashboardWidget( slotId, component ) {
 			registry.dashboardWidgets[ slotId ] = component;
@@ -57,6 +59,10 @@ export function createStayiloRegistry() {
 			registry.portalTemplates[ templateId ] = component;
 		},
 
+		registerPortalRecipe( templateId, recipe ) {
+			registry.portalRecipes[ templateId ] = recipe;
+		},
+
 		registerPortalAction( actionId, component ) {
 			registry.portalActions[ actionId ] = component;
 		},
@@ -67,6 +73,10 @@ export function createStayiloRegistry() {
 
 		registerPortalRoute( path, component ) {
 			registry.portalRoutes[ path ] = component;
+		},
+
+		registerPortalApi( name, fn ) {
+			registry.portalApis[ name ] = fn;
 		},
 
 		registerPortalActionCard( card ) {
@@ -89,6 +99,10 @@ export function createStayiloRegistry() {
 			return registry.portalTemplates[ templateId ];
 		},
 
+		getPortalRecipe( templateId ) {
+			return registry.portalRecipes[ templateId ];
+		},
+
 		getPortalAction( actionId ) {
 			return registry.portalActions[ actionId ];
 		},
@@ -99,6 +113,14 @@ export function createStayiloRegistry() {
 
 		getPortalRoute( path ) {
 			return registry.portalRoutes[ path ];
+		},
+
+		getPortalRoutes() {
+			return registry.portalRoutes;
+		},
+
+		getPortalApi( name ) {
+			return registry.portalApis[ name ];
 		},
 
 		getPortalActionCards() {

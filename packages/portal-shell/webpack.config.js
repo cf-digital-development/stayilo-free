@@ -5,6 +5,10 @@ const {
 	webpackOutput,
 	WriteAssetPhpPlugin,
 } = require( '../../tooling/wp-output.cjs' );
+const {
+	singleLineMinimizers,
+	SingleLineCssPlugin,
+} = require( '../../tooling/single-line-minify.cjs' );
 
 const repoRoot = path.resolve( __dirname, '..' );
 
@@ -22,11 +26,16 @@ module.exports = {
 		...webpackOutput( __dirname, 'portal' ),
 	},
 	externals: {},
+	optimization: {
+		...defaultConfig.optimization,
+		minimizer: singleLineMinimizers( defaultConfig ),
+	},
 	plugins: [
 		...defaultConfig.plugins.filter(
 			( plugin ) => ! ( plugin instanceof DependencyExtractionWebpackPlugin )
 		),
 		new WriteAssetPhpPlugin(),
+		new SingleLineCssPlugin(),
 	],
 	resolve: {
 		...defaultConfig.resolve,

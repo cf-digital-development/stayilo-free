@@ -14,6 +14,7 @@ import {
 import { HomeLayout } from '../templates/layouts/HomeLayout.jsx';
 import { Subscription } from './sections/Subscription.jsx';
 import { useTemplateRecipe } from '../templates/TemplateProvider.jsx';
+import { hasPortalActionNonce } from '../utils/portalActions.js';
 import { __, sprintf } from '@stayilo/design-system/i18n';
 
 /**
@@ -25,6 +26,7 @@ export function MySubscription() {
 	const { firstName } = useAccount();
 	const { subscriptions, activeCount, loading, resumeSubscription, reactivateSubscription } =
 		useSubscriptions();
+	const canResume = hasPortalActionNonce( 'resumeNonce' );
 	const [ cancelCompleteOpen, setCancelCompleteOpen ] = useState(
 		Boolean( location.state?.showCancelComplete )
 	);
@@ -81,7 +83,7 @@ export function MySubscription() {
 						cards={ subscriptions }
 						headerSubtitle={ formatActiveSubscriptionsSubtitle( activeCount ) }
 						onReactivate={ reactivateSubscription }
-						onResume={ resumeSubscription }
+						onResume={ canResume ? resumeSubscription : undefined }
 					/>
 				)
 			}

@@ -22,17 +22,19 @@ export function UpdateAddressAction( {
 } = {} ) {
 	const { subscription } = useResolvedSubscription();
 
-	return (
-		<ShippingAddressSection
-			shipping={ shipping ?? subscription?.shipping }
-			estimateLabel={
-				estimateLabel || subscription?.nextDelivery?.date || ''
-			}
-			actionsEnabled={ actionsEnabled }
-			descriptionClassName={ descriptionClassName }
-			label={ label }
-			actionLabel={ actionLabel }
-			className={ className }
-		/>
-	);
+	const sectionProps = {
+		shipping: shipping ?? subscription?.shipping,
+		estimateLabel: estimateLabel || subscription?.nextDelivery?.date || '',
+		actionsEnabled,
+		descriptionClassName,
+		className,
+	};
+	if ( label !== undefined ) {
+		sectionProps.label = label;
+	}
+	if ( actionLabel !== undefined && actionLabel !== null ) {
+		sectionProps.actionLabel = actionLabel;
+	}
+
+	return <ShippingAddressSection { ...sectionProps } />;
 }

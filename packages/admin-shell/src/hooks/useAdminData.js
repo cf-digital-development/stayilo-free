@@ -14,15 +14,15 @@ import {
 	transformSettings,
 	transformSubscribers,
 } from '../transforms/admin-data.js';
-import { MOCK_ACTIVITY, MOCK_SUBSCRIBERS } from '../data/mock.js';
+import { resolveSubscriberCap } from '@stayilo/design-system/validation';
 
-const MOCK_METRICS = {
-	activeSubscribers: 48,
-	subscriberGrowth: 12,
+const EMPTY_METRICS = {
+	activeSubscribers: 0,
+	subscriberGrowth: 0,
 	revenue: 0,
-	revenueChange: 480,
+	revenueChange: 0,
 	currencySymbol: '£',
-	freeSubscriberCap: 50,
+	freeSubscriberCap: resolveSubscriberCap(),
 };
 
 export function useDashboardData() {
@@ -59,15 +59,9 @@ export function useDashboardData() {
 		};
 	}, [] );
 
-	const metrics = view?.metrics || MOCK_METRICS;
+	const metrics = view?.metrics || EMPTY_METRICS;
 	const symbol = metrics.currencySymbol || '£';
-
-	// Live WP admin: use API activity (may be empty). Mock only outside WordPress.
-	const activity = isWpAdmin()
-		? view?.activity || []
-		: view?.activity?.length
-			? view.activity
-			: MOCK_ACTIVITY;
+	const activity = isWpAdmin() ? view?.activity || [] : [];
 
 	return {
 		loading,
@@ -111,18 +105,8 @@ export function useSubscribers( { page = 1, perPage = 15, search = '', status = 
 		? transformSubscribers( raw, { page, perPage, search, status } )
 		: null;
 
-	const mockView = querySubscriberRows(
-		MOCK_SUBSCRIBERS.map( ( sub ) => ( {
-			...sub,
-			nextRenewal: sub.renewal,
-			price: sub.mrr,
-			lastActivity: sub.lastActivity || '—',
-			raw: sub,
-		} ) ),
-		{ page, perPage, search, status }
-	);
-
-	const resolved = isWpAdmin() ? view : mockView;
+	const emptyView = querySubscriberRows( [], { page, perPage, search, status } );
+	const resolved = isWpAdmin() ? view : emptyView;
 	const items = resolved?.items ?? [];
 	const filteredItems = resolved?.filtered ?? items;
 
@@ -138,16 +122,6 @@ export function useSubscribers( { page = 1, perPage = 15, search = '', status = 
 		counts: resolved?.counts,
 		reload: load,
 	};
-}
-
-function filterAllRows( raw ) {
-	if ( ! raw?.subscriptions ) {
-		return [];
-	}
-	return ( raw.subscriptions || [] ).map( ( sub ) => ( {
-		status: sub.status,
-		raw: sub,
-	} ) );
 }
 
 export function usePortalSettings() {

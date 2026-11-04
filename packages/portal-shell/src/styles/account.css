@@ -28,7 +28,7 @@
 		@apply inline-flex items-center gap-1 rounded-[40px] border-[.5px] border-[#EFEADA] bg-[#FAF8F2] px-3 py-1 text-sm font-medium leading-5 text-[#101010CC] transition-colors hover:bg-stayilo-chip;
 	}
 	.portal-subscription-manage {
-		@apply relative mt-4 items-center justify-between gap-8 overflow-hidden rounded-3xl border border-[#1010101A] bg-portal-delivery p-4 sm:flex sm:p-6;
+		@apply relative mt-4 items-center justify-between gap-8 overflow-hidden rounded-3xl border border-[#1010101A] bg-portal-delivery p-4 min-[767px]:flex min-[767px]:p-6;
 	}
 	.portal-subscription-manage::before {
 		content: '';
@@ -45,7 +45,7 @@
 		@apply flex flex-col gap-6;
 	}
 	.portal-shell[data-template='classic'] .portal-subscription-manage {
-		@apply order-first mt-0 mb-0 gap-[60px] rounded-[8px] border-0 bg-[#FFF7EF] py-6 px-0 sm:py-6 sm:px-0 justify-start;
+		@apply order-first mt-0 mb-0 gap-[60px] rounded-[8px] border-0 bg-[#FFF7EF] py-6 px-0 min-[767px]:py-6 min-[767px]:px-0 justify-start;
 	}
 	.portal-shell[data-template='classic'] .portal-subscription-manage::before {
 		display: none;
@@ -54,7 +54,7 @@
 		@apply max-w-[520px];
 	}
 	.portal-shell[data-template='classic'] .portal-subscription-manage__art {
-		@apply !relative !left-auto !right-auto !mt-0 !mb-0 flex items-center sm:!static sm:!order-first;
+		@apply !relative !left-auto !right-auto !mt-0 !mb-0 flex items-center min-[767px]:!static min-[767px]:!order-first;
 	}
 	.portal-shell[data-template='classic'] .portal-subscription-manage__art > div {
 		@apply h-auto w-[372px];
@@ -76,7 +76,7 @@
 		@apply flex flex-wrap items-center gap-3;
 	}
 	.portal-shell[data-template='classic'] .portal-subscription-manage__title {
-		@apply text-xl font-bold leading-6 sm:text-[22px] sm:leading-7;
+		@apply text-xl font-bold leading-6 min-[767px]:text-[22px] min-[767px]:leading-7;
 	}
 	.portal-shell[data-template='classic'] .portal-subscription-manage__body {
 		@apply mt-2 max-w-xl text-sm font-normal leading-5 text-[#10101099] opacity-100;
@@ -94,7 +94,7 @@
 		}
 	}
 	.portal-shell[data-template='classic'] .portal-btn.portal-subscription-manage__btn {
-		@apply !w-full !max-w-none py-3 !text-sm !font-semibold !leading-5 sm:!w-full;
+		@apply !w-full !max-w-none py-3 !text-sm !font-semibold !leading-5 min-[767px]:!w-full;
 		background: var(--stayilo-button, #007943);
 		color: #ffffff;
 	}

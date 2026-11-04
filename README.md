@@ -23,4 +23,6 @@ The build writes into the local WordPress plugin at `../SubXP/wp-content/plugins
 
 ## WordPress.org
 
-After this folder is published, add its public URL to the plugin `readme.txt` so reviewers can read this source.
+Source repository: https://github.com/cf-digital-development/stayilo-free.git
+
+That URL is also listed in the plugin `readme.txt` so reviewers can read this source.

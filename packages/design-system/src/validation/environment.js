@@ -122,7 +122,7 @@ export function buildEnvironmentChecks() {
 	const phpOk = versionAtLeast( env.phpVersion, '8.0' );
 	const checks = [
 		pluginCheck( 'wc', __( 'WooCommerce', 'stayilo' ), '10.8', env.wooCommerce ),
-		pluginCheck( 'subs', __( 'WC Subscriptions', 'stayilo' ), '9.1', env.wcSubscriptions ),
+		pluginCheck( 'subs', __( 'WC Subscriptions', 'stayilo' ), '8.0', env.wcSubscriptions ),
 		{
 			id: 'php',
 			title: __( 'PHP version', 'stayilo' ),

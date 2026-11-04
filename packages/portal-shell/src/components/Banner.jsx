@@ -263,7 +263,14 @@ export function Banner( {
 			) : null }
 
 			{ fullBleed ? (
-				<div className={ hasLeaf ? 'relative overflow-visible px-1.5 lg:px-6' : 'px-1.5 lg:px-6' }>
+				<div
+					className={ [
+						'portal-banner-inner',
+						hasLeaf ? 'relative overflow-visible' : '',
+					]
+						.filter( Boolean )
+						.join( ' ' ) }
+				>
 					{ content }
 				</div>
 			) : content }

@@ -85,6 +85,19 @@ export function savePortalSettings( settings ) {
 	);
 }
 
+export function dismissUpgradeBanner() {
+	if ( ! isWpAdmin() ) {
+		return Promise.resolve( { dismissed: true } );
+	}
+
+	return postAdminAction( 'stayilo_dismiss_upgrade_banner' ).then( ( data ) => {
+		if ( typeof window !== 'undefined' && window.stayiloAdmin ) {
+			window.stayiloAdmin.upgradeBannerDismissed = true;
+		}
+		return data;
+	} );
+}
+
 export function saveSubscriptionMode( mode = 'single' ) {
 	return postAdminAction( 'stayilo_save_subscription_mode', {
 		subscriptionMode: mode === 'multiple' ? 'multiple' : 'single',

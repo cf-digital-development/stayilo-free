@@ -13,16 +13,38 @@ function CardActions( {
 	isClassic,
 	isCanceled,
 	isPaused,
+	paymentFailed,
 	actionLabel,
 	reactivateLabel,
 	loadingLabel,
 	resumeLabel,
+	payLabel,
 	onManage,
 	onReactivate,
 	onResume,
+	onPay,
 	actionLoading,
 } ) {
 	const inactiveLabel = isClassic ? __( 'Reactivate subscription', 'stayilo' ) : null;
+
+	// Failed renewal → repay checkout (not resume/reactivate).
+	if ( paymentFailed && onPay ) {
+		return (
+			<Button
+				label={
+					actionLoading
+						? __( 'Opening checkout…', 'stayilo' )
+						: payLabel || __( 'Pay now', 'stayilo' )
+				}
+				variant="primary"
+				showIcon
+				icon={ <NavArrowIcon width={ 24 } height={ 24 } className="text-current" /> }
+				onClick={ onPay }
+				loading={ actionLoading }
+				className="portal-btn-block"
+			/>
+		);
+	}
 
 	if ( isCanceled ) {
 		if ( onReactivate ) {
@@ -125,6 +147,8 @@ export function MealBoxCard( {
 	onManage,
 	onReactivate,
 	onResume,
+	onPay,
+	payLabel = __( 'Pay now', 'stayilo' ),
 	onOpenDelivery,
 	actionLoading = false,
 	className = '',
@@ -144,13 +168,16 @@ export function MealBoxCard( {
 			isClassic={ isClassic }
 			isCanceled={ isCanceled }
 			isPaused={ isPaused }
+			paymentFailed={ paymentFailed }
 			actionLabel={ actionLabel }
 			reactivateLabel={ reactivateLabel }
 			loadingLabel={ loadingLabel }
 			resumeLabel={ resumeLabel }
+			payLabel={ payLabel }
 			onManage={ onManage }
 			onReactivate={ onReactivate }
 			onResume={ onResume }
+			onPay={ onPay }
 			actionLoading={ actionLoading }
 		/>
 	);

@@ -15,5 +15,5 @@ export const FREE_PLAN_STEP_INDEX = Object.fromEntries(
 
 export const FREE_PLAN_STEP_COUNT = FREE_PLAN_STEPS.length;
 
-/** Maximum active subscribers managed on the Free plan. */
-export { FREE_SUBSCRIBER_CAP as FREE_PLAN_SUBSCRIBER_LIMIT } from '@stayilo/design-system/validation';
+/** Live Free subscriber cap from PHP localize — not a hardcoded number. */
+export { resolveSubscriberCap as getFreePlanSubscriberLimit } from '@stayilo/design-system/validation';

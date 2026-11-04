@@ -12,6 +12,7 @@ import {
 } from '../routes.js';
 import { useSubscriptions } from '../store/useSubscriptions.js';
 import { useTemplateRecipe } from '../templates/TemplateProvider.jsx';
+import { hasPortalActionNonce } from '../utils/portalActions.js';
 import { __ } from '@stayilo/design-system/i18n';
 
 /**
@@ -21,13 +22,14 @@ export function AccountSubscription() {
 	const { view, id } = useTemplateRecipe();
 	const { subscriptions, loading, resumeSubscription, reactivateSubscription } =
 		useSubscriptions();
+	const canResume = hasPortalActionNonce( 'resumeNonce' );
 	const isEmpty = subscriptions.length === 0;
 	const grid = (
 		<SubscriptionGrid
 			cards={ subscriptions }
 			loading={ loading }
 			onReactivate={ reactivateSubscription }
-			onResume={ resumeSubscription }
+			onResume={ canResume ? resumeSubscription : undefined }
 			managePath={ {
 				manage: MANAGE_SUBSCRIPTION_PATH,
 				view:

@@ -79,9 +79,24 @@
 	.portal-content-narrow {
 		@apply mx-auto w-full max-w-[968px];
 	}
+	/* Cancel portal-main gutters: px-2 below lg, px-6 from lg up. */
 	.portal-full-bleed,
 	.background_container {
-		@apply relative mx-0 lg:-mx-6 w-full lg:w-[calc(100%+3rem)];
+		@apply relative -mx-2 w-[calc(100%+1rem)] lg:-mx-6 lg:w-[calc(100%+3rem)];
+	}
+	.portal-banner-inner {
+		@apply px-1.5 lg:px-6;
+	}
+	/* Classic: no extra banner gutter below 1024 — full-bleed already cancels portal-main. */
+	.portal-shell[data-template='classic'] .portal-banner-inner {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+	}
+	@media (min-width: 1024px) {
+		.portal-shell[data-template='classic'] .portal-banner-inner {
+			padding-left: 1.5rem;
+			padding-right: 1.5rem;
+		}
 	}
 	.background_container {
 		@apply bg-[#EFEADA];
@@ -108,6 +123,15 @@
 	}
 	.portal-shell[data-template] .portal-header--menu-open {
 		@apply fixed left-0 right-0 top-0 z-50 flex flex-col border-b-0;
+	}
+	/* Sit below the WP admin bar when the mobile menu is fixed. */
+	body.admin-bar .portal-shell[data-template] .portal-header--menu-open {
+		top: 32px;
+	}
+	@media screen and (max-width: 782px) {
+		body.admin-bar .portal-shell[data-template] .portal-header--menu-open {
+			top: 46px;
+		}
 	}
 	.portal-shell[data-template] .portal-header--menu-open .portal-header-bar {
 		@apply w-full max-w-none shrink-0;
@@ -169,19 +193,18 @@
 		@apply hidden items-center;
 	}
 	.portal-shell[data-template] .portal-nav--mobile {
-		@apply flex w-full flex-col items-stretch;
+		@apply flex w-full flex-col items-stretch py-6;
 	}
 	.portal-shell[data-template] .portal-nav-item {
 		@apply inline-flex items-center border-0 transition-colors outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0;
 		color: inherit;
 	}
 	.portal-shell[data-template] .portal-nav-item--mobile {
-		@apply w-full justify-start px-6 py-6 text-lg leading-6;
+		@apply w-full justify-start px-6 py-3 text-lg leading-6;
 	}
 	.portal-shell[data-template] .portal-mobile-nav {
 		display: grid;
 		grid-template-rows: 0fr;
-		height: 0;
 		width: calc(100% + 3rem);
 		margin-left: -1.5rem;
 		margin-right: -1.5rem;
@@ -190,24 +213,22 @@
 		pointer-events: none;
 		border-top: 1px solid transparent;
 		background-color: white;
+		/* Animate open/close via rows only — height follows the nav links. */
 		transition:
 			grid-template-rows 320ms ease-out,
-			height 320ms ease-out,
 			border-color 320ms ease-out;
 	}
 	.portal-shell[data-template] .portal-mobile-nav--open {
 		grid-template-rows: 1fr;
-		height: calc(100vh - 80px);
 		pointer-events: auto;
 		border-top-color: var(--stayilo-border, #e5e7eb);
 	}
 	.portal-shell[data-template] .portal-mobile-nav__inner {
 		overflow: hidden;
 		min-height: 0;
-		height: 100%;
 	}
 	.portal-shell[data-template] .portal-mobile-nav--open .portal-mobile-nav__inner {
-		overflow-y: auto;
+		overflow-y: visible;
 	}
 	@media (min-width: 1024px) {
 		.portal-shell[data-template] .portal-header-spacer {
@@ -407,7 +428,8 @@
 		@apply bg-[#B4E7BB];
 	}
 	.portal-delivery-strip {
-		@apply relative mt-[32px] mb-[10px] w-full overflow-hidden rounded-[10px];
+		/* mx-0: WP/theme `section` margins otherwise inset the strip vs full-width buttons. */
+		@apply relative mx-0 mt-[32px] mb-[10px] w-full max-w-full overflow-hidden rounded-[10px];
 	}
 	.portal-action-panel {
 		@apply rounded-lg border border-stayilo-border bg-white p-4;

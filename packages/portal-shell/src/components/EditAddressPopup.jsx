@@ -72,6 +72,7 @@ export function EditAddressPopup( {
 					addressLine2: initialValues?.addressLine2 ?? '',
 					city: initialValues?.city ?? '',
 					postcode: initialValues?.postcode ?? '',
+					country: initialValues?.country ?? '',
 				} }
 				enableReinitialize
 				validationSchema={ editAddressSchema }
@@ -133,7 +134,50 @@ export function EditAddressPopup( {
 								variant="inset"
 								autoComplete="postal-code"
 							/>
-							
+							{ countryName ? (
+								<div
+									className={
+										isClassic
+											? 'portal-edit-address-country'
+											: 'portal-field'
+									}
+								>
+									{ isClassic ? (
+										<label className="portal-field-inset">
+											<span className="portal-field-inset__label">
+												{ __( 'Country', 'stayilo' ) }
+											</span>
+											<input
+												type="text"
+												value={ countryName }
+												readOnly
+												aria-readonly="true"
+												autoComplete="country-name"
+												className="portal-field-inset__input"
+											/>
+											<span
+												className="portal-edit-address-country__chevron"
+												aria-hidden="true"
+											/>
+										</label>
+									) : (
+										<>
+											<label className="portal-field-label" htmlFor="stayilo-edit-address-country">
+												{ __( 'Country', 'stayilo' ) }
+											</label>
+											<input
+												id="stayilo-edit-address-country"
+												type="text"
+												value={ countryName }
+												readOnly
+												aria-readonly="true"
+												autoComplete="country-name"
+												className="portal-account-field"
+											/>
+										</>
+									) }
+								</div>
+							) : null }
 						</div>
 
 						{ isClassic ? (

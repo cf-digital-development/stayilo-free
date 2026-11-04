@@ -4,6 +4,7 @@ import securityPassIconUrl from '@stayilo/design-system/assets/svg/security-pass
 import globeIconUrl from '@stayilo/design-system/assets/svg/Globe.svg';
 import PlanFeaturesCard from '../components/PlanFeaturesCard';
 import { completeFreeSetup } from '../api/completeFreeSetup';
+import { getUpgradeUrl } from '@stayilo/admin-shell';
 
 /** Wider step card when the live portal success screen is shown. */
 export const LIVE_PORTAL_STEP_CARD_CLASS = 'max-w-[886px]';
@@ -63,9 +64,11 @@ export default function LivePortalStep( {
 	};
 
 	const openPlans = () => {
-		if ( plansUrl ) {
-			window.open( plansUrl, '_blank', 'noopener,noreferrer' );
-		}
+		window.open(
+			plansUrl || getUpgradeUrl( 'setup_live' ),
+			'_blank',
+			'noopener,noreferrer'
+		);
 	};
 
 	const openDashboard = async () => {

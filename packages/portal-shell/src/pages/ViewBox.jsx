@@ -1,6 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ChangeFrequencyPopup } from '../components/ChangeFrequencyPopup.jsx';
 import { PortalActionSlot } from '../slots/PortalActionSlot.jsx';
 import { VIEW_BOX_NEXT_CARD } from '../data/commerce.js';
 import { EDIT_BOX_PATH } from '../routes.js';
@@ -22,7 +21,6 @@ import { getStayiloRegistry } from '@stayilo/extension-sdk';
 import {
 	hasPortalActionNonce,
 	isPortalActionEnabled,
-	isPortalActionRegistered,
 	usePortalPremiumRevision,
 } from '../utils/portalActions.js';
 import { oneTimeLinesFromSubscription } from '../utils/cartLines.js';
@@ -32,7 +30,7 @@ import { __ } from '@stayilo/design-system/i18n';
 
 /**
  * View box / upcoming order details — timeline, next box, address, lines.
- * Change date is a paid action (`portal-core` → PortalActionSlot).
+ * Change date and frequency are paid actions registered via PortalActionSlot.
  */
 
 export function ViewBox() {
@@ -43,7 +41,6 @@ export function ViewBox() {
 	const {
 		subscription,
 		subscriptionId,
-		changeFrequency,
 		lines,
 		saveState,
 		updateQuantity,
@@ -52,7 +49,8 @@ export function ViewBox() {
 	const boxSectionRef = useRef( null );
 	const [ changeDateBannerAction, setChangeDateBannerAction ] =
 		useState( null );
-	const [ changeFrequencyOpen, setChangeFrequencyOpen ] = useState( false );
+	const [ frequencyDeliveryAction, setFrequencyDeliveryAction ] =
+		useState( null );
 	const currency = getPortalCurrency( subscription?.currency );
 	const oneTimeLines = useMemo(
 		() => oneTimeLinesFromSubscription( subscription ),
@@ -96,11 +94,6 @@ export function ViewBox() {
 		Boolean( getStayiloRegistry().getPortalRoute?.( 'edit-box' ) ) &&
 		isPortalActionEnabled( 'edit-items' ) &&
 		hasPortalActionNonce( 'editItemsNonce' );
-	const canChangeFrequency =
-		canManageDelivery &&
-		isPortalActionRegistered( 'change-frequency' ) &&
-		isPortalActionEnabled( 'change-frequency' ) &&
-		hasPortalActionNonce( 'changeFrequencyNonce' );
 	const deliveryActions = useMemo( () => {
 		const actions = [];
 		if ( changeDateBannerAction ) {
@@ -111,22 +104,30 @@ export function ViewBox() {
 					! canManageDelivery,
 			} );
 		}
-		if ( canChangeFrequency ) {
+		if ( frequencyDeliveryAction ) {
 			actions.push( {
-				label: __( 'Order frequency', 'stayilo' ),
-				disabled: false,
-				onClick: () => setChangeFrequencyOpen( true ),
+				...frequencyDeliveryAction,
+				label:
+					frequencyDeliveryAction.label ||
+					__( 'Order frequency', 'stayilo' ),
+				disabled:
+					Boolean( frequencyDeliveryAction.disabled ) ||
+					! canManageDelivery,
 			} );
 		}
 		return actions;
-	}, [ changeDateBannerAction, canChangeFrequency, canManageDelivery ] );
+	}, [ changeDateBannerAction, frequencyDeliveryAction, canManageDelivery ] );
 	const splitDeliveryActions = useMemo( () => {
 		const actions = [];
-		if ( canChangeFrequency ) {
+		if ( frequencyDeliveryAction ) {
 			actions.push( {
-				label: __( 'Delivery frequency', 'stayilo' ),
-				disabled: false,
-				onClick: () => setChangeFrequencyOpen( true ),
+				...frequencyDeliveryAction,
+				label:
+					frequencyDeliveryAction.label ||
+					__( 'Delivery frequency', 'stayilo' ),
+				disabled:
+					Boolean( frequencyDeliveryAction.disabled ) ||
+					! canManageDelivery,
 			} );
 		}
 		if ( changeDateBannerAction ) {
@@ -139,7 +140,7 @@ export function ViewBox() {
 			} );
 		}
 		return actions;
-	}, [ changeDateBannerAction, canChangeFrequency, canManageDelivery ] );
+	}, [ changeDateBannerAction, frequencyDeliveryAction, canManageDelivery ] );
 
 	const goToEditBox = ( tab ) => {
 		if ( ! canEditItems || ! subscriptionId ) {
@@ -187,26 +188,10 @@ export function ViewBox() {
 				selectedDateId={ selectedDateId }
 				registerBannerAction={ setChangeDateBannerAction }
 			/>
-			<ChangeFrequencyPopup
-				open={ changeFrequencyOpen }
-				onClose={ () => setChangeFrequencyOpen( false ) }
-				subscription={ subscription }
-				onConfirm={ async ( option ) => {
-					if ( ! subscriptionId ) {
-						return;
-					}
-					try {
-						await changeFrequency( subscriptionId, {
-							interval: option.interval,
-							period: option.period,
-						} );
-						setChangeFrequencyOpen( false );
-					} catch ( err ) {
-						window.alert(
-							err?.message || __( 'Could not change order frequency', 'stayilo' )
-						);
-					}
-				} }
+			<PortalActionSlot
+				actionId="change-frequency"
+				subscriptionId={ subscriptionId }
+				registerDeliveryAction={ setFrequencyDeliveryAction }
 			/>
 		</>
 	);

@@ -112,7 +112,7 @@ export function ClassicOrderBody( {
 						shipping={ shipping }
 						estimateLabel={ estimateLabel }
 						label={ __( 'Delivery address', 'stayilo' ) }
-						actionLabel={ null }
+						actionLabel={ __( 'Edit address', 'stayilo' ) }
 						className="portal-order-details__address"
 						descriptionClassName="!font-normal !text-base !leading-6 !mt-4"
 					/>

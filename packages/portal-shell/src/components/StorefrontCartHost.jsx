@@ -27,6 +27,15 @@ export function StorefrontCartHost() {
 			if ( ! ( target instanceof Element ) ) {
 				return;
 			}
+
+			// Never intercept checkout / cart navigation links.
+			const navLink = target.closest(
+				'a[href*="checkout"], a.checkout-button, a.wc-forward, .wc-block-cart__submit-button, .wc-block-mini-cart__footer-checkout'
+			);
+			if ( navLink ) {
+				return;
+			}
+
 			const trigger = target.closest( MINI_CART_SELECTORS );
 			if ( ! trigger ) {
 				return;

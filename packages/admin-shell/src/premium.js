@@ -65,76 +65,6 @@ function notifyPremium() {
 	window.dispatchEvent( new CustomEvent( 'stayilo-premium-loaded' ) );
 }
 
-const GROWTH_SCRIPT_ATTR = 'data-stayilo-growth-preview';
-let growthPreviewLoaderBooted = false;
-
-function loadGrowthPreviewBundle() {
-	if ( typeof window === 'undefined' || window.StayiloReactPremium?.growthLoaded ) {
-		return true;
-	}
-
-	if ( document.querySelector( `script[${ GROWTH_SCRIPT_ATTR }]` ) ) {
-		return true;
-	}
-
-	const scriptUrl = window.stayiloData?.scriptUrl;
-	if ( ! scriptUrl ) {
-		return false;
-	}
-
-	try {
-		const base = scriptUrl.replace( /script\.php.*$/i, '' );
-		const bust = String( Date.now() );
-		const growthUrl = new URL( 'builds/growth/index.js', base );
-		growthUrl.searchParams.set( 'v', bust );
-
-		const cssUrl = new URL( 'builds/growth/index.css', base );
-		cssUrl.searchParams.set( 'v', bust );
-		if ( ! document.querySelector( `link[${ GROWTH_SCRIPT_ATTR }]` ) ) {
-			const link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.href = cssUrl.href;
-			link.setAttribute( GROWTH_SCRIPT_ATTR, '1' );
-			document.head.appendChild( link );
-		}
-
-		const script = document.createElement( 'script' );
-		script.src = growthUrl.href;
-		script.async = true;
-		script.setAttribute( GROWTH_SCRIPT_ATTR, '1' );
-		document.body.appendChild( script );
-		return true;
-	} catch {
-		return false;
-	}
-}
-
-/**
- * Temp plan preview stores Growth in sessionStorage, but script.php only
- * emits the Growth bundle for a real Growth licence. Re-inject on refresh.
- */
-export function ensureGrowthPreviewBundle() {
-	if ( typeof window === 'undefined' ) {
-		return;
-	}
-	if ( getPreviewTier() !== 'growth' ) {
-		return;
-	}
-	loadGrowthPreviewBundle();
-}
-
-function bootGrowthPreviewLoader() {
-	if ( typeof window === 'undefined' || growthPreviewLoaderBooted ) {
-		return;
-	}
-	growthPreviewLoaderBooted = true;
-
-	const tryLoad = () => ensureGrowthPreviewBundle();
-	window.addEventListener( 'stayilo-premium-loaded', tryLoad );
-	document.addEventListener( 'DOMContentLoaded', tryLoad );
-	tryLoad();
-}
-
 /**
  * True when the store has a valid Core or Growth licence (not Free).
  */
@@ -167,10 +97,6 @@ export function setPreviewMerchantTier( tier ) {
 		preview: true,
 	};
 
-	if ( next === 'growth' ) {
-		ensureGrowthPreviewBundle();
-	}
-
 	notifyPremium();
 }
 
@@ -194,8 +120,6 @@ export function seedMerchantPremium() {
 		return;
 	}
 
-	bootGrowthPreviewLoader();
-
 	if ( ! window.StayiloReactPremium ) {
 		const paid = getPreviewTier() || localizedPaidTier();
 		if ( paid ) {
@@ -206,8 +130,6 @@ export function seedMerchantPremium() {
 			};
 		}
 	}
-
-	ensureGrowthPreviewBundle();
 }
 
 export function subscribePremium( onStoreChange ) {

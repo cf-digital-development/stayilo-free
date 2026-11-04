@@ -67,7 +67,7 @@ export function ColorRow( { label, hint, value, onChange, onCommit } ) {
 				<p className="text-sm font-medium text-stayilo-ink leading-5">{ label }</p>
 				{ hint ? <p className="text-xs text-[#7C8494] leading-4">{ hint }</p> : null }
 			</div>
-			<div className="flex shrink-0 items-center gap-2 min-w-0  max-w-[94px]">
+			<div className="flex shrink-0 items-center gap-2 min-w-0 max-w-[140px]">
 				<ColorSwatch label={ label } value={ value } onChange={ onChange } />
 				<HexField
 					label={ `${ label } hex` }

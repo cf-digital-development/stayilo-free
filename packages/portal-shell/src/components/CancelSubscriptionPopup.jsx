@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { acceptPortalOffer } from '../api/portal.js';
+import { callPaidPortalApi } from '../utils/paidPortalApi.js';
 import { useTemplateRecipe } from '../templates/TemplateProvider.jsx';
 import { PortalPopup } from './PortalPopup.jsx';
 import {
@@ -166,7 +166,7 @@ export function CancelSubscriptionPopup( {
 			throw new Error( __( 'This offer is not available. Please try again.', 'stayilo' ) );
 		}
 
-		const data = await acceptPortalOffer( subscriptionId, {
+		const data = await callPaidPortalApi( 'acceptPortalOffer', subscriptionId, {
 			offerId: offerStep.offer?.id || '',
 			...choices,
 		} );

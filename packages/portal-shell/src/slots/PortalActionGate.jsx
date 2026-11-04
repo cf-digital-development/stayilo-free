@@ -3,10 +3,9 @@ import {
 	hasPortalActionNonce,
 	isPortalActionEnabled,
 } from '../utils/portalActions.js';
-import { __ } from '@stayilo/design-system/i18n';
 
-/** Pro-only actions — require a nonce Free never localizes. */
-const PAID_ACTION_NONCES = {
+/** Actions that need a nonce Pro localizes when licensed. */
+const ACTION_NONCE_KEYS = {
 	'edit-items': 'editItemsNonce',
 	'change-delivery-date': 'changeDateNonce',
 	'change-date': 'changeDateNonce',
@@ -17,8 +16,7 @@ const PAID_ACTION_NONCES = {
 };
 
 /**
- * Redirect away when a Core/Growth portal setting is turned off
- * (or when a paid action’s Pro nonce is missing on Free).
+ * Redirect away when a portal action setting is off, or its nonce is missing.
  *
  * @param {{ actionId: string, to?: string, children: import('react').ReactNode }} props
  */
@@ -28,7 +26,7 @@ export function PortalActionGate( {
 	children,
 } ) {
 	const location = useLocation();
-	const nonceKey = PAID_ACTION_NONCES[ actionId ];
+	const nonceKey = ACTION_NONCE_KEYS[ actionId ];
 	const allowed =
 		isPortalActionEnabled( actionId ) &&
 		( ! nonceKey || hasPortalActionNonce( nonceKey ) );

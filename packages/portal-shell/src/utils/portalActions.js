@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getStayiloRegistry } from '@stayilo/extension-sdk';
 import { getPortal } from '../api/portal.js';
 
-/** Actions implemented by a paid plugin. Free never enables these on its own. */
+/** Actions that stay off until a paid plugin registers them. */
 const PAID_ACTION_IDS = new Set( [
 	'pause',
 	'pause-subscription',

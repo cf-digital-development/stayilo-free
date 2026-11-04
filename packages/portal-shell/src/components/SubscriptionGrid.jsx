@@ -9,7 +9,10 @@ import {
 	handleReactivateSubscription,
 	reactivateActionLabel,
 } from '../utils/createSubscription.js';
-import { isSubscriptionCanceled } from '../utils/subscriptionOverview.js';
+import {
+	goToSubscriptionPaymentCheckout,
+	isSubscriptionCanceled,
+} from '../utils/subscriptionOverview.js';
 import { subscriptionLocation } from '../utils/subscriptionNavigation.js';
 import { isPortalActionEnabled } from '../utils/portalActions.js';
 import { useTemplateRecipe } from '../templates/TemplateProvider.jsx';
@@ -140,7 +143,14 @@ export function SubscriptionGrid( {
 								? () => handleReactivate( card )
 								: undefined
 						}
-						onResume={ () => handleResume( card.id ) }
+						onResume={
+							card.paymentFailed ? undefined : () => handleResume( card.id )
+						}
+						onPay={
+							card.paymentFailed
+								? () => goToSubscriptionPaymentCheckout( card )
+								: undefined
+						}
 					/>
 				) ) }
 			</div>

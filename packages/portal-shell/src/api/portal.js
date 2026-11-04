@@ -1,4 +1,3 @@
-import { boxLinesToPersistPayload } from '../utils/cartLines.js';
 import { __, sprintf } from '@stayilo/design-system/i18n';
 
 export function getPortal() {
@@ -151,60 +150,6 @@ export function skipPortalDelivery( subscriptionId ) {
 	);
 }
 
-export function pausePortalSubscription( subscriptionId ) {
-	return portalAjax(
-		'stayilo_pause_subscription',
-		{ subscription_id: subscriptionId },
-		'pauseNonce'
-	);
-}
-
-export function resumePortalSubscription( subscriptionId ) {
-	return portalAjax(
-		'stayilo_resume_subscription',
-		{ subscription_id: subscriptionId },
-		'resumeNonce'
-	);
-}
-
-export function changePortalSubscriptionDate( subscriptionId, nextPaymentDate ) {
-	return portalAjax(
-		'stayilo_change_subscription_date',
-		{
-			subscription_id: subscriptionId,
-			next_payment_date: nextPaymentDate,
-		},
-		'changeDateNonce'
-	);
-}
-
-export function changePortalSubscriptionFrequency(
-	subscriptionId,
-	billingInterval,
-	billingPeriod
-) {
-	return portalAjax(
-		'stayilo_change_subscription_frequency',
-		{
-			subscription_id: subscriptionId,
-			billing_interval: billingInterval,
-			billing_period: billingPeriod,
-		},
-		'changeFrequencyNonce'
-	);
-}
-
-export function editPortalSubscriptionItems( subscriptionId, items ) {
-	return portalAjax(
-		'stayilo_edit_subscription_items',
-		{
-			subscription_id: subscriptionId,
-			items: JSON.stringify( items ),
-		},
-		'editItemsNonce'
-	);
-}
-
 export function createPortalPaymentSetupIntent() {
 	return portalAjax( 'stayilo_portal_payment_setup_intent' );
 }
@@ -226,50 +171,6 @@ export function deletePortalPaymentMethod( tokenId ) {
 export function setDefaultPortalPaymentMethod( tokenId ) {
 	return portalAjax( 'stayilo_portal_payment_default', {
 		token_id: tokenId,
-	} );
-}
-
-export function updatePortalBox( subscriptionId, lines ) {
-	const payload = boxLinesToPersistPayload( lines );
-	if ( payload.length === 0 ) {
-		return Promise.reject(
-			new Error( __( 'Your subscription must contain at least one item.', 'stayilo' ) )
-		);
-	}
-
-	return portalAjax(
-		'stayilo_portal_update_box',
-		{
-			subscription_id: subscriptionId,
-			lines: JSON.stringify( payload ),
-		},
-		hasPortalEditItemsNonce() ? 'editItemsNonce' : 'nonce'
-	);
-}
-
-function hasPortalEditItemsNonce() {
-	const portal = getPortal();
-	return Boolean( portal.editItemsNonce );
-}
-
-export function acceptPortalOffer(
-	subscriptionId,
-	{
-		offerId = '',
-		quantity,
-		billingInterval,
-		billingPeriod,
-		delayWeeks,
-	} = {}
-) {
-	return portalAjax( 'stayilo_portal_accept_offer', {
-		subscription_id: subscriptionId,
-		offer_id: offerId || undefined,
-		quantity: quantity != null ? Number( quantity ) : undefined,
-		billing_interval:
-			billingInterval != null ? Number( billingInterval ) : undefined,
-		billing_period: billingPeriod || undefined,
-		delay_weeks: delayWeeks != null ? Number( delayWeeks ) : undefined,
 	} );
 }
 

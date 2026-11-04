@@ -32,6 +32,7 @@ export {
 	RetentionTrendChart,
 } from './components/charts/index.js';
 export { hasTierAccess } from './utils/tier.js';
+export { getUpgradeUrl, openUpgrade } from './utils/upgradeUrl.js';
 export { DashboardPage } from './pages/DashboardPage.jsx';
 export { SubscribersPage } from './pages/SubscribersPage.jsx';
 export { TemplatesBrandingPage } from './pages/TemplatesBrandingPage.jsx';
@@ -46,6 +47,7 @@ export {
 	savePortalBranding,
 	savePortalSettings,
 	saveSubscriptionMode,
+	dismissUpgradeBanner,
 	adminSkipSubscription,
 	adminChangeSubscriptionDate,
 	adminPauseSubscription,
@@ -98,7 +100,6 @@ export {
 	getMerchantTier,
 	getPremiumSnapshot,
 	isLicensedPaid,
-	ensureGrowthPreviewBundle,
 	seedMerchantPremium,
 	setPreviewMerchantTier,
 	subscribePremium,

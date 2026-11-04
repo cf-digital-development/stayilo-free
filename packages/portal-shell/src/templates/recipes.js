@@ -1,6 +1,8 @@
+import { getStayiloRegistry } from '@stayilo/extension-sdk';
+import { getPortal } from '../api/portal.js';
+
 /**
- * Free portal layout. Only Classic ships with this plugin.
- * Other ids fall back to Classic. Minimal stays in the paid frontend.
+ * Free portal layouts. Classic only — Minimal registers from Stayilo Pro.
  */
 
 export const DEFAULT_TEMPLATE_ID = 'classic';
@@ -22,5 +24,14 @@ const RECIPES = {
  * @returns {{ id: string, chrome: string, home: string, card: string, view: string }}
  */
 export function getRecipe( id ) {
+	const tier = String( getPortal().tier || 'free' ).toLowerCase();
+	if ( tier === 'free' ) {
+		return CLASSIC_RECIPE;
+	}
+
+	const registered = getStayiloRegistry().getPortalRecipe?.( id );
+	if ( registered ) {
+		return registered;
+	}
 	return RECIPES[ id ] || RECIPES[ DEFAULT_TEMPLATE_ID ];
 }

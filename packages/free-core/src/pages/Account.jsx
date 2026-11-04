@@ -16,6 +16,8 @@ import {
 	useMerchantTier,
 } from '@stayilo/admin-shell';
 import { getStayiloRegistry } from '@stayilo/extension-sdk';
+import { resolveSubscriberCap } from '@stayilo/design-system/validation';
+import { getUpgradeUrl } from '@stayilo/admin-shell';
 import { ReactComponent as FlowIcon } from '@stayilo/design-system/assets/svg/account-flow.svg';
 import { ReactComponent as UsersIcon } from '@stayilo/design-system/assets/svg/account-user.svg';
 import { ReactComponent as PaintIcon } from '../../../admin-shell/src/assets/svg/PaintBrushHousehold.svg';
@@ -28,6 +30,9 @@ import { ReactComponent as RulesIcon } from '../assets/svg/account-rules.svg';
 import { ReactComponent as BellIcon } from '../assets/svg/account-bell.svg';
 
 const admin = typeof window !== 'undefined' ? window.stayiloAdmin || {} : {};
+const subscriberCap = resolveSubscriberCap( admin.freeSubscriberCap );
+const freeCapFeature =
+	subscriberCap > 0 ? `${ subscriberCap } subscribers` : 'Customer portal';
 
 const LICENCE_SLOT_ID = 'account-licence';
 
@@ -35,7 +40,8 @@ const FEATURE_ICONS = {
 	'Cancellation flows': FlowIcon,
 	'Up to 500 subscribers': UsersIcon,
 	'No subscriber cap': UsersIcon,
-	'50 subscribers': UsersIcon,
+	'Customer portal': UsersIcon,
+	[ freeCapFeature ]: UsersIcon,
 	'Unlimited subscribers': UsersIcon,
 	'Portal branding': PaintIcon,
 	'Customer emails': EnvelopeIcon,
@@ -52,17 +58,22 @@ const FEATURE_ICONS = {
 const PLAN_COPY = {
 	free: {
 		name: 'Stayilo Free',
-		priceLine: 'Free · 50 active subscriber cap',
+		priceLine:
+			subscriberCap > 0
+				? `Free · ${ subscriberCap } active subscriber cap`
+				: 'Free',
 		features: [
 			'Skip delivery',
 			'Update address',
 			'Portal branding',
-			'50 subscribers'
+			freeCapFeature,
 		],
 		cta: 'Upgrade to Core',
 		upsellTitle: 'What you unlock with Core',
 		upsellBody:
-			'Full portal actions · Customer emails · No subscriber cap · Priority support',
+			subscriberCap > 0
+				? 'Full portal actions · Customer emails · No subscriber cap · Priority support'
+				: 'Full portal actions · Customer emails · Priority support',
 	},
 	core: {
 		name: 'Stayilo Core',
@@ -137,8 +148,8 @@ function CurrentPlanCard( { tier } ) {
 	const priceLine = renews
 		? `${ copy.priceLine } · renews ${ renews }`
 		: copy.priceLine;
-	const upgradeUrl = admin.upgradeUrl || admin.accountUrl || '#';
-	const compareUrl = admin.comparePlansUrl || upgradeUrl;
+	const upgradeUrl = getUpgradeUrl( 'account_cta' );
+	const compareUrl = getUpgradeUrl( 'account_compare' );
 
 	return (
 		<section className="rounded-2xl border border-[#0D11171A] bg-white p-5">
@@ -158,7 +169,7 @@ function CurrentPlanCard( { tier } ) {
 				) : (
 					<a
 						href={ upgradeUrl }
-						className="inline-flex items-center gap-2 rounded-xl bg-[#8200DB] px-6 py-3 text-base leading-6 font-bold text-white no-underline transition-opacity hover:opacity-90"
+						className="inline-flex items-center gap-2 rounded-xl bg-[#8200DB] px-6 py-3 text-base leading-6 font-bold !text-white no-underline transition-opacity hover:opacity-90 hover:!text-white focus:!text-white active:!text-white visited:!text-white"
 					>
 						{ copy.cta }
 						<AccountArrowIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -196,7 +207,7 @@ function CurrentPlanCard( { tier } ) {
 					</div>
 					<a
 						href={ compareUrl }
-						className="inline-flex shrink-0 items-center gap-1 text-base leading-6 font-semibold text-[#6366F1] no-underline"
+						className="inline-flex shrink-0 items-center gap-1 text-base leading-6 font-semibold !text-[#6366F1] no-underline hover:!text-[#6366F1] focus:!text-[#6366F1] active:!text-[#6366F1] visited:!text-[#6366F1]"
 					>
 						Compare plans
 						<AccountArrowIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -208,7 +219,7 @@ function CurrentPlanCard( { tier } ) {
 }
 
 function AccountDetailsCard( { tier } ) {
-	const accountUrl = admin.accountUrl || admin.upgradeUrl || '#';
+	const accountUrl = getUpgradeUrl( 'account_manage' );
 	const isFree = String( tier || 'free' ).toLowerCase() === 'free';
 
 	return (
@@ -226,12 +237,14 @@ function AccountDetailsCard( { tier } ) {
 					}
 				/>
 				<Field label="Platform" value="WooCommerce" />
-				<Field
-					label="Member since"
-					value={ admin.memberSince || admin.installedAt || '—' }
-				/>
 				{ ! isFree ? (
-					<Field label="Next payment" value={ nextPaymentValue( tier ) } />
+					<>
+						<Field
+							label="Member since"
+							value={ admin.memberSince || admin.installedAt || '—' }
+						/>
+						<Field label="Next payment" value={ nextPaymentValue( tier ) } />
+					</>
 				) : null }
 			</div>
 			{ ! isFree ? (
