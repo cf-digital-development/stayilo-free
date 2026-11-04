@@ -115,6 +115,27 @@ export const TEMPLATE_COLOR_DEFAULTS = {
 	},
 };
 
+const extraTemplateColors =
+	( typeof window !== 'undefined' && window.stayiloPortal?.templateColorDefaults ) || {};
+Object.entries( extraTemplateColors ).forEach( ( [ id, row ] ) => {
+	if ( ! row || TEMPLATE_COLOR_DEFAULTS[ id ] ) {
+		return;
+	}
+	const brand = {
+		brandColor: row.brandColor,
+		accentColor: row.accentColor,
+		buttonColor: row.buttonColor,
+	};
+	const surfaces = Object.fromEntries(
+		Object.keys( SURFACE_COLOR_DEFAULTS.classic ).map( ( key ) => [
+			key,
+			row[ key ] ?? SURFACE_COLOR_DEFAULTS.classic[ key ],
+		] )
+	);
+	SURFACE_COLOR_DEFAULTS[ id ] = surfaces;
+	TEMPLATE_COLOR_DEFAULTS[ id ] = { ...brand, ...surfaces };
+} );
+
 const PORTAL_ICON_IDS = [ 'logo', 'bell', 'truck', 'cart', 'card', 'subscription', 'emptyBox' ];
 
 function pickHex( value, fallback ) {
@@ -129,13 +150,13 @@ function pickColor( value, fallback ) {
 }
 
 export function readTemplateColors( branding = {} ) {
-	const map = {
-		classic: { ...TEMPLATE_COLOR_DEFAULTS.classic },
-	};
+	const map = Object.fromEntries(
+		Object.entries( TEMPLATE_COLOR_DEFAULTS ).map( ( [ id, row ] ) => [ id, { ...row } ] )
+	);
 	const saved = branding.colors && typeof branding.colors === 'object' ? branding.colors : null;
 
 	if ( saved ) {
-		[ 'classic' ].forEach( ( id ) => {
+		Object.keys( TEMPLATE_COLOR_DEFAULTS ).forEach( ( id ) => {
 			const row = saved[ id ];
 			if ( ! row || typeof row !== 'object' ) {
 				return;

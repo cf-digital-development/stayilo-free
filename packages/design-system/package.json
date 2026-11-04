@@ -2,6 +2,7 @@
   "name": "@stayilo/design-system",
   "version": "0.0.0",
   "private": true,
+  "sideEffects": ["*.css"],
   "main": "./src/index.js",
   "exports": {
     ".": "./src/index.js",

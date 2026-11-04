@@ -1,13 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import { getStayiloRegistry } from '@stayilo/extension-sdk';
 
-function notifyPremium() {
-	if ( typeof window === 'undefined' ) {
-		return;
-	}
-	window.dispatchEvent( new CustomEvent( 'stayilo-premium-loaded' ) );
-}
-
 /**
  * Display tier for Free screens. Pro calls registry.setMerchantTier() after
  * licence verification; Free never reads a local licence payload.
@@ -47,16 +40,10 @@ export function getPremiumSnapshot() {
 }
 
 /**
- * Ensure registry defaults to free before Pro registers.
- * Does not notify when already free — avoids a pointless remount storm.
+ * No-op. Resetting to free at boot would undo Pro’s tier if Pro loaded first.
  */
 export function seedMerchantPremium() {
-	const registry = getStayiloRegistry();
-	if ( registry.getMerchantTier() === 'free' ) {
-		return;
-	}
-	registry.setMerchantTier( 'free' );
-	notifyPremium();
+	return;
 }
 
 /**

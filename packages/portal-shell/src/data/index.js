@@ -1,5 +1,4 @@
 export { DEFAULT_NAV_ITEMS } from './navItems.js';
-export { DEFAULT_ORDER_CARDS } from './orderCards.js';
 export { WELCOME_BANNER, EDIT_BOX_BANNER, REACTIVATE_BANNER, PAYMENT_FAILED_BANNER } from './banners.js';
 export { UPCOMING_DELIVERY_BANNER } from './contentHeaders.js';
 export { WEEKLY_DISCOUNT_BANNER } from './discounts.js';

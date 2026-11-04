@@ -1,6 +1,6 @@
 {
   "name": "stayilo-free",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Uncompiled source for the Stayilo free WordPress plugin. The portal template included here is Classic.",
   "engines": {

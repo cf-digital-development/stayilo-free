@@ -116,7 +116,6 @@ export { Payment } from './pages/Payment.jsx';
 export { SubscriptionActions } from './pages/SubscriptionActions.jsx';
 export {
 	DEFAULT_NAV_ITEMS,
-	DEFAULT_ORDER_CARDS,
 	WELCOME_BANNER,
 	EDIT_BOX_BANNER,
 	REACTIVATE_BANNER,

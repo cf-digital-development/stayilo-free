@@ -5,13 +5,12 @@ import { Card } from '../../components/Card.jsx';
 import { ContentHeader } from '../../components/ContentHeader.jsx';
 import { EmptyState } from '../../components/EmptyState.jsx';
 import { SliderNavButton } from '../../components/SliderNavButton.jsx';
-import { DEFAULT_ORDER_CARDS } from '../../data/orderCards.js';
 
 
 export function YourOrderSlider( {
 	title = __( 'What’s in your subscription', 'stayilo' ),
 	subtitle = __( 'Review the items scheduled for your next order below.', 'stayilo' ),
-	items = DEFAULT_ORDER_CARDS,
+	items = [],
 	actionsEnabled = false,
 	onEditBox,
 	editBoxEnabled,
