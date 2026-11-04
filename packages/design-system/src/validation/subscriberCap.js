@@ -1,7 +1,7 @@
 /**
  * Display helpers only. The live cap is PHP `STAYILO_FREE_SUBSCRIBER_CAP`
- * via stayiloAdmin / stayiloPortal. Do not hardcode 50 here — the public
- * bundle is editable and is not enforcement.
+ * via stayiloAdmin (0 = unlimited). Do not hardcode a limit here — the
+ * public bundle is editable and is not enforcement.
  */
 
 function readBootstrappedCap() {

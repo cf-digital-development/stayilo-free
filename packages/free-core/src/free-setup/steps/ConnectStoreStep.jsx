@@ -156,7 +156,7 @@ export default function ConnectStoreStep( {
 									__( 'Stayilo found %s active subscribers in WooCommerce.', 'stayilo' ),
 									String( values.subscriberCount ?? 0 )
 								) }
-								{ showSubscriberLimit
+								{ showSubscriberLimit && getFreePlanSubscriberLimit() > 0
 									? ' ' + sprintf(
 										/* translators: %s: Free plan subscriber limit. */
 										__( 'The Free plan manages up to %s.', 'stayilo' ),
