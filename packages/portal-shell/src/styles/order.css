@@ -127,7 +127,7 @@
 		@apply text-[16px] font-semibold leading-6 md:text-[16px] md:leading-6;
 	}
 	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line__meta {
-		@apply mt-1 m-0 line-clamp-1 text-sm font-normal leading-5 text-[#10101099];
+		@apply mt-1 m-0 text-sm font-normal leading-5 text-[#10101099];
 	}
 	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line__prices {
 		@apply items-end;

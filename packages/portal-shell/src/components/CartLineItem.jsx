@@ -143,9 +143,16 @@ export function CartLineItem( {
 	};
 
 	const lineTags = Array.isArray( tags ) ? tags.filter( Boolean ) : [];
+	// Read-only lines (order details): fold tags + quantity into one meta row
+	// e.g. "Medium roast · Washed · Quantity: 2".
+	const quantityInMeta = ! showQuantity;
 	const meta = [
 		servings,
-		! showQuantity ? sprintf( __( 'Quantity: %s', 'stayilo' ), quantity ) : '',
+		quantityInMeta ? subtitle : '',
+		...( quantityInMeta ? lineTags : [] ),
+		quantityInMeta
+			? sprintf( __( 'Quantity: %s', 'stayilo' ), quantity )
+			: '',
 	]
 		.filter( Boolean )
 		.join( ' · ' );
@@ -202,10 +209,10 @@ export function CartLineItem( {
 					<h3 className="m-0 text-base font-bold leading-6 md:text-xl md:leading-[100%]">
 						{ title }
 					</h3>
-					{ subtitle ? (
+					{ subtitle && showQuantity ? (
 						<p className="portal-cart-line__subtitle">{ subtitle }</p>
 					) : null }
-					{ lineTags.length ? (
+					{ ! quantityInMeta && lineTags.length ? (
 						<ul className="portal-cart-line__tags">
 							{ lineTags.map( ( tag ) => (
 								<li key={ tag } className="portal-cart-line__tag">

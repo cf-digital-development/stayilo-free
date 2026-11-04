@@ -142,6 +142,30 @@ export function reactivatePortalSubscription( subscriptionId ) {
 	} );
 }
 
+/**
+ * One-time reorder of an order's products → checkout.
+ *
+ * @param {string|number} orderId
+ * @returns {Promise<{ checkoutUrl?: string }>}
+ */
+export function orderAgainCheckout( orderId ) {
+	return portalAjax( 'stayilo_portal_order_again', {
+		order_id: orderId,
+	} );
+}
+
+/**
+ * Start a monthly subscription from an order's products → checkout.
+ *
+ * @param {string|number} orderId
+ * @returns {Promise<{ checkoutUrl?: string }>}
+ */
+export function orderSubscribeCheckout( orderId ) {
+	return portalAjax( 'stayilo_portal_order_subscribe', {
+		order_id: orderId,
+	} );
+}
+
 export function skipPortalDelivery( subscriptionId ) {
 	return portalAjax(
 		'stayilo_skip_subscription',

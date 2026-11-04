@@ -301,7 +301,7 @@ export function AccountDetailsCards( {
 												? __( 'Save changes', 'stayilo' )
 												: __( 'Save Changes', 'stayilo' )
 									}
-									variant="secondary"
+									variant="primary"
 									className="form_btn"
 									disabled={ isSubmitting || saving || ( ! dirty && ! avatarDirty ) }
 									loading={ isSubmitting }

@@ -1,13 +1,17 @@
+import { useState } from 'react';
 import { ReactComponent as DeliveryIcon } from '@stayilo/design-system/assets/svg/delivery-truck.svg';
 import { BrandedIcon } from '../../components/BrandedIcon.jsx';
-import { getShopUrl } from '../../api/portal.js';
+import {
+	getCheckoutUrl,
+	orderAgainCheckout,
+	orderSubscribeCheckout,
+} from '../../api/portal.js';
 import { Button } from '../../components/Button.jsx';
 import { CartLineList } from '../../components/CartLineList.jsx';
 import { ContentHeader } from '../../components/ContentHeader.jsx';
 import { OrderMetaCard } from '../../components/OrderMetaCard.jsx';
 import { ORDER_CONVERT_BANNER } from '../../data/commerce.js';
 import { PortalActionSlot } from '../../slots/PortalActionSlot.jsx';
-import { startCreateSubscription } from '../../utils/createSubscription.js';
 import { __, _n, sprintf } from '@stayilo/design-system/i18n';
 
 function formatBoxSubtitle( items ) {
@@ -27,10 +31,27 @@ function formatBoxSubtitle( items ) {
 	);
 }
 
-function goOrderAgain( order ) {
-	const url = order?.orderAgainUrl || getShopUrl();
-	if ( typeof window !== 'undefined' && url ) {
-		window.location.assign( url );
+/**
+ * Prepare cart server-side, then send the customer to checkout.
+ *
+ * @param {(id: string|number) => Promise<{ checkoutUrl?: string }>} prepareFn
+ * @param {string|number|undefined} orderId
+ * @param {(busy: boolean) => void} setBusy
+ */
+async function redirectToOrderCheckout( prepareFn, orderId, setBusy ) {
+	if ( ! orderId || typeof window === 'undefined' ) {
+		return;
+	}
+
+	setBusy( true );
+	try {
+		const data = await prepareFn( orderId );
+		window.location.assign( data?.checkoutUrl || getCheckoutUrl() );
+	} catch ( err ) {
+		setBusy( false );
+		window.alert(
+			err?.message || __( 'Could not start checkout.', 'stayilo' )
+		);
 	}
 }
 
@@ -45,6 +66,11 @@ export function ClassicOrderBody( {
 	estimateLabel,
 	showConvertBanner = false,
 } ) {
+	const [ againBusy, setAgainBusy ] = useState( false );
+	const [ subscribeBusy, setSubscribeBusy ] = useState( false );
+	const orderId = order?.id;
+	const checkoutBusy = againBusy || subscribeBusy;
+
 	return (
 		<div className="portal-order-details">
 			<div className="portal-order-details__grid">
@@ -63,6 +89,7 @@ export function ClassicOrderBody( {
 							currency={ currency }
 							layout="row"
 							showUnitPrice
+							compactMeta
 							showQuantity={ false }
 							emptyMessage={ __( 'No products are present.', 'stayilo' ) }
 							emptyClassName="!rounded-none bg-transparent py-4"
@@ -81,10 +108,22 @@ export function ClassicOrderBody( {
 								{ ORDER_CONVERT_BANNER.subtitle }
 							</p>
 							<Button
-								label={ ORDER_CONVERT_BANNER.actionLabel }
+								label={
+									subscribeBusy
+										? __( 'Starting checkout…', 'stayilo' )
+										: ORDER_CONVERT_BANNER.actionLabel
+								}
 								variant="success"
 								className="portal-order-details__convert-btn"
-								onClick={ startCreateSubscription }
+								disabled={ checkoutBusy || ! orderId }
+								loading={ subscribeBusy }
+								onClick={ () =>
+									redirectToOrderCheckout(
+										orderSubscribeCheckout,
+										orderId,
+										setSubscribeBusy
+									)
+								}
 							/>
 						</section>
 					) : null }
@@ -147,10 +186,22 @@ export function ClassicOrderBody( {
 						) ) }
 					</ul>
 					<Button
-						label={ __( 'Order again', 'stayilo' ) }
+						label={
+							againBusy
+								? __( 'Starting checkout…', 'stayilo' )
+								: __( 'Order again', 'stayilo' )
+						}
 						variant="success"
 						className="portal-order-details__again"
-						onClick={ () => goOrderAgain( order ) }
+						disabled={ checkoutBusy || ! orderId }
+						loading={ againBusy }
+						onClick={ () =>
+							redirectToOrderCheckout(
+								orderAgainCheckout,
+								orderId,
+								setAgainBusy
+							)
+						}
 					/>
 				</section>
 			</div>

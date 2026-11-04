@@ -145,7 +145,7 @@
 		@apply h-[80px];
 	}
 	.portal-shell[data-template] .portal-header-bar {
-		@apply flex w-full max-w-none items-center;
+		@apply mx-auto flex w-full max-w-[1920px] items-center;
 	}
 	.portal-shell[data-template] .portal-header-brand {
 		@apply flex min-w-0 items-center;

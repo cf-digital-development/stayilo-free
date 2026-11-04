@@ -135,7 +135,7 @@
 		@apply rounded-[2px] border-[#10101033] py-2.5 text-sm font-normal;
 	}
 	.portal-shell[data-template='classic'] .portal-account-card--profile .portal-btn.form_btn {
-		@apply !w-full !rounded-[4px] !border-0 !py-3 !text-sm !font-semibold !leading-5;
+		@apply !w-full !rounded-[4px] !border-0 !py-3 !text-sm !font-semibold !leading-5 disabled:!text-white;
 		background: var(--stayilo-button, #007943);
 		color: #ffffff;
 	}
