@@ -26,13 +26,8 @@ export const DEFAULT_PORTAL_BRANDING = {
 	bannerText: '',
 	bannerColor: '#0D1117',
 	bannerLink: '',
-	template: 'minimal',
+	template: 'classic',
 	colors: {
-		minimal: {
-			brandColor: '#FFFFFF',
-			accentColor: '#BCEF6A',
-			buttonColor: '#101010',
-		},
 		classic: {
 			brandColor: '#FFFFFF',
 			accentColor: '#E33B12',
@@ -45,15 +40,6 @@ export const TEMPLATE_COLOR_DEFAULTS = DEFAULT_PORTAL_BRANDING.colors;
 
 /** Per-template surfaces. Button tint is derived in CSS, not stored. */
 export const SURFACE_COLOR_DEFAULTS = {
-	minimal: {
-		primaryColor: '#BCEF6A',
-		backgroundColor: '#FAF8F2',
-		secondaryColor: '#101010',
-		cardColor: '#FFFFFF',
-		cardAccentColor: '#FFFFFF',
-		bannerBackground: '#007943',
-		inputColor: '#FFFFFF',
-	},
 	classic: {
 		primaryColor: '#E33B12',
 		backgroundColor: '#FEEFDE',
@@ -69,7 +55,7 @@ export const SURFACE_COLOR_ROWS = [
 	{
 		key: 'primaryColor',
 		label: 'Primary color',
-		hint: 'Classic nav text and underline. Minimal nav background.',
+		hint: 'Classic nav text and underline.',
 	},
 	{
 		key: 'buttonColor',
@@ -127,7 +113,6 @@ function emptyIconRow() {
 
 export function emptyPortalIcons() {
 	return {
-		minimal: emptyIconRow(),
 		classic: emptyIconRow(),
 	};
 }
@@ -152,7 +137,7 @@ export function readPortalIcons( icons ) {
 		}
 	} );
 
-	[ 'minimal', 'classic' ].forEach( ( id ) => {
+	[ 'classic' ].forEach( ( id ) => {
 		const row = icons[ id ];
 		if ( ! row || typeof row !== 'object' ) {
 			if ( id === 'classic' && hasFlat ) {
@@ -267,13 +252,12 @@ export function fontStack( font ) {
 
 export function readTemplateColors( branding = {} ) {
 	const map = {
-		minimal: { ...TEMPLATE_COLOR_DEFAULTS.minimal },
 		classic: { ...TEMPLATE_COLOR_DEFAULTS.classic },
 	};
 	const saved = branding.colors && typeof branding.colors === 'object' ? branding.colors : null;
 
 	if ( saved ) {
-		[ 'minimal', 'classic' ].forEach( ( id ) => {
+		[ 'classic' ].forEach( ( id ) => {
 			const row = saved[ id ];
 			if ( ! row || typeof row !== 'object' ) {
 				return;
@@ -293,25 +277,34 @@ export function readTemplateColors( branding = {} ) {
 	}
 
 	if ( branding.brandColor || branding.accentColor || branding.buttonColor ) {
-		map.minimal = {
-			brandColor: normalizeHex( branding.brandColor, map.minimal.brandColor ),
-			accentColor: normalizeHex( branding.accentColor, map.minimal.accentColor ),
-			buttonColor: normalizeHex( branding.buttonColor, map.minimal.buttonColor ),
+		map.classic = {
+			brandColor: normalizeHex( branding.brandColor, map.classic.brandColor ),
+			accentColor: normalizeHex( branding.accentColor, map.classic.accentColor ),
+			buttonColor: normalizeHex( branding.buttonColor, map.classic.buttonColor ),
+			...surfaceColorsFrom(
+				{
+					...SURFACE_COLOR_DEFAULTS.classic,
+					brandColor: branding.brandColor,
+					accentColor: branding.accentColor,
+					buttonColor: branding.buttonColor,
+				},
+				'classic'
+			),
 		};
 	}
 
 	return map;
 }
 
-export function colorsForTemplate( branding = {}, templateId = 'minimal' ) {
+export function colorsForTemplate( branding = {}, templateId = 'classic' ) {
 	const map = readTemplateColors( branding );
 	return map[ templateId ] && TEMPLATE_COLOR_DEFAULTS[ templateId ]
 		? map[ templateId ]
-		: map.minimal;
+		: map.classic;
 }
 
 export function brandingCssVars( branding = {}, templateId ) {
-	const id = templateId || branding.template || 'minimal';
+	const id = templateId || branding.template || 'classic';
 	const fromMap = colorsForTemplate( branding, id );
 	const isEditing = ! branding.template || id === branding.template;
 	const brandColor = normalizeHex(
@@ -391,7 +384,7 @@ export function readAdminBranding( admin = window.stayiloAdmin || {} ) {
 
 function definedSurfaceColors( branding = {} ) {
 	const source = {};
-	Object.keys( SURFACE_COLOR_DEFAULTS.minimal ).forEach( ( key ) => {
+	Object.keys( SURFACE_COLOR_DEFAULTS.classic ).forEach( ( key ) => {
 		if ( typeof branding[ key ] === 'string' && branding[ key ].trim() ) {
 			source[ key ] = branding[ key ];
 		}
@@ -406,7 +399,7 @@ export function persistableBranding( branding = {}, templateId ) {
 			? branding.template
 			: DEFAULT_PORTAL_BRANDING.template );
 	const colors = readTemplateColors( branding );
-	const activeId = TEMPLATE_COLOR_DEFAULTS[ template ] ? template : 'minimal';
+	const activeId = TEMPLATE_COLOR_DEFAULTS[ template ] ? template : 'classic';
 	// Preview stores this object and runs it through here again. Keep colours
 	// already saved on the template row when the top-level fields are absent.
 	const row = colors[ activeId ] || {};

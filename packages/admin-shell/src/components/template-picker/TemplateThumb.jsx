@@ -26,17 +26,6 @@ function ClassicPreview() {
 	);
 }
 
-function MinimalPreview() {
-	return (
-		<div className={ previewShellClass } aria-hidden="true">
-			<div className="mx-auto mt-4 h-8 w-8 rounded-full border border-[#E5E7EB] bg-white" />
-			<div className="mx-auto mt-3 h-2.5 w-3/5 rounded border border-[#E5E7EB] bg-white" />
-			<div className="mx-auto mt-2 h-2 w-2/5 rounded bg-[#E5E7EB]" />
-			<div className={ barClass } />
-		</div>
-	);
-}
-
 function SplitPreview() {
 	return (
 		<div className={ previewShellClass } aria-hidden="true">
@@ -104,7 +93,6 @@ function FocusPreview() {
 
 const PREVIEWS = {
 	classic: ClassicPreview,
-	minimal: MinimalPreview,
 	split: SplitPreview,
 	card: CardPreview,
 	compact: CompactPreview,

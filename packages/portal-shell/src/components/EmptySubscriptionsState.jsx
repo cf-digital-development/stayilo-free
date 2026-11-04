@@ -3,7 +3,7 @@ import { BrandedIcon } from './BrandedIcon.jsx';
 import { Button } from './Button.jsx';
 import { startCreateSubscription } from '../utils/createSubscription.js';
 import { ReactComponent as EmptyBoxIllustration } from '@stayilo/design-system/assets/svg/emptycart.svg';
-import classicEmptyCart from '@stayilo/design-system/assets/images/empty-cart-classic.png';
+import classicEmptyCart from '@stayilo/design-system/assets/images/empty-cart-classic.webp';
 import { useTemplateRecipe } from '../templates/TemplateProvider.jsx';
 
 export function EmptySubscriptionsState( {

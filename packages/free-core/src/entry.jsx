@@ -4,17 +4,21 @@ import * as ReactDOMClient from 'react-dom/client';
 import * as ReactJSXRuntime from 'react/jsx-runtime';
 import * as ReactRouter from 'react-router';
 import * as ReactRouterDOM from 'react-router-dom';
+import * as ReactRedux from 'react-redux';
+import * as ReduxToolkit from '@reduxjs/toolkit';
 import { seedMerchantPremium } from '@stayilo/admin-shell';
 import { ADMIN_MOUNT_ID } from './mount-config.js';
 import { mountStayiloFreeAdmin } from './mount-admin.jsx';
 
-// Same React + Router instance for live-fetched Core/Growth bundles.
+// Same React + Router + Redux instance for live-fetched Core/Growth bundles.
 window.React = React;
 window.ReactDOM = ReactDOM;
 window.ReactDOMClient = ReactDOMClient;
 window.ReactJSXRuntime = ReactJSXRuntime;
 window.ReactRouter = ReactRouter;
 window.ReactRouterDOM = ReactRouterDOM;
+window.ReactRedux = ReactRedux;
+window.ReduxToolkit = ReduxToolkit;
 
 seedMerchantPremium();
 

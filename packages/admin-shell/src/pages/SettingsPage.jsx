@@ -3,7 +3,7 @@ import { PageHeader } from '../components/PageHeader.jsx';
 import { LockedSettingsCard } from '../components/LockedSettingsCard.jsx';
 import { SubscriptionMode } from '../components/SubscriptionMode.jsx';
 import { visibleLockedSettingsCards } from '../components/settings-locked-cards.js';
-import { useMerchantTier } from '../premium.js';
+import { useMerchantTier } from '../tier.js';
 import { usePortalSettings } from '../hooks/useAdminData.js';
 import { ReactComponent as SaveIcon } from '../assets/svg/FloppyDisk.svg';
 

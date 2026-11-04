@@ -222,7 +222,7 @@ export function BrandSection( {
 	branding,
 	logoName,
 	saving,
-	template = 'minimal',
+	template = 'classic',
 	onChangeLogo,
 	onUpdateColor,
 	onCommitColor,

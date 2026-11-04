@@ -187,7 +187,7 @@ export function toOrderSliderItems( subscription ) {
 	return [
 		{
 			id: subscription.id,
-			title: subscription.title || __( 'Meal subscription', 'stayilo' ),
+			title: subscription.title || __( 'Subscription', 'stayilo' ),
 			description: subscription.description,
 			imageUrl: subscription.imageUrl,
 			imageAlt: subscription.imageAlt,

@@ -11,7 +11,7 @@ import { CancellationReasonsChart } from '../components/charts/CancellationReaso
 import { RetentionTrendChart } from '../components/charts/RetentionTrendChart.jsx';
 import { DashboardHeaderActions } from '../components/DashboardHeaderActions.jsx';
 import { hasTierAccess } from '../utils/tier.js';
-import { useMerchantTier } from '../premium.js';
+import { useMerchantTier } from '../tier.js';
 import { useDashboardData } from '../hooks/useAdminData.js';
 import { buildPeriodMetrics, formatCurrency } from '../domain/metrics.js';
 import { buildDashboardNotifications } from '../domain/notifications.js';

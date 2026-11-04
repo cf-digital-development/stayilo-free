@@ -1,5 +1,5 @@
 import { ReactComponent as TruckDeliveryIcon } from '@stayilo/design-system/assets/svg/Delivery-account.svg';
-import classicIcon from '@stayilo/design-system/assets/images/subscription-management-classic.png';
+import classicIcon from '@stayilo/design-system/assets/images/subscription-management-classic.webp';
 import { BrandedIcon } from './BrandedIcon.jsx';
 import { Button } from './Button.jsx';
 import { NavArrowIcon } from './NavArrowIcon.jsx';

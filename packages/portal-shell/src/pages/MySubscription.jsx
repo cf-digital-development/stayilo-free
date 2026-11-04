@@ -60,7 +60,7 @@ export function MySubscription() {
 		return {
 			...WELCOME_BANNER,
 			title: firstName ? sprintf( __( 'Welcome, %s!', 'stayilo' ), firstName ) : __( 'Welcome!', 'stayilo' ),
-			subtitle: __( 'Manage your meal subscriptions and upcoming orders here.', 'stayilo' ),
+			subtitle: __( 'Manage your subscriptions and upcoming orders here.', 'stayilo' ),
 		};
 	}, [ firstName, paymentFailedSubscription ] );
 

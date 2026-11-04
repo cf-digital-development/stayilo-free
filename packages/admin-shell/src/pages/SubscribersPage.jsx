@@ -9,7 +9,7 @@ import { SearchField } from '../components/toolbar/SearchField.jsx';
 import { UpgradeBanner } from '../components/UpgradeBanner.jsx';
 import { hasTierAccess } from '../utils/tier.js';
 import { buildCsv, downloadCsv } from '../utils/downloadCsv.js';
-import { useMerchantTier } from '../premium.js';
+import { useMerchantTier } from '../tier.js';
 import { useUpgradeBannerDismiss } from '../hooks/useUpgradeBannerDismiss.js';
 import { useSubscribers } from '../hooks/useAdminData.js';
 import { openUpgrade } from '../utils/upgradeUrl.js';

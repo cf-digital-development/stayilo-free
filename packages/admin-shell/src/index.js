@@ -1,4 +1,6 @@
 export { AppShell } from './AppShell.jsx';
+export { AdminCenterModal } from './components/AdminCenterModal.jsx';
+export * from './assets/icons.js';
 export { NAV_ITEMS, TIER_RANK, isNavItemLocked, navItemLabel } from './nav-config.js';
 export { DashboardSlot } from './components/DashboardSlot.jsx';
 export { PremiumLoadingState } from './components/PremiumLoadingState.jsx';
@@ -99,9 +101,7 @@ export {
 export {
 	getMerchantTier,
 	getPremiumSnapshot,
-	isLicensedPaid,
 	seedMerchantPremium,
-	setPreviewMerchantTier,
 	subscribePremium,
 	useMerchantTier,
-} from './premium.js';
+} from './tier.js';

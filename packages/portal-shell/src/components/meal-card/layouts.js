@@ -1,7 +1,6 @@
 import { ChipCardBody } from './ChipCardBody.jsx';
-import { MediaCardBody } from './MediaCardBody.jsx';
 
+/** Classic card layout only. Pro registers other cards via StayiloRegistry. */
 export const CARD_LAYOUTS = {
-	media: MediaCardBody,
 	chip: ChipCardBody,
 };

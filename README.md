@@ -1,8 +1,8 @@
 # Stayilo free plugin source
 
-Uncompiled JavaScript for the Stayilo plugin submitted to WordPress.org. The compiled files that ship in the plugin are `wp-content/plugins/stayilo/build/`.
+Uncompiled JavaScript for the Stayilo plugin submitted to WordPress.org. Compiled assets ship in `wp-content/plugins/stayilo/build/`.
 
-This tree includes the Classic portal template only. Minimal stays in the private Stayilo frontend, which keeps every template for paid installs.
+This tree includes the Classic portal template only. Minimal and other paid templates live in the private Stayilo Pro frontend.
 
 ## Packages
 
@@ -19,7 +19,7 @@ npm install
 npm run build
 ```
 
-The build writes into the local WordPress plugin at `../SubXP/wp-content/plugins/stayilo/build` when that plugin directory exists. Set `STAYILO_WP_ROOT` to point at a different WordPress root, or `STAYILO_WP_OUT=0` to write into each package's own `build/` folder instead.
+By default each package writes into its own `build/` folder inside this repo. Set `STAYILO_WP_ROOT` to a WordPress root to write into that site’s Stayilo plugin directory instead.
 
 ## WordPress.org
 

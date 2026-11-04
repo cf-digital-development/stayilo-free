@@ -1,76 +1,37 @@
 const fs = require( 'fs' );
 const path = require( 'path' );
 
-
-const XAMPP_ROOT = 'D:/xampp/htdocs/SubXP/SubXP';
-const DOCKER_ROOT = path.resolve( __dirname, '../../SubXP' );
-const LICENSE_DEMO_ROOT = 'D:/xampp/htdocs/SubXP/license-demo/server';
-
+/**
+ * WordPress root when STAYILO_WP_ROOT is set. Otherwise builds stay in-repo.
+ *
+ * @returns {string|null}
+ */
 function resolveWpRoot() {
 	if ( process.env.STAYILO_WP_ROOT ) {
 		return path.resolve( process.env.STAYILO_WP_ROOT );
 	}
-
-	const xamppPlugin = path.join(
-		XAMPP_ROOT,
-		'wp-content/plugins/stayilo'
-	);
-	if ( fs.existsSync( xamppPlugin ) ) {
-		return XAMPP_ROOT;
-	}
-
-	return DOCKER_ROOT;
-}
-
-/**
- * Pro script.php lives in license-demo/server on this XAMPP setup.
- * Fall back to WP-root license-server/ for Docker.
- */
-function resolveLicenseRoot() {
-	if ( process.env.STAYILO_LICENSE_ROOT ) {
-		return path.resolve( process.env.STAYILO_LICENSE_ROOT );
-	}
-
-	if ( fs.existsSync( path.join( LICENSE_DEMO_ROOT, 'script.php' ) ) ) {
-		return LICENSE_DEMO_ROOT;
-	}
-
-	return path.join( resolveWpRoot(), 'license-server' );
-}
-
-function useLocalBuild() {
-	return process.env.STAYILO_WP_OUT === '0';
-}
-
-function resolveProPluginDir() {
-	const wp = resolveWpRoot();
-	const plugin = path.join( wp, 'wp-content/plugins/stayilo-pro-plugin' );
-	const legacy = path.join( wp, 'wp-content/plugins/stayilo-pro' );
-
-	if ( fs.existsSync( path.join( plugin, 'stayilo-pro.php' ) ) ) {
-		return plugin;
-	}
-
-	return legacy;
-}
-
-function wpPath( relative ) {
-	return path.join( resolveWpRoot(), relative );
+	return null;
 }
 
 const targets = {
 	freeAdmin: 'wp-content/plugins/stayilo/build',
 	portal: 'wp-content/plugins/stayilo/build/portal',
-	wizard: 'wp-content/plugins/stayilo-pro/build/wizard-pro',
-	licenseCore: 'license-server/builds/core',
-	licenseGrowth: 'license-server/builds/growth',
-	licensePortal: 'license-server/builds/portal',
 };
 
+/**
+ * Default: each package's own `build/`.
+ * With STAYILO_WP_ROOT: write into that WordPress tree.
+ *
+ * @param {string} packageDir
+ * @param {string} targetKey
+ * @returns {string}
+ */
 function resolveOutput( packageDir, targetKey ) {
-	if ( useLocalBuild() ) {
-		const local = path.resolve( packageDir, 'build' );
-		console.log( `[stayilo] ${ targetKey } → ${ local } (STAYILO_WP_OUT=0)` );
+	const local = path.resolve( packageDir, 'build' );
+	const wpRoot = resolveWpRoot();
+
+	if ( ! wpRoot ) {
+		console.log( `[stayilo] ${ targetKey } → ${ local }` );
 		return local;
 	}
 
@@ -78,23 +39,11 @@ function resolveOutput( packageDir, targetKey ) {
 		throw new Error( `Unknown Stayilo WP output target: ${ targetKey }` );
 	}
 
-	let outDir;
-	if ( targetKey === 'wizard' ) {
-		outDir = path.join( resolveProPluginDir(), 'build/wizard-pro' );
-	} else if ( targetKey.startsWith( 'license' ) ) {
-		outDir = path.join(
-			resolveLicenseRoot(),
-			targets[ targetKey ].replace( /^license-server\//, '' )
-		);
-	} else {
-		outDir = wpPath( targets[ targetKey ] );
-	}
-
+	const outDir = path.join( wpRoot, targets[ targetKey ] );
 	fs.mkdirSync( outDir, { recursive: true } );
 	console.log( `[stayilo] ${ targetKey } → ${ outDir }` );
 	return outDir;
 }
-
 
 function webpackOutput( packageDir, targetKey, options = {} ) {
 	const keepNames = [ 'fonts', 'images', ...( options.keep || [] ) ];
@@ -106,7 +55,6 @@ function webpackOutput( packageDir, targetKey, options = {} ) {
 	};
 }
 
-
 const liveFetchExternals = {
 	react: 'React',
 	'react-dom': 'ReactDOM',
@@ -115,6 +63,8 @@ const liveFetchExternals = {
 	'@wordpress/element': 'React',
 	'react-router': 'ReactRouter',
 	'react-router-dom': 'ReactRouterDOM',
+	'react-redux': 'ReactRedux',
+	'@reduxjs/toolkit': 'ReduxToolkit',
 };
 
 class WriteAssetPhpPlugin {

@@ -1,5 +1,5 @@
 /**
- * Minimal home composition — same outer wrapper as the designed pages.
+ * Classic home composition — same outer wrapper as the designed pages.
  * Region props render in order with no extra wrappers.
  *
  * @param {object} props

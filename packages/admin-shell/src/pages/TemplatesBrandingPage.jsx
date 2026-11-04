@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PageHeader } from '../components/PageHeader.jsx';
 import { hasTierAccess } from '../utils/tier.js';
-import { useMerchantTier } from '../premium.js';
+import { useMerchantTier } from '../tier.js';
 import { isWpAdmin, savePortalBranding } from '../api/wp-admin.js';
 import { pickImage } from '../utils/wpMedia.js';
 import { ReactComponent as EyeIcon } from '../assets/svg/Eye.svg';
@@ -42,7 +42,7 @@ export function TemplatesBrandingPage( { tier: tierProp } ) {
 		typeof window !== 'undefined' ? window.stayiloAdmin || {} : {};
 
 	const [ branding, setBranding ] = useState( () => readAdminBranding( admin ) );
-	const [ template, setTemplate ] = useState( branding.template || 'minimal' );
+	const [ template, setTemplate ] = useState( branding.template || 'classic' );
 	const [ customCss, setCustomCss ] = useState( '' );
 	const [ previewMode, setPreviewMode ] = useState( 'desktop' );
 	const [ previewScope, setPreviewScope ] = useState( 'single' );
@@ -58,7 +58,7 @@ export function TemplatesBrandingPage( { tier: tierProp } ) {
 		: 'SVG, JPG, or PNG';
 
 	const selectTemplate = ( next ) => {
-		const nextId = TEMPLATE_COLOR_DEFAULTS[ next ] ? next : 'minimal';
+		const nextId = TEMPLATE_COLOR_DEFAULTS[ next ] ? next : 'classic';
 		setBranding( ( current ) => {
 			const colors = {
 				...( current.colors || TEMPLATE_COLOR_DEFAULTS ),

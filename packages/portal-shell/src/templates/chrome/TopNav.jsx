@@ -3,7 +3,7 @@ import { AnnouncementBanner } from '../../components/AnnouncementBanner.jsx';
 import { Header } from '../../components/Header.jsx';
 
 /**
- * Minimal chrome — current portal frame (top header + main). Markup and
+ * Classic chrome — portal frame (top header + main). Markup and
  * class names match the previous PortalShell return 1:1.
  *
  * @param {object} props

@@ -97,9 +97,6 @@ export { ReactivateSubscriptionPopup } from './components/ReactivateSubscription
 export { QuickActionCard } from './components/QuickActionCard.jsx';
 export { DateBadge } from './components/DateBadge.jsx';
 export { ManageDeliveryPopup } from './components/ManageDeliveryPopup/index.js';
-export { MonthCalendar } from './components/MonthCalendar.jsx';
-export { ChangeDatePopup } from './components/ChangeDatePopup.jsx';
-export { ChangeFrequencyPopup } from './components/ChangeFrequencyPopup.jsx';
 export { PaymentMethodCard } from './components/PaymentMethodCard.jsx';
 export { PaymentMethods } from './components/PaymentMethods.jsx';
 export { PaymentHistory } from './components/PaymentHistory.jsx';
@@ -114,7 +111,6 @@ export { AccountInfo } from './pages/AccountInfo.jsx';
 export { AccountSubscription } from './pages/AccountSubscription.jsx';
 export { Order } from './pages/Order.jsx';
 export { OrderDetails } from './pages/OrderDetails.jsx';
-export { EditBox } from './pages/EditBox.jsx';
 export { ViewBox } from './pages/ViewBox.jsx';
 export { Payment } from './pages/Payment.jsx';
 export { SubscriptionActions } from './pages/SubscriptionActions.jsx';
@@ -152,3 +148,43 @@ export {
 	toDateParts,
 	DEFAULT_DELIVERY_DATE_COUNT,
 } from './data/index.js';
+
+/* Public surface for Pro (portal-core) — import these from the barrel only. */
+export { CardStatusBadge } from './components/meal-card/CardStatusBadge.jsx';
+export { EmptyState } from './components/EmptyState.jsx';
+export { PageLoader } from './components/PageLoader.jsx';
+export { AnnouncementBanner } from './components/AnnouncementBanner.jsx';
+export { ensureCalendarStyles } from './styles/ensureCalendarStyles.js';
+export { ensurePortalPopupStyles } from './styles/ensurePortalPopupStyles.js';
+export { findDateIndex } from './utils/delivery/index.js';
+export {
+	formatDeliveryFrequency,
+	getSelectableFrequencyOptions,
+	getSubscriptionFrequencyOptionId,
+} from './utils/delivery/frequency.js';
+export { fetchShopProducts } from './api/wc.js';
+export { getPortal, portalAjax } from './api/portal.js';
+export { boxLinesToPersistPayload } from './utils/cartLines.js';
+export { useSaveSubscriptionBox } from './store/useSaveSubscriptionBox.js';
+export { findCartLineForProduct } from './utils/cartLines.js';
+export { getPortalCurrency } from './utils/portalCurrency.js';
+export { mapStoreProductsToCatalog } from './utils/shopProducts.js';
+export { subscriptionLocation } from './utils/subscriptionNavigation.js';
+export {
+	WEEKDAY_HEADERS,
+	earliestSelectableDeliveryDate,
+	earliestSelectableDeliveryDateId,
+	formatDeliveryBannerDate,
+	formatMonthTitle,
+	getMonthGrid,
+	parseDateId,
+	toDateId,
+} from './utils/monthCalendar.js';
+export {
+	listOffersForReasons,
+	resolveOfferStep,
+	shouldShowOfferAfterReasons,
+	offerNeedsCustomerChoice,
+	buildOfferConfigureStep,
+	buildOfferAppliedStep,
+} from './data/popupContent.js';

@@ -1,6 +1,6 @@
 /**
  * Inject shared month-calendar CSS once.
- * Needed when MonthCalendar is used from live-fetched portal-core / admin-core,
+ * Needed when calendar UI is used from live-fetched portal-core / admin-core,
  * where theme/Woo button styles would otherwise override muted days.
  */
 const STYLE_ID = 'stayilo-month-calendar-styles';

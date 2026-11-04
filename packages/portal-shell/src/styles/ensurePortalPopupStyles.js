@@ -1,6 +1,6 @@
 /**
  * Inject PortalPopup + calendar-popup styles once.
- * Needed when ChangeDatePopup is used outside portal-shell (e.g. live-fetched
+ * Needed when portal popups are used outside portal-shell (e.g. live-fetched
  * admin-core), where portal.css is not loaded.
  */
 const STYLE_ID = 'stayilo-portal-popup-styles';

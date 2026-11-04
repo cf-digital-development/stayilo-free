@@ -240,8 +240,7 @@ export function resolveOfferStep( selectedReasonIds = [], offerIndex = 0 ) {
 	const offer = offers[ Math.max( 0, offerIndex ) ] || null;
 
 	// No offer for this reason (Free, or Core+ reason with an empty list).
-	// CancelSubscriptionPopup skips this step via shouldShowOfferAfterReasons;
-	// this is only a safe fallback if the offer step is opened anyway.
+	// Free cancel never opens this step; Pro RetentionOffers may still call it.
 	if ( ! offer ) {
 		return {
 			title: __( 'Continue cancelling?', 'stayilo' ),
@@ -544,19 +543,6 @@ export const CANCEL_POPUP_STEPS = {
 			{ id: 'yes-cancel', label: __( 'Yes, Cancel', 'stayilo' ), variant: 'danger' },
 		],
 	},
-	// Placeholder only — live offer UI uses resolveOfferStep(). Free never shows offers.
-	offer: {
-		title: __( 'Continue cancelling?', 'stayilo' ),
-		description: __( 'Your subscription will be cancelled.', 'stayilo' ),
-		actions: [
-			{
-				id: 'cancel-anyway',
-				label: __( 'Yes, cancel my subscription', 'stayilo' ),
-				variant: 'danger',
-			},
-		],
-		offer: null,
-	},
 	canceled: {
 		title: __( 'Your subscription is now cancelled.', 'stayilo' ),
 		description: __(
@@ -568,7 +554,7 @@ export const CANCEL_POPUP_STEPS = {
 	active: {
 		title: __( 'Your subscription is active now', 'stayilo' ),
 		description: __(
-			'Great choice — your subscription stays active with the offer applied.',
+			'Great choice — your subscription stays active.',
 			'stayilo'
 		),
 		actions: [],

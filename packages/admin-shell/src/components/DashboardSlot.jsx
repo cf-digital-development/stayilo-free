@@ -5,7 +5,7 @@ import { TIER_RANK } from '../nav-config.js';
 import {
 	getMerchantTier,
 	subscribePremium,
-} from '../premium.js';
+} from '../tier.js';
 import { PremiumLoadingState } from './PremiumLoadingState.jsx';
 
 /**

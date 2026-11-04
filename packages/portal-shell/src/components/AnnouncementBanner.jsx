@@ -1,4 +1,3 @@
-import { __ } from '@stayilo/design-system/i18n';
 /**
  * Site-wide announcement strip from Templates & Branding settings.
  * Renders above the white portal header when enabled.
@@ -9,11 +8,11 @@ export function AnnouncementBanner( {
 	color = '#0D1117',
 	link = '',
 } ) {
-	if ( ! enabled ) {
+	const label = text?.trim() || '';
+	if ( ! enabled || ! label ) {
 		return null;
 	}
 
-	const label = text?.trim() || __( '🎉 Free shipping on all orders this month', 'stayilo' );
 	const background = color || '#0D1117';
 	const className = 'portal-announcement-banner';
 

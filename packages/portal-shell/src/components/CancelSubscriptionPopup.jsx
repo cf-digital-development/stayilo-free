@@ -1,32 +1,27 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { callPaidPortalApi } from '../utils/paidPortalApi.js';
+import { useEffect, useRef, useState } from 'react';
+import { getStayiloRegistry } from '@stayilo/extension-sdk';
 import { useTemplateRecipe } from '../templates/TemplateProvider.jsx';
 import { PortalPopup } from './PortalPopup.jsx';
 import {
 	CancelPackageIcon,
-	DiscountOfferIcon,
 	SuccessCheckIcon,
 } from './PortalPopupIcons.jsx';
 import { __ } from '@stayilo/design-system/i18n';
 import {
 	CANCEL_POPUP_STEPS,
-	buildOfferAppliedStep,
-	buildOfferConfigureStep,
 	isFreeTextReasonId,
-	listOffersForReasons,
-	offerNeedsCustomerChoice,
-	resolveOfferStep,
-	shouldShowOfferAfterReasons,
 } from '../data/popupContent.js';
+import { usePortalPremiumRevision } from '../utils/portalActions.js';
 
 const STEP_ICONS = {
 	reasons: <CancelPackageIcon />,
 	confirm: <CancelPackageIcon />,
-	offer: <DiscountOfferIcon />,
-	configure: <DiscountOfferIcon />,
 	canceled: <CancelPackageIcon />,
 	active: <SuccessCheckIcon />,
 };
+
+/** Pro registers RetentionOffers under this id (portal-core). */
+const CANCEL_OFFERS_ACTION = 'retention-offers';
 
 function resolveOpeningStep( initialStep, isClassic ) {
 	if ( isClassic && initialStep === 'confirm' ) {
@@ -35,6 +30,10 @@ function resolveOpeningStep( initialStep, isClassic ) {
 	return initialStep;
 }
 
+/**
+ * Free cancel flow: reasons → confirm → canceled.
+ * Growth retention offers render via registered `retention-offers` action.
+ */
 export function CancelSubscriptionPopup( {
 	open,
 	onClose,
@@ -46,56 +45,30 @@ export function CancelSubscriptionPopup( {
 	onKept,
 	descriptionClassName = '',
 } ) {
+	usePortalPremiumRevision();
 	const { id: templateId } = useTemplateRecipe();
 	const isClassic = templateId === 'classic';
 	const openingStep = resolveOpeningStep( initialStep, isClassic );
 	const [ step, setStep ] = useState( openingStep );
 	const [ selectedOptionIds, setSelectedOptionIds ] = useState( [] );
 	const [ otherReason, setOtherReason ] = useState( '' );
-	const [ offerIndex, setOfferIndex ] = useState( 0 );
-	const [ configureChoiceIds, setConfigureChoiceIds ] = useState( [] );
-	const [ appliedResult, setAppliedResult ] = useState( null );
 	const [ submitting, setSubmitting ] = useState( false );
 	const otherInputRef = useRef( null );
+
+	const CancelOffers = getStayiloRegistry().getPortalAction?.(
+		CANCEL_OFFERS_ACTION
+	);
 
 	useEffect( () => {
 		if ( open ) {
 			setStep( resolveOpeningStep( initialStep, isClassic ) );
 			setSelectedOptionIds( [] );
 			setOtherReason( '' );
-			setOfferIndex( 0 );
-			setConfigureChoiceIds( [] );
-			setAppliedResult( null );
 			setSubmitting( false );
 		}
 	}, [ open, initialStep, isClassic ] );
 
-	const offerStep = useMemo(
-		() => resolveOfferStep( selectedOptionIds, offerIndex ),
-		[ selectedOptionIds, offerIndex ]
-	);
-
-	const configureStep = useMemo(
-		() => buildOfferConfigureStep( offerStep.offer, subscription ),
-		[ offerStep.offer, subscription ]
-	);
-
-	const activeStep = useMemo( () => {
-		if ( step !== 'active' ) {
-			return CANCEL_POPUP_STEPS.active;
-		}
-		return buildOfferAppliedStep( offerStep.offer, appliedResult?.applied );
-	}, [ step, offerStep.offer, appliedResult ] );
-
-	const config =
-		step === 'offer'
-			? offerStep
-			: step === 'configure'
-				? configureStep
-				: step === 'active'
-					? activeStep
-					: CANCEL_POPUP_STEPS[ step ] ?? CANCEL_POPUP_STEPS.confirm;
-
+	const config = CANCEL_POPUP_STEPS[ step ] ?? CANCEL_POPUP_STEPS.confirm;
 	const classicReasons =
 		isClassic && step === 'reasons' && ( config.options?.length ?? 0 ) > 0;
 
@@ -106,21 +79,11 @@ export function CancelSubscriptionPopup( {
 		selectedOptionIds.length > 0 &&
 		( ! othersSelected || otherReason.trim().length > 0 );
 
-	const selectedConfigure = configureStep.options.find( ( option ) =>
-		configureChoiceIds.includes( option.id )
-	);
-
 	useEffect( () => {
 		if ( othersSelected ) {
 			otherInputRef.current?.focus();
 		}
 	}, [ othersSelected ] );
-
-	useEffect( () => {
-		if ( step === 'configure' ) {
-			setConfigureChoiceIds( [] );
-		}
-	}, [ step, offerIndex ] );
 
 	const handleClose = () => {
 		if ( step === 'canceled' ) {
@@ -150,33 +113,11 @@ export function CancelSubscriptionPopup( {
 	};
 
 	const goToOfferOrCancel = async () => {
-		if ( shouldShowOfferAfterReasons( selectedOptionIds ) ) {
-			setOfferIndex( 0 );
-			setStep( 'offer' );
+		if ( typeof CancelOffers === 'function' ) {
+			setStep( 'offers' );
 			return;
 		}
 		await completeCancel();
-	};
-
-	const acceptCurrentOffer = async ( choices = {} ) => {
-		if ( ! subscriptionId ) {
-			throw new Error( __( 'Missing subscription for this offer.', 'stayilo' ) );
-		}
-		if ( ! offerStep.offer?.id && ! offerStep.offer?.type ) {
-			throw new Error( __( 'This offer is not available. Please try again.', 'stayilo' ) );
-		}
-
-		const data = await callPaidPortalApi( 'acceptPortalOffer', subscriptionId, {
-			offerId: offerStep.offer?.id || '',
-			...choices,
-		} );
-
-		setAppliedResult( data );
-		await onKept?.( {
-			applied: data?.applied,
-			subscription: data?.subscription,
-		} );
-		setStep( 'active' );
 	};
 
 	const handleAction = async ( actionId ) => {
@@ -191,68 +132,6 @@ export function CancelSubscriptionPopup( {
 			return;
 		}
 
-		if ( actionId === 'cancel-anyway' ) {
-			const offers = listOffersForReasons( selectedOptionIds );
-			const nextIndex = offerIndex + 1;
-			if ( nextIndex < offers.length ) {
-				setOfferIndex( nextIndex );
-				setStep( 'offer' );
-				return;
-			}
-			await completeCancel();
-			return;
-		}
-
-		if ( actionId === 'keep' ) {
-			if ( submitting ) {
-				return;
-			}
-			if ( offerNeedsCustomerChoice( offerStep.offer ) ) {
-				const next = buildOfferConfigureStep(
-					offerStep.offer,
-					subscription
-				);
-				if ( ! next.options.length ) {
-					window.alert(
-						next.description ||
-							__( 'This offer can’t be applied to your subscription right now.', 'stayilo' )
-					);
-					return;
-				}
-				setStep( 'configure' );
-				return;
-			}
-			setSubmitting( true );
-			try {
-				await acceptCurrentOffer();
-			} catch ( err ) {
-				window.alert( err?.message || __( 'Could not accept offer', 'stayilo' ) );
-			} finally {
-				setSubmitting( false );
-			}
-			return;
-		}
-
-		if ( actionId === 'apply-choice' ) {
-			if ( submitting || ! selectedConfigure?.value ) {
-				return;
-			}
-			setSubmitting( true );
-			try {
-				await acceptCurrentOffer( selectedConfigure.value );
-			} catch ( err ) {
-				window.alert( err?.message || __( 'Could not accept offer', 'stayilo' ) );
-			} finally {
-				setSubmitting( false );
-			}
-			return;
-		}
-
-		if ( actionId === 'back-to-offer' ) {
-			setStep( 'offer' );
-			return;
-		}
-
 		if ( actionId === 'continue' ) {
 			if ( ! hasValidReason || submitting ) {
 				return;
@@ -261,25 +140,25 @@ export function CancelSubscriptionPopup( {
 		}
 	};
 
-	const actions = (() => {
-		if ( step === 'configure' ) {
-			return [
-				{
-					label: __( 'Cancel', 'stayilo' ),
-					variant: 'secondary',
-					disabled: submitting,
-					onClick: () => handleAction( 'back-to-offer' ),
-				},
-				{
-					label: configureStep.confirmLabel || __( 'Apply offer', 'stayilo' ),
-					variant: 'success',
-					disabled: submitting || ! selectedConfigure,
-					loading: submitting,
-					onClick: () => handleAction( 'apply-choice' ),
-				},
-			];
-		}
+	if ( step === 'offers' && typeof CancelOffers === 'function' ) {
+		return (
+			<CancelOffers
+				open={ open }
+				onClose={ onClose }
+				subscriptionId={ subscriptionId }
+				subscription={ subscription }
+				selectedOptionIds={ selectedOptionIds }
+				otherReason={ otherReason.trim() }
+				onCanceled={ onCanceled }
+				onCancelComplete={ onCancelComplete }
+				onKept={ onKept }
+				onCancelAnyway={ completeCancel }
+				descriptionClassName={ descriptionClassName }
+			/>
+		);
+	}
 
+	const actions = (() => {
 		if ( classicReasons ) {
 			return [
 				{
@@ -309,11 +188,7 @@ export function CancelSubscriptionPopup( {
 				( step === 'reasons' &&
 					action.id === 'continue' &&
 					! hasValidReason ),
-			loading:
-				submitting &&
-				( action.id === 'continue' ||
-					action.id === 'keep' ||
-					action.id === 'cancel-anyway' ),
+			loading: submitting && action.id === 'continue',
 			onClick: () => handleAction( action.id ),
 		} ) );
 	} )();
@@ -322,7 +197,7 @@ export function CancelSubscriptionPopup( {
 		<PortalPopup
 			open={ open }
 			onClose={ handleClose }
-			stepKey={ `${ step }-${ offerIndex }` }
+			stepKey={ step }
 			icon={ classicReasons ? null : STEP_ICONS[ step ] }
 			title={ config.title }
 			description={ config.description }
@@ -333,29 +208,14 @@ export function CancelSubscriptionPopup( {
 			]
 				.filter( Boolean )
 				.join( ' ' ) }
-			options={
-				classicReasons
-					? []
-					: step === 'configure'
-						? configureStep.options.map( ( option ) => ( {
-								id: option.id,
-								label: option.label,
-						  } ) )
-						: config.options ?? []
-			}
-			selectedOptionIds={
-				step === 'configure' ? configureChoiceIds : selectedOptionIds
-			}
-			onOptionChange={
-				step === 'configure'
-					? setConfigureChoiceIds
-					: ( ids ) => {
-							setSelectedOptionIds( ids );
-							if ( ! ids.some( ( id ) => isFreeTextReasonId( id ) ) ) {
-								setOtherReason( '' );
-							}
-					  }
-			}
+			options={ classicReasons ? [] : config.options ?? [] }
+			selectedOptionIds={ selectedOptionIds }
+			onOptionChange={ ( ids ) => {
+				setSelectedOptionIds( ids );
+				if ( ! ids.some( ( id ) => isFreeTextReasonId( id ) ) ) {
+					setOtherReason( '' );
+				}
+			} }
 			optionMode="single"
 			actions={ actions }
 		>
@@ -395,7 +255,7 @@ export function CancelSubscriptionPopup( {
 											aria-hidden="true"
 										>
 											{ checked ? (
-												<span className={`block ${isClassic ? 'h-full w-full' : 'h-2.5 w-2.5'}  rounded-full bg-[#007943]`} />
+												<span className={ `block ${ isClassic ? 'h-full w-full' : 'h-2.5 w-2.5' }  rounded-full bg-[#007943]` } />
 											) : null }
 										</span>
 										<span className="text-base font-medium leading-6 text-[#101010]">

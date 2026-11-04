@@ -95,15 +95,6 @@ function fontStack( font ) {
 }
 
 export const SURFACE_COLOR_DEFAULTS = {
-	minimal: {
-		primaryColor: '#BCEF6A',
-		backgroundColor: '#FAF8F2',
-		secondaryColor: '#101010',
-		cardColor: '#FFFFFF',
-		cardAccentColor: '#FFFFFF',
-		bannerBackground: '#007943',
-		inputColor: '#FFFFFF',
-	},
 	classic: {
 		primaryColor: '#E33B12',
 		backgroundColor: '#FEEFDE',
@@ -116,12 +107,6 @@ export const SURFACE_COLOR_DEFAULTS = {
 };
 
 export const TEMPLATE_COLOR_DEFAULTS = {
-	minimal: {
-		brandColor: '#FFFFFF',
-		accentColor: '#BCEF6A',
-		buttonColor: '#101010',
-		...SURFACE_COLOR_DEFAULTS.minimal,
-	},
 	classic: {
 		brandColor: '#FFFFFF',
 		accentColor: '#E33B12',
@@ -145,13 +130,12 @@ function pickColor( value, fallback ) {
 
 export function readTemplateColors( branding = {} ) {
 	const map = {
-		minimal: { ...TEMPLATE_COLOR_DEFAULTS.minimal },
 		classic: { ...TEMPLATE_COLOR_DEFAULTS.classic },
 	};
 	const saved = branding.colors && typeof branding.colors === 'object' ? branding.colors : null;
 
 	if ( saved ) {
-		[ 'minimal', 'classic' ].forEach( ( id ) => {
+		[ 'classic' ].forEach( ( id ) => {
 			const row = saved[ id ];
 			if ( ! row || typeof row !== 'object' ) {
 				return;
@@ -172,19 +156,20 @@ export function readTemplateColors( branding = {} ) {
 	}
 
 	if ( HEX.test( branding.brandColor || '' ) || HEX.test( branding.accentColor || '' ) ) {
-		map.minimal = {
-			brandColor: pickHex( branding.brandColor, map.minimal.brandColor ),
-			accentColor: pickHex( branding.accentColor, map.minimal.accentColor ),
-			buttonColor: pickHex( branding.buttonColor, map.minimal.buttonColor ),
+		map.classic = {
+			...map.classic,
+			brandColor: pickHex( branding.brandColor, map.classic.brandColor ),
+			accentColor: pickHex( branding.accentColor, map.classic.accentColor ),
+			buttonColor: pickHex( branding.buttonColor, map.classic.buttonColor ),
 		};
 	}
 
 	return map;
 }
 
-export function colorsForTemplate( branding = {}, templateId = 'minimal' ) {
+export function colorsForTemplate( branding = {}, templateId = 'classic' ) {
 	const map = readTemplateColors( branding );
-	return map[ templateId ] || map.minimal;
+	return map[ templateId ] || map.classic;
 }
 
 export function readPortalBranding( source ) {
@@ -201,10 +186,10 @@ function sameHex( value, fallback ) {
 export function brandingStyle( branding = {}, templateId ) {
 	const style = {};
 	const defaults =
-		TEMPLATE_COLOR_DEFAULTS[ templateId ] || TEMPLATE_COLOR_DEFAULTS.minimal;
+		TEMPLATE_COLOR_DEFAULTS[ templateId ] || TEMPLATE_COLOR_DEFAULTS.classic;
 	const colors = colorsForTemplate( branding, templateId );
 
-	const surfaces = SURFACE_COLOR_DEFAULTS[ templateId ] || SURFACE_COLOR_DEFAULTS.minimal;
+	const surfaces = SURFACE_COLOR_DEFAULTS[ templateId ] || SURFACE_COLOR_DEFAULTS.classic;
 	const primary = pickHex( colors.primaryColor, surfaces.primaryColor );
 	// Primary is the nav accent. Banner washes use --stayilo-banner-bg instead.
 	style[ '--stayilo-primary' ] = primary;

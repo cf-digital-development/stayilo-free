@@ -8,7 +8,7 @@ import { readAdminBranding } from './branding.js';
 import { isNavItemLocked, navItemLabel, NAV_ITEMS } from './nav-config.js';
 import { SidebarNavIcon } from './nav-icons.jsx';
 import { SidebarPlanCard } from './components/SidebarPlanCard.jsx';
-import { getMerchantTier, subscribePremium } from './premium.js';
+import { getMerchantTier, subscribePremium } from './tier.js';
 import { openUpgrade } from './utils/upgradeUrl.js';
 
 const SIDEBAR_TIER_PREVIEW_SLOT = 'sidebar-tier-preview';
@@ -117,38 +117,52 @@ export function AppShell( { tier = 'growth', storeName = 'Stayilo' } ) {
 			'#wpbody-content > .stayilo-upgrade-banner',
 		].join( ', ' );
 
+		// Ignore mutations we cause by relocating notices — otherwise the
+		// observer re-enters, fights WP core, and can trip React error #185.
+		let moving = false;
+
 		const moveNotices = () => {
+			if ( moving ) {
+				return;
+			}
+
 			const slot = noticeSlotRef.current;
 			const pending = document.querySelectorAll( selector );
 
 			if ( ! slot ) {
 				if ( pending.length ) {
-					setHasAdminNotices( true );
+					setHasAdminNotices( ( prev ) => ( prev ? prev : true ) );
 				}
 				return;
 			}
 
-			pending.forEach( ( node ) => {
-				if ( slot.contains( node ) ) {
-					return;
-				}
-				// Core's "WordPress x is available" nag is a .notice.update-nag.inline.
-				// That inline class only stops core from parking it under the heading.
-				// Other .inline notices belong next to a form field, so leave those.
-				if (
-					node.classList.contains( 'inline' ) &&
-					! node.classList.contains( 'update-nag' )
-				) {
-					return;
-				}
-				slot.appendChild( node );
-				node.classList.add( 'below-h2' );
-			} );
+			moving = true;
+			try {
+				pending.forEach( ( node ) => {
+					if ( slot.contains( node ) ) {
+						return;
+					}
+					// Core's "WordPress x is available" nag is a .notice.update-nag.inline.
+					// That inline class only stops core from parking it under the heading.
+					// Other .inline notices belong next to a form field, so leave those.
+					if (
+						node.classList.contains( 'inline' ) &&
+						! node.classList.contains( 'update-nag' )
+					) {
+						return;
+					}
+					slot.appendChild( node );
+					node.classList.add( 'below-h2' );
+				} );
+			} finally {
+				moving = false;
+			}
 
 			const placed = slot.querySelector(
 				'.notice, .updated, .error, .update-nag, .stayilo-upgrade-banner'
 			);
-			setHasAdminNotices( Boolean( placed ) );
+			const next = Boolean( placed );
+			setHasAdminNotices( ( prev ) => ( prev === next ? prev : next ) );
 		};
 
 		moveNotices();
@@ -161,7 +175,7 @@ export function AppShell( { tier = 'growth', storeName = 'Stayilo' } ) {
 		const observer = new MutationObserver( moveNotices );
 		observer.observe( root, { childList: true, subtree: true } );
 		return () => observer.disconnect();
-	}, [ hasAdminNotices ] );
+	}, [] );
 
 	useEffect( () => {
 		setMobileMenuOpen( false );

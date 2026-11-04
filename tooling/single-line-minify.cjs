@@ -44,7 +44,7 @@ function singleLineMinimizers( defaultConfig ) {
 
 		return new TerserPlugin( {
 			parallel: true,
-			extractComments: false,
+			extractComments: true,
 			terserOptions: {
 				compress: {
 					passes: 2,

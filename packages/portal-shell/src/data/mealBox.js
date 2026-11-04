@@ -1,7 +1,11 @@
-import { __ } from '@stayilo/design-system/i18n';
+import { __, sprintf } from '@stayilo/design-system/i18n';
+
 export const MY_SUBSCRIPTION_HEADER = {
 	title: __( 'My subscription', 'stayilo' ),
-	subtitle: __( 'You can update your box, schedule orders, or make changes at any time.', 'stayilo' ),
+	subtitle: __(
+		'You can update your subscription, schedule orders, or make changes at any time.',
+		'stayilo'
+	),
 };
 
 /** Account → Manage subscriptions page header. */
@@ -24,10 +28,22 @@ export const ACCOUNT_SUBSCRIPTION_BANNER = {
  */
 export function formatActiveSubscriptionsSubtitle( activeCount ) {
 	if ( activeCount <= 0 ) {
-		return 'You can update your box, schedule orders, or make changes at any time.';
+		return __(
+			'You can update your subscription, schedule orders, or make changes at any time.',
+			'stayilo'
+		);
 	}
 	if ( activeCount === 1 ) {
-		return 'You can update your box, schedule orders, or make changes at any time.';
+		return __(
+			'You have 1 active subscription. Update it, schedule orders, or make changes anytime.',
+			'stayilo'
+		);
 	}
-	return `You can update your box, schedule orders, or make changes at any time.`;
+	return sprintf(
+		__(
+			'You have %d active subscriptions. Update them, schedule orders, or make changes anytime.',
+			'stayilo'
+		),
+		activeCount
+	);
 }

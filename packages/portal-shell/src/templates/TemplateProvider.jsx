@@ -1,4 +1,5 @@
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useSyncExternalStore } from 'react';
+import { getStayiloRegistry } from '@stayilo/extension-sdk';
 import {
 	readPortalBranding,
 	readPreviewBranding,
@@ -8,7 +9,24 @@ import { getRecipe } from './recipes.js';
 
 const TEMPLATE_PARAM = 'stayilo_template';
 
+function subscribePremium( onStoreChange ) {
+	if ( typeof window === 'undefined' ) {
+		return () => {};
+	}
+	window.addEventListener( 'stayilo-premium-loaded', onStoreChange );
+	return () =>
+		window.removeEventListener( 'stayilo-premium-loaded', onStoreChange );
+}
+
 function merchantTier() {
+	const registry = getStayiloRegistry();
+	const fromRegistry =
+		typeof registry.getMerchantTier === 'function'
+			? registry.getMerchantTier()
+			: 'free';
+	if ( fromRegistry && fromRegistry !== 'free' ) {
+		return fromRegistry;
+	}
 	return String( getPortal().tier || 'free' ).toLowerCase();
 }
 
@@ -49,11 +67,12 @@ export function readTemplateId() {
 const TemplateContext = createContext( getRecipe( 'classic' ) );
 
 /**
- * Exposes the active portal recipe.
+ * Exposes the active portal recipe. Re-reads after Pro loads.
  *
  * @param {{ children: import('react').ReactNode }} props
  */
 export function TemplateProvider( { children } ) {
+	useSyncExternalStore( subscribePremium, merchantTier, () => 'free' );
 	const recipe = getRecipe( readTemplateId() );
 
 	return (
@@ -67,6 +86,7 @@ export function TemplateProvider( { children } ) {
  * @returns {{ id: string, chrome: string, home: string, card: string, view: string }}
  */
 export function useTemplateRecipe() {
+	useSyncExternalStore( subscribePremium, merchantTier, () => 'free' );
 	const fromContext = useContext( TemplateContext );
 	const liveId = readTemplateId();
 	return liveId ? getRecipe( liveId ) : fromContext;

@@ -1,18 +1,13 @@
 # Tooling
 
-Shared webpack output lives in `wp-output.cjs`. Shipping packages write **directly** into WordPress / the license server.
+Shared webpack output lives in `wp-output.cjs`. Shipping packages write into each package's own `build/` by default.
 
-| Target key | Destination |
-|------------|-------------|
-| `freeAdmin` | `stayilo/build/` (`index` + `setup`) |
-| `portal` | `stayilo/build/portal/` |
-| `wizard` | `stayilo-pro/build/wizard-pro/` |
-| `licenseCore` | `license-server/builds/core/` |
-| `licenseGrowth` | `license-server/builds/growth/` |
-| `licensePortal` | `license-server/builds/portal/` |
+| Target key | Local default | With `STAYILO_WP_ROOT` |
+|------------|---------------|------------------------|
+| `freeAdmin` | `packages/free-core/build/` | `{WP_ROOT}/wp-content/plugins/stayilo/build/` |
+| `portal` | `packages/portal-shell/build/` | `{WP_ROOT}/wp-content/plugins/stayilo/build/portal/` |
 
-- Default root: sibling `SubXP/` (or XAMPP `D:/xampp/htdocs/SubXP/SubXP` if that plugin exists).
-- Override: `STAYILO_WP_ROOT=/path/to/SubXP`
-- Local package `build/`: `STAYILO_WP_OUT=0`
+- Override WordPress root: `STAYILO_WP_ROOT=/path/to/wordpress`
+- Builds always stay inside the repo when that env var is unset
 
-Vite mocks (`dev:admin`, `dev:free`, `dev:wizard`, …) stay in the package. They do not touch WordPress.
+Vite mocks (`dev:admin`, `dev:free`, …) stay in the package. They do not touch WordPress.

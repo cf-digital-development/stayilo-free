@@ -155,8 +155,13 @@ export function ViewBox() {
 		);
 	};
 
-	const layout = recipe?.view === 'split' ? 'split' : 'stack';
-	const Body = VIEW_LAYOUTS[ layout ];
+	const viewKey = recipe?.view || 'split';
+	const Body =
+		getStayiloRegistry().getPortalTemplate?.( `view:${ viewKey }` ) ||
+		VIEW_LAYOUTS[ viewKey ] ||
+		VIEW_LAYOUTS.split;
+	const layout =
+		Body === VIEW_LAYOUTS.split || viewKey === 'split' ? 'split' : viewKey;
 	const bodyProps = {
 		boxSectionRef,
 		subscription,

@@ -4,6 +4,8 @@ import { createRoot } from 'react-dom/client';
 import * as ReactJSXRuntime from 'react/jsx-runtime';
 import * as ReactRouter from 'react-router';
 import * as ReactRouterDOM from 'react-router-dom';
+import * as ReactRedux from 'react-redux';
+import * as ReduxToolkit from '@reduxjs/toolkit';
 import '@stayilo/design-system/styles/styles.css';
 import './styles/portal.css';
 /* Unlayered (after portal.css @layer) so theme button styles cannot override muted days. */
@@ -19,6 +21,8 @@ window.ReactDOMClient = window.ReactDOMClient || { createRoot };
 window.ReactJSXRuntime = window.ReactJSXRuntime || ReactJSXRuntime;
 window.ReactRouter = window.ReactRouter || ReactRouter;
 window.ReactRouterDOM = window.ReactRouterDOM || ReactRouterDOM;
+window.ReactRedux = window.ReactRedux || ReactRedux;
+window.ReduxToolkit = window.ReduxToolkit || ReduxToolkit;
 
 const admin = window.stayiloPortal || {};
 

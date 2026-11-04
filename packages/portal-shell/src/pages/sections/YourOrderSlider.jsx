@@ -10,7 +10,7 @@ import { DEFAULT_ORDER_CARDS } from '../../data/orderCards.js';
 
 export function YourOrderSlider( {
 	title = __( 'What’s in your subscription', 'stayilo' ),
-	subtitle = __( 'Review the meals scheduled for your next order below.', 'stayilo' ),
+	subtitle = __( 'Review the items scheduled for your next order below.', 'stayilo' ),
 	items = DEFAULT_ORDER_CARDS,
 	actionsEnabled = false,
 	onEditBox,
@@ -84,7 +84,7 @@ export function YourOrderSlider( {
 						<div className="col-start-1 row-start-2 self-center justify-self-end">
 							<SliderNavButton
 								direction="prev"
-								label={ __( 'Previous meals', 'stayilo' ) }
+								label={ __( 'Previous items', 'stayilo' ) }
 								onClick={ () => scrollByCard( 'prev' ) }
 							/>
 						</div>
@@ -117,7 +117,7 @@ export function YourOrderSlider( {
 						<div className="col-start-3 row-start-2 self-center justify-self-start">
 							<SliderNavButton
 								direction="next"
-								label={ __( 'Next meals', 'stayilo' ) }
+								label={ __( 'Next items', 'stayilo' ) }
 								onClick={ () => scrollByCard( 'next' ) }
 							/>
 						</div>

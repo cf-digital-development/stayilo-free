@@ -112,7 +112,7 @@ export function Header( {
 				<div className="portal-header-spacer" aria-hidden="true" />
 			) : null }
 			<header className={ classes }>
-				<div className="portal-header-bar portal-content">
+				<div className="portal-header-bar">
 					<div className="portal-header-brand">
 						<div className="portal-header-logo">
 							<Link

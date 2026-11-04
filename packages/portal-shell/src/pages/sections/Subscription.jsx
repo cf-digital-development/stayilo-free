@@ -10,7 +10,7 @@ import { useTemplateRecipe } from '../../templates/TemplateProvider.jsx';
 import { __ } from '@stayilo/design-system/i18n';
 
 /**
- * My subscription header + meal box card grid.
+ * My subscription header + subscription card grid.
  *
  * @param {object} props
  * @param {Array<object>} [props.cards]
@@ -49,7 +49,7 @@ export function Subscription( {
 					/>
 				) : null }
 				<SubscriptionGrid
-					emptyTitle={ id === 'classic' ? __( 'Your box is empty', 'stayilo' ) : __( 'No subscription found', 'stayilo' ) }
+					emptyTitle={ __( 'No subscription found', 'stayilo' ) }
 					cards={ cards }
 					onReactivate={ onReactivate }
 					onResume={ onResume }

@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import { __ } from '@stayilo/design-system/i18n';
 import { Banner } from '../components/Banner.jsx';
 import { SubscriptionOverview } from './sections/SubscriptionOverview.jsx';
 import { UpcomingBoxesSlider } from '../components/UpcomingBoxesSlider.jsx';
@@ -96,7 +97,7 @@ export function ManageSubscription() {
 						sliderSubtitle={
 							subscription
 								? subscription.description
-								: "We picked meals we thought you'd like."
+								: __( "We picked items we thought you'd like.", 'stayilo' )
 						}
 					/>
 				</div>

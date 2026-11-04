@@ -9,7 +9,7 @@ import { __ } from '@stayilo/design-system/i18n';
 export const WELCOME_BANNER = {
 	title: __( 'Welcome!', 'stayilo' ),
 	subtitle: __(
-		'Manage your meal subscriptions, upcoming orders, and account details here.',
+		'Manage your subscriptions, upcoming orders, and account details here.',
 		'stayilo'
 	),
 	backgroundColor: 'var(--stayilo-banner-bg)',
@@ -38,7 +38,7 @@ export const EDIT_BOX_BANNER = {
 
 /** Canceled / reactivate CTA banner (image 3). */
 export const REACTIVATE_BANNER = {
-	title: __( 'Welcome back, Coby!', 'stayilo' ),
+	title: __( 'Welcome back!', 'stayilo' ),
 	subtitle: __( 'We missed you! Your subscription is currently cancelled.', 'stayilo' ),
 	backgroundColor: '#FFDAA7',
 	textTone: 'dark',
@@ -55,7 +55,7 @@ export const REACTIVATE_BANNER = {
 export const PAYMENT_FAILED_BANNER = {
 	title: __( 'Payment failed', 'stayilo' ),
 	subtitle: __(
-		'We couldn’t process your payment. Please complete repayment to keep your meals coming.',
+		'We couldn’t process your payment. Please complete repayment to keep your subscription active.',
 		'stayilo'
 	),
 	backgroundColor: '#C00808',

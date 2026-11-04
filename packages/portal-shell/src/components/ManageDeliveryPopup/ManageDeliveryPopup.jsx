@@ -25,9 +25,10 @@ import {
 	earliestSelectableDeliveryDateId,
 	parseDateId,
 } from '../../utils/monthCalendar.js';
+import { getStayiloRegistry } from '@stayilo/extension-sdk';
+import { usePortalPremiumRevision } from '../../utils/portalActions.js';
 import { buildConfirmActions } from './confirmActions.js';
 import { ManageStep } from './steps/ManageStep.jsx';
-import { RescheduleStep } from './steps/RescheduleStep.jsx';
 import { __, sprintf } from '@stayilo/design-system/i18n';
 
 /**
@@ -122,8 +123,14 @@ export function ManageDeliveryPopup( {
 	allowChangeBoxSize = true,
 	descriptionClassName = '',
 } ) {
+	usePortalPremiumRevision();
 	const { id: templateId } = useTemplateRecipe();
 	const isClassic = templateId === 'classic';
+	const RescheduleStep = getStayiloRegistry().getPortalAction?.(
+		'reschedule-step'
+	);
+	const canReschedule =
+		allowReschedule && typeof RescheduleStep === 'function';
 	/** Persists across open/close until parent passes a new currentDeliveryDateId. */
 	const [ savedDeliveryDateId, setSavedDeliveryDateId ] = useState(
 		() => currentDeliveryDateId || ''
@@ -284,11 +291,11 @@ export function ManageDeliveryPopup( {
 		contentClassName = 'portal-popup--wide';
 		children = (
 			<ManageStep
-				allowReschedule={ allowReschedule }
+				allowReschedule={ canReschedule }
 				allowSkip={ allowSkip }
 				allowChangeBoxSize={ allowChangeBoxSize }
 				onReschedule={
-					allowReschedule
+					canReschedule
 						? () => {
 								setStartIndex(
 									findDateIndex( carouselDates, savedDeliveryDateId )
@@ -309,7 +316,7 @@ export function ManageDeliveryPopup( {
 				}
 			/>
 		);
-	} else if ( step === 'reschedule' ) {
+	} else if ( step === 'reschedule' && typeof RescheduleStep === 'function' ) {
 		title = __( 'Would you like to reschedule your order days?', 'stayilo' );
 		description = 'Available order dates';
 		contentClassName = 'portal-popup--wide';
@@ -325,6 +332,31 @@ export function ManageDeliveryPopup( {
 					setSelectedDateId( dateId );
 					setStep( 'confirm' );
 				} }
+			/>
+		);
+	} else if ( step === 'reschedule' ) {
+		// Pro registers reschedule-step; without it fall back to manage.
+		title = __( 'Manage delivery', 'stayilo' );
+		description = (
+			<>
+				{ __( 'Manage your upcoming order preferences below.', 'stayilo' ) }
+			</>
+		);
+		contentClassName = 'portal-popup--wide';
+		children = (
+			<ManageStep
+				allowReschedule={ false }
+				allowSkip={ allowSkip }
+				allowChangeBoxSize={ allowChangeBoxSize }
+				onSkip={ allowSkip ? () => setStep( 'skip-confirm' ) : undefined }
+				onChangeBoxSize={
+					allowChangeBoxSize
+						? () => {
+								onChangeBoxSize?.();
+								onClose?.();
+						  }
+						: undefined
+				}
 			/>
 		);
 	} else if ( step === 'skip-confirm' ) {

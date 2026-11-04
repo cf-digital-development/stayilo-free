@@ -135,7 +135,7 @@ export function isPortalActionEnabled( actionId ) {
 }
 
 /**
- * Whether the Manage Subscription CTA should show on meal-box cards.
+ * Whether the Manage Subscription CTA should show on subscription cards.
  * Always true — Free includes skip, address, cancel, and reactivate, so the
  * manage entry point is not gated on a single portal-action toggle.
  *
@@ -189,9 +189,6 @@ export function usePortalPremiumRevision() {
 	useEffect( () => {
 		const bump = () => setRevision( ( n ) => n + 1 );
 		window.addEventListener( 'stayilo-premium-loaded', bump );
-		if ( window.StayiloReactPremium?.portalLoaded ) {
-			bump();
-		}
 		return () => {
 			window.removeEventListener( 'stayilo-premium-loaded', bump );
 		};

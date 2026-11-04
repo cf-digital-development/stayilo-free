@@ -6,6 +6,7 @@ const REGISTRY_KEY = 'StayiloRegistry';
 
 /**
  * @typedef {object} StayiloRegistry
+ * @property {number} apiVersion
  * @property {Record<string, RegistryComponent>} dashboardWidgets
  * @property {Record<string, RegistryComponent>} adminPages
  * @property {Record<string, RegistryComponent>} portalTemplates
@@ -20,6 +21,8 @@ const REGISTRY_KEY = 'StayiloRegistry';
  * @property {(afterStepId: string, component: RegistryComponent) => void} registerWizardStep
  * @property {(path: string, component: RegistryComponent) => void} registerPortalRoute
  * @property {(card: object) => void} registerPortalActionCard
+ * @property {(tier: 'free'|'core'|'growth'|null|undefined) => void} setMerchantTier
+ * @property {() => 'free'|'core'|'growth'} getMerchantTier
  * @property {(slotId: string) => RegistryComponent | undefined} getDashboardWidget
  * @property {(routeId: string) => RegistryComponent | undefined} getAdminPage
  * @property {(templateId: string) => RegistryComponent | undefined} getPortalTemplate
@@ -35,8 +38,11 @@ const REGISTRY_KEY = 'StayiloRegistry';
  * @returns {StayiloRegistry}
  */
 export function createStayiloRegistry() {
+	let merchantTier = 'free';
+
 	/** @type {StayiloRegistry} */
 	const registry = {
+		apiVersion: 1,
 		dashboardWidgets: {},
 		adminPages: {},
 		portalTemplates: {},
@@ -46,6 +52,27 @@ export function createStayiloRegistry() {
 		portalActionCards: [],
 		portalApis: {},
 		portalRecipes: {},
+
+		setMerchantTier( tier ) {
+			const raw = String( tier || '' ).toLowerCase();
+			const next =
+				raw === 'growth'
+					? 'growth'
+					: raw === 'core' || raw === 'pro'
+						? 'core'
+						: 'free';
+			if ( next === merchantTier ) {
+				return;
+			}
+			merchantTier = next;
+			if ( typeof window !== 'undefined' ) {
+				window.dispatchEvent( new CustomEvent( 'stayilo-premium-loaded' ) );
+			}
+		},
+
+		getMerchantTier() {
+			return merchantTier;
+		},
 
 		registerDashboardWidget( slotId, component ) {
 			registry.dashboardWidgets[ slotId ] = component;

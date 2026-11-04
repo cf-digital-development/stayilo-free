@@ -7,4 +7,3 @@ build
 *.local
 .turbo
 coverage
-package-lock.json

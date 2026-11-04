@@ -166,7 +166,7 @@ export function PortalHome() {
 						rescheduleDelivery={ rescheduleDelivery }
 						sliderSubtitle={
 							primary?.description ||
-							"We picked meals we thought you'd like."
+							__( "We picked items we thought you'd like.", 'stayilo' )
 						}
 					/>
 				}

@@ -1,4 +1,5 @@
 import { __ } from '@stayilo/design-system/i18n';
+import { getStayiloRegistry } from '@stayilo/extension-sdk';
 import { Button } from './Button.jsx';
 import { NavArrowIcon } from './NavArrowIcon.jsx';
 import { CARD_LAYOUTS } from './meal-card/layouts.js';
@@ -108,11 +109,11 @@ function CardActions( {
 }
 
 /**
- * Meal subscription card — image, title, next-order strip, manage CTA.
+ * Subscription card — image, title, next-order strip, manage CTA.
  * Layout (media vs chip) comes from the active template recipe.
  *
  * @param {object} props
- * @param {string} [props.title='Meal subscription']
+ * @param {string} [props.title='Subscription']
  * @param {string} [props.description]
  * @param {string} [props.category]
  * @param {string} [props.imageUrl]
@@ -132,7 +133,7 @@ function CardActions( {
  * @param {string} [props.className]
  */
 export function MealBoxCard( {
-	title = __( 'Meal subscription', 'stayilo' ),
+	title = __( 'Subscription', 'stayilo' ),
 	description = __( 'Your recurring subscription.', 'stayilo' ),
 	category,
 	imageUrl,
@@ -154,10 +155,12 @@ export function MealBoxCard( {
 	className = '',
 } ) {
 	const recipe = useTemplateRecipe();
-	const layout = recipe?.card && CARD_LAYOUTS[ recipe.card ]
-		? recipe.card
-		: 'media';
-	const Body = CARD_LAYOUTS[ layout ];
+	const cardKey = recipe?.card || 'chip';
+	const Body =
+		getStayiloRegistry().getPortalTemplate?.( `card:${ cardKey }` ) ||
+		CARD_LAYOUTS[ cardKey ] ||
+		CARD_LAYOUTS.chip;
+	const layout = Body === CARD_LAYOUTS.chip || cardKey === 'chip' ? 'chip' : cardKey;
 	const isCanceled = isSubscriptionCanceled( status );
 	const isPaused = isSubscriptionPaused( status );
 	const isClassic = recipe?.id === 'classic';

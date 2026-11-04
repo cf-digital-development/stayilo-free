@@ -5,8 +5,6 @@
   "main": "./src/index.js",
   "exports": {
     ".": "./src/index.js",
-    "./components/MonthCalendar": "./src/components/MonthCalendar.jsx",
-    "./components/ChangeDatePopup": "./src/components/ChangeDatePopup.jsx",
     "./utils/monthCalendar": "./src/utils/monthCalendar.js",
     "./styles/*": "./src/styles/*"
   },

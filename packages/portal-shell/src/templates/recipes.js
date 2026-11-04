@@ -24,12 +24,21 @@ const RECIPES = {
  * @returns {{ id: string, chrome: string, home: string, card: string, view: string }}
  */
 export function getRecipe( id ) {
-	const tier = String( getPortal().tier || 'free' ).toLowerCase();
+	const registry = getStayiloRegistry();
+	const registryTier =
+		typeof registry.getMerchantTier === 'function'
+			? registry.getMerchantTier()
+			: 'free';
+	const portalTier = String( getPortal().tier || 'free' ).toLowerCase();
+	const tier =
+		registryTier && registryTier !== 'free' ? registryTier : portalTier;
+
+	// Free-only: always Classic. Paid UI unlocks after Pro calls setMerchantTier.
 	if ( tier === 'free' ) {
 		return CLASSIC_RECIPE;
 	}
 
-	const registered = getStayiloRegistry().getPortalRecipe?.( id );
+	const registered = registry.getPortalRecipe?.( id );
 	if ( registered ) {
 		return registered;
 	}

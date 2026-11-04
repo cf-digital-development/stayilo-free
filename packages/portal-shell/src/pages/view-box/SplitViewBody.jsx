@@ -132,7 +132,7 @@ export function SplitViewBody( {
 	onEditBox,
 	onAddMore,
 } ) {
-	const title = subscription?.title || __( 'Meal subscription', 'stayilo' );
+	const title = subscription?.title || __( 'Subscription', 'stayilo' );
 	const imageUrl = resolveMediaUrl(
 		subscription?.imageUrl || displayLines[ 0 ]?.imageUrl,
 		DEFAULT_MEAL_IMAGE

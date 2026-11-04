@@ -1,3 +1,4 @@
+import { getPortal } from '../api/portal.js';
 import {
 	readStorageJson,
 	writeStorageJson,
@@ -8,10 +9,20 @@ export const DELIVERY_OVERRIDES_STORAGE_KEY =
 	'portal-shell:delivery-overrides';
 
 /**
+ * Scope overrides to the logged-in customer on shared computers.
+ *
+ * @returns {string}
+ */
+function deliveryOverridesStorageKey() {
+	const customerId = String( getPortal().customerId || '0' );
+	return `${ DELIVERY_OVERRIDES_STORAGE_KEY }:${ customerId }`;
+}
+
+/**
  * @returns {Record<string, { dateId?: string, dateLabel?: string }>}
  */
 export function readDeliveryOverrides() {
-	const raw = readStorageJson( DELIVERY_OVERRIDES_STORAGE_KEY );
+	const raw = readStorageJson( deliveryOverridesStorageKey() );
 	if ( ! raw || typeof raw !== 'object' || Array.isArray( raw ) ) {
 		return {};
 	}
@@ -22,7 +33,7 @@ export function readDeliveryOverrides() {
  * @param {Record<string, { dateId?: string, dateLabel?: string }>} overrides
  */
 export function writeDeliveryOverrides( overrides ) {
-	writeStorageJson( DELIVERY_OVERRIDES_STORAGE_KEY, overrides || {} );
+	writeStorageJson( deliveryOverridesStorageKey(), overrides || {} );
 }
 
 /**

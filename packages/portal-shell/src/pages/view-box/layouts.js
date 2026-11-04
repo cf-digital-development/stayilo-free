@@ -1,7 +1,6 @@
 import { SplitViewBody } from './SplitViewBody.jsx';
-import { StackViewBody } from './StackViewBody.jsx';
 
+/** Classic view-box layout only. Pro registers other views via StayiloRegistry. */
 export const VIEW_LAYOUTS = {
-	stack: StackViewBody,
 	split: SplitViewBody,
 };
