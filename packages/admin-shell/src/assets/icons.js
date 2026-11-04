@@ -1,0 +1,20 @@
+/** Named SVG icons for Pro packages — import from `@stayilo/admin-shell` only. */
+export { ReactComponent as KeyIcon } from './svg/Key.svg';
+export { ReactComponent as ClockIcon } from './svg/Clock.svg';
+export { ReactComponent as CaretDownIcon } from './svg/CaretDown.svg';
+export { ReactComponent as DateIcon } from './svg/dateIcon.svg';
+export { ReactComponent as SkipForwardIcon } from './svg/SkipForward.svg';
+export { ReactComponent as ArrowRightIcon } from './svg/ArrowRight.svg';
+export { ReactComponent as EyeIcon } from './svg/Eye.svg';
+export { ReactComponent as DotsSixVerticalIcon } from './svg/DotsSixVertical.svg';
+export { ReactComponent as PlusIcon } from './svg/Plus.svg';
+export { ReactComponent as SparkleIcon } from './svg/sparkIcon.svg';
+export { ReactComponent as SyncIcon } from './svg/Icon.svg';
+export { ReactComponent as ArrowDiagonalIcon } from './svg/arrow-diagonal.svg';
+export { ReactComponent as CalendarCheckIcon } from './svg/CalendarCheck.svg';
+export { ReactComponent as PauseIcon } from './svg/Pause.svg';
+export { ReactComponent as PencilEditIcon } from './svg/Pencil-edit.svg';
+export { ReactComponent as ArrowUpRightIcon } from './svg/ArrowUpRight.svg';
+export { ReactComponent as ActivityClockIcon } from './svg/activity-clock.svg';
+export { ReactComponent as PaginationArrowIcon } from './svg/pagination-arrow.svg';
+export { ReactComponent as RightArrowIcon } from './svg/right-arrow.svg';

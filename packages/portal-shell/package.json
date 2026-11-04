@@ -1,0 +1,46 @@
+{
+  "name": "@stayilo/portal-shell",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": ["*.css"],
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./utils/monthCalendar": "./src/utils/monthCalendar.js",
+    "./styles/*": "./src/styles/*"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-router-dom": "^6.0.0 || ^7.0.0"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.12.0",
+    "@stayilo/design-system": "*",
+    "@stayilo/extension-sdk": "*",
+    "@stripe/stripe-js": "^9.17.0",
+    "formik": "^2.4.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.3.0",
+    "react-router-dom": "^6.28.0",
+    "redux-persist": "^6.0.0",
+    "yup": "^1.7.1"
+  },
+  "devDependencies": {
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "@wordpress/scripts": "^30.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^5.4.11"
+  },
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "start:wp": "wp-scripts start",
+    "build": "wp-scripts build",
+    "preview": "vite preview"
+  }
+}

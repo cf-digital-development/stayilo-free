@@ -1,0 +1,205 @@
+@layer components {
+	.portal-order-history {
+		@apply flex flex-col items-start gap-4 rounded-2xl bg-white p-4 shadow-[0px_2px_16px_0px_#0000001A] sm:flex-row sm:items-center sm:gap-5 sm:p-5;
+	}
+	.portal-order-history--row {
+		@apply flex flex-col items-start gap-2 bg-transparent sm:flex-row sm:items-center sm:gap-3;
+	}
+	.portal-order-history--divided {
+		@apply border-b py-4;
+		border-color: var(--stayilo-border, #e5e7eb);
+	}
+	.portal-order-history--row:not(.portal-order-history--divided) {
+		@apply pt-4;
+	}
+	.portal-order-history-media {
+		@apply h-full w-full shrink-0 overflow-hidden rounded-[6.46px] sm:h-[92px] sm:w-[92px];
+	}
+	.portal-order-history-media img {
+		@apply h-full w-full object-cover;
+	}
+	.portal-order-history__body {
+		@apply min-w-0 flex-1;
+	}
+	.portal-order-history__title {
+		@apply m-0 text-base font-bold leading-6 text-[#06021F];
+	}
+	.portal-order-history__price {
+		@apply mt-[6px] m-0 text-sm font-medium leading-5 text-[#101010];
+	}
+	.portal-order-history__meta {
+		@apply mt-[18px] flex flex-wrap items-center gap-x-4 gap-y-1;
+	}
+	.portal-order-history__meta-text {
+		@apply m-0 text-sm font-normal leading-5 text-[#101010] opacity-80;
+	}
+	.portal-order-history__dot {
+		@apply mx-[10px];
+	}
+	.portal-order-history__action-wrap {
+		@apply w-full shrink-0 sm:w-auto;
+	}
+	.portal-btn.portal-order-history__action {
+		@apply w-full gap-1 rounded-[8px] border !border-[#101010] !pr-3 !pl-4 !py-[7px] !text-base !font-semibold !leading-6 !text-[#101010] sm:w-auto;
+	}
+	.portal-orders-list {
+		@apply mx-auto max-w-[1080px] rounded-[16px] bg-white p-5 pt-2 pb-6 sm:px-6;
+	}
+
+	.portal-shell[data-template='classic'] .portal-orders-list {
+		@apply flex flex-col gap-2 rounded-none bg-transparent p-0;
+	}
+	.portal-shell[data-template='classic'] .portal-order-history--row {
+		@apply gap-3 rounded-[4px] bg-white p-5 sm:gap-5 items-start;
+	}
+	.portal-shell[data-template='classic'] .portal-order-history--divided {
+		@apply border-0 py-5;
+	}
+	.portal-shell[data-template='classic'] .portal-order-history--row:not(.portal-order-history--divided) {
+		@apply pt-5;
+	}
+	.portal-shell[data-template='classic'] .portal-order-history-media {
+		@apply h-16 w-16 rounded-lg bg-[#E8E8E8] sm:h-[92px] sm:w-[92px];
+	}
+	.portal-shell[data-template='classic'] .portal-order-history__title {
+		@apply text-[18px] font-[700] leading-[26px] text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-order-history__price {
+		@apply mt-2 text-[16px] font-[500] leading-[24px] text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-order-history__meta {
+		@apply mt-3 gap-x-3;
+	}
+	.portal-shell[data-template='classic'] .portal-order-history__meta-text {
+		@apply text-sm font-normal leading-5 text-[#10101099] opacity-100;
+	}
+	.portal-shell[data-template='classic'] .portal-orders-list .portal-order-status {
+		@apply rounded-full border-0 px-2.5 py-0.5 text-xs font-medium leading-5;
+	}
+	.portal-shell[data-template='classic'] .portal-orders-list .portal-order-status--delivered {
+		@apply bg-[#E7F8EE] rounded-[4px] text-[#0A7A3E] border-[1px] border-[#0079434c] text-[14px] font-[500] leading-[20px];
+	}
+	.portal-shell[data-template='classic'] .portal-btn.portal-order-history__action {
+		@apply !w-auto !rounded-[4px] !border-[#101010] !px-3.5 !py-1.5 !text-sm !font-semibold !leading-5;
+	}
+
+	.portal-shell[data-template='classic'] .portal-order-details {
+		@apply mx-auto w-full !max-w-[1200px] !px-0;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__grid {
+		@apply grid grid-cols-1 items-start gap-5 lg:grid-cols-[minmax(0,1fr)_420px];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__main {
+		@apply flex min-w-0 flex-col gap-5;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__items {
+		@apply rounded-[8px] bg-white p-5 sm:p-6;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__items-header {
+		@apply mb-4;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__items-header h2,
+	.portal-shell[data-template='classic'] .portal-order-details__items-header .portal-title {
+		@apply m-0 text-[24px] !font-[700] leading-normal;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__items-header p {
+		@apply !mt-1.5 text-[16px] font-normal leading-6 text-[#10101099];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line {
+		@apply flex-row flex-wrap items-center gap-4 py-4 sm:flex-nowrap;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line--divided {
+		@apply border-[#EAE5DD] py-7;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__items-header + .portal-cart-line {
+		@apply border-t border-[#EAE5DD];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line:not(.portal-cart-line--divided) {
+		@apply pt-7 pb-0;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line-media {
+		@apply h-12 w-12 rounded-[8px] bg-[#F3EDE4] sm:h-12 sm:w-12 md:h-12 md:w-12;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line__info {
+		@apply min-w-0 flex-1;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line__info h3 {
+		@apply text-[16px] font-semibold leading-6 md:text-[16px] md:leading-6;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line__meta {
+		@apply mt-1 m-0 text-sm font-normal leading-5 text-[#10101099];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line__prices {
+		@apply items-end;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line__total {
+		@apply text-sm font-semibold leading-5 md:text-sm md:leading-5;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-cart-line__unit {
+		@apply text-xs font-normal leading-4 text-[#10101099];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__convert {
+		@apply flex flex-col items-start rounded-[8px] border border-[#007943] bg-[#E0EDE6] px-5 py-5 sm:px-6 sm:py-6;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__convert-title {
+		@apply m-0 text-[20px] font-bold leading-[26px] text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__convert-body {
+		@apply mt-2 mb-0 max-w-[680px] text-[18px] font-[500] leading-[26px] text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-btn.portal-order-details__convert-btn {
+		@apply mt-6 !w-auto !rounded-[4px] !border-0 !bg-[#007943] !px-[32px] !py-3 !text-[18px] !font-[800] !leading-6 !text-white hover:!bg-[#006636];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__date,
+	.portal-shell[data-template='classic'] .portal-order-details__address {
+		@apply rounded-[8px] p-5 sm:p-6;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__date .portal-order-meta__label {
+		@apply text-[20px] font-bold leading-[26px] text-[#101010] opacity-100;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__date .portal-order-meta__body {
+		@apply mt-2;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__date .portal-order-meta__body p {
+		@apply text-[18px] font-[500] leading-[26px] sm:text-[18px] sm:leading-[26px];
+	}
+	.portal-shell[data-template='classic'] .portal-order-meta__icon svg {
+		@apply w-[40px] h-[40px];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__date .portal-order-meta__trailing {
+		@apply !my-0 sm:top-auto sm:bottom-5 sm:translate-y-0;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details .portal-order-status--delivered {
+		@apply rounded-[4px] border border-[#6B4326] bg-[#FFF] !px-3 !py-1 text-xs font-medium leading-5 text-[#6B4326];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__address .portal-order-meta__label {
+		@apply text-[16px] font-[400] tracking-[0.04px] leading-6 text-[#10101099] opacity-100;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__address .portal-order-meta__body {
+		@apply mt-0;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__address .portal-order-meta__icon svg {
+		@apply w-[48px] h-[48px];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__summary {
+		@apply rounded-[8px] bg-white p-5 sm:p-6;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__summary-title {
+		@apply m-0 text-[18px] font-[800] leading-6;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__summary-lines {
+		@apply m-0 mt-4 list-none space-y-3 p-0;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__summary-line {
+	@apply flex items-center justify-between gap-4 text-[16px] font-[500] leading-6 text-[#615E59];
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__summary-line--discount {
+		color: #e11d2a;
+	}
+	.portal-shell[data-template='classic'] .portal-order-details__summary-line--total {
+		@apply pt-1 text-[18px] font-[800] leading-6 text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-btn.portal-order-details__again {
+		@apply mt-5 !w-full !rounded-[4px] !border-0 !bg-[#007943] !py-3 !text-[18px] !font-[800] !leading-6 !text-white hover:!bg-[#006636];
+	}
+}

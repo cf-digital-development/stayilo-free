@@ -1,0 +1,72 @@
+/* Extra utilities for free-core / admin-shell classes not in design-system layer. */
+@tailwind utilities;
+
+/* Match WordPress Free plugin mount id (#stayilo-react-root) and local mocks. */
+#stayilo-react-root,
+#stayilo-free-admin-root,
+#stayilo-free-wizard-root {
+	width: 100%;
+	min-height: 100vh;
+}
+
+.stayilo-free-admin {
+	width: 100%;
+	min-height: 100vh;
+}
+
+/*
+ * Elementor-style fullscreen: hide WP admin chrome on the Stayilo dashboard.
+ * Class is added on <html> from mount-admin.jsx.
+ */
+html.stayilo-fullscreen-admin {
+	padding-top: 0 !important;
+	margin-top: 0 !important;
+}
+
+html.stayilo-fullscreen-admin #wpadminbar,
+html.stayilo-fullscreen-admin #adminmenumain,
+html.stayilo-fullscreen-admin #adminmenuback,
+html.stayilo-fullscreen-admin #adminmenuwrap,
+html.stayilo-fullscreen-admin #wpfooter {
+	display: none !important;
+}
+
+html.stayilo-fullscreen-admin #wpcontent,
+html.stayilo-fullscreen-admin.folded #wpcontent,
+html.stayilo-fullscreen-admin #wpbody-content {
+	margin-left: 0 !important;
+	padding-left: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+html.stayilo-fullscreen-admin #wpbody-content > .wrap {
+	margin: 0;
+	max-width: none;
+	border: 0;
+	box-shadow: none;
+}
+
+html.stayilo-fullscreen-admin hr.wp-header-end {
+	display: none !important;
+}
+
+body.stayilo-free-admin-page #stayilo-react-root .min-h-screen,
+body.stayilo-free-admin-page #stayilo-free-admin-root .min-h-screen {
+	min-height: 100vh;
+}
+
+/* Setup wizard — edge-to-edge content column only (keeps WP menu for now). */
+.stayilo-free-setup {
+	min-height: 100vh;
+	width: 100%;
+}
+
+body.stayilo-free-setup-page #wpcontent {
+	padding-left: 0;
+}
+
+body.stayilo-free-setup-page #wpbody-content {
+	padding-bottom: 0;
+}
+
+/* Checkbox styles live in design-system styles.css so paid and free setup match. */

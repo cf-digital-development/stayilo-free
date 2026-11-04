@@ -1,0 +1,738 @@
+﻿
+/* Font files ship with the plugin. The system stack is the fallback. */
+@tailwind base;
+@tailwind components;
+
+
+#stayilo-react-root a:focus,
+#stayilo-react-root a:focus-visible,
+#stayilo-free-admin-root a:focus,
+#stayilo-free-admin-root a:focus-visible,
+#stayilo-free-wizard-root a:focus,
+#stayilo-free-wizard-root a:focus-visible,
+#stayilo-portal-root a:focus,
+#stayilo-portal-root a:focus-visible,
+.stayilo-portal a:focus, a:focus, a:hover,
+.stayilo-portal a:focus-visible {
+	color: inherit;
+	box-shadow: none;
+	outline: none;
+}
+
+@layer components {
+	/* ---- Typography ---- */
+	.stayilo-type-title-sm {
+		@apply m-0 font-inter text-base font-bold leading-6 tracking-normal text-stayilo-ink;
+	}
+
+	.stayilo-type-title-md {
+		@apply m-0 font-inter text-base font-semibold leading-6 tracking-normal text-stayilo-ink;
+	}
+
+	.stayilo-type-title-lg {
+		@apply m-0 font-inter text-2xl font-bold leading-8 tracking-normal text-stayilo-ink;
+	}
+
+	.stayilo-type-body {
+		@apply m-0 font-inter text-sm font-normal leading-5 tracking-normal text-stayilo-ink;
+	}
+
+	.stayilo-type-body-muted {
+		@apply m-0 font-inter text-sm font-normal leading-5 tracking-normal text-stayilo-muted;
+	}
+
+	.stayilo-type-label {
+		@apply m-0 font-inter text-sm font-medium leading-5 tracking-normal text-stayilo-muted;
+	}
+
+	.stayilo-type-label-caps {
+		@apply m-0 font-inter text-sm font-semibold leading-5 tracking-[1px] text-stayilo-muted uppercase;
+	}
+
+	.stayilo-type-label-caps-sm {
+		@apply m-0 font-inter text-xs font-bold leading-4 tracking-[1px] text-stayilo-muted uppercase;
+	}
+
+	.stayilo-type-mono {
+		@apply font-mono text-stayilo-ink;
+	}
+
+	.stayilo-type-mono-sm {
+		@apply font-mono text-sm leading-5 text-stayilo-ink;
+	}
+
+	.stayilo-type-mono-md {
+		@apply font-mono text-base leading-6 text-stayilo-ink;
+	}
+
+	/* ---- Surfaces / cards ---- */
+	.stayilo-card {
+		@apply box-border bg-white border border-stayilo-ink-alpha rounded-[15px];
+	}
+
+	.stayilo-card--soft {
+		@apply box-border bg-stayilo-surface-soft rounded-xl;
+	}
+
+	.stayilo-card--soft-bordered {
+		@apply box-border bg-stayilo-surface-soft border border-stayilo-ink-alpha rounded-xl;
+	}
+
+	.stayilo-card--step {
+		@apply box-border w-full max-w-[680px] mx-auto p-[30px] bg-white border border-stayilo-ink-alpha rounded-3xl shadow-[0px_1px_3px_0px_#0000001A];
+	}
+
+	.stayilo-card--selected {
+		@apply border-stayilo-ink bg-stayilo-ink-alpha-selected;
+	}
+
+	.stayilo-card--clickable {
+		@apply cursor-pointer select-none;
+	}
+
+	/* ---- Layout helpers ---- */
+	.stayilo-stack {
+		@apply flex flex-col;
+	}
+
+	.stayilo-stack-8 {
+		@apply flex flex-col gap-2;
+	}
+
+	.stayilo-stack-16 {
+		@apply flex flex-col gap-4;
+	}
+
+	.stayilo-stack-24 {
+		@apply flex flex-col gap-6;
+	}
+	.stayilo-stack-12 {
+		@apply flex flex-col gap-3;
+	}
+
+	.stayilo-row-between {
+		@apply flex items-center justify-between gap-4;
+	}
+
+	.stayilo-row-start {
+		@apply flex items-start gap-3;
+	}
+
+	.stayilo-row-center {
+		@apply flex items-center gap-3;
+	}
+
+	/* ---- Pills / badges ---- */
+	.stayilo-pill-pro {
+		@apply inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-stayilo-core-soft font-inter text-xs font-semibold leading-4 tracking-[0.22px] text-stayilo-core;
+	}
+
+	.stayilo-pill-status-on {
+		@apply inline-flex items-center shrink-0 px-3 py-1 rounded-full bg-stayilo-accent-soft font-inter text-xs font-bold leading-4 text-stayilo-accent;
+	}
+
+	.stayilo-pill-status-off {
+		@apply inline-flex items-center shrink-0 px-3 py-1 rounded-full bg-[#EDEEF2] font-inter text-xs font-bold leading-4 text-[#7C8494];
+	}
+
+	.stayilo-pill-notice {
+		@apply inline-flex items-center gap-[7px] px-4 py-1.5 rounded-full bg-stayilo-chip font-inter text-xs font-normal leading-4 text-stayilo-muted;
+	}
+
+	/* ---- Form / radio ---- */
+	.stayilo-radio {
+		@apply box-border w-4 h-4 rounded-full border-2 border-[#7C849466] bg-white;
+	}
+
+	.stayilo-radio--checked {
+		@apply bg-stayilo-ink border-stayilo-ink;
+	}
+
+	.stayilo-check-accent {
+		@apply flex items-center justify-center shrink-0 w-6 h-6 rounded-full bg-stayilo-accent-soft text-stayilo-accent;
+	}
+
+	.stayilo-icon-well {
+		@apply flex items-center justify-center shrink-0 w-10 !h-10 rounded-xl bg-stayilo-ink-alpha-muted text-stayilo-ink;
+	}
+
+	.stayilo-link-pro {
+		@apply font-inter text-sm font-medium leading-5 text-stayilo-core hover:text-[#5948dd];
+	}
+
+	/* ---- Buttons (shared base; variants via modifiers) ---- */
+	.stayilo-btn {
+		@apply inline-flex items-center justify-center gap-2 border-0 font-inter font-bold text-base leading-6 tracking-normal text-center cursor-pointer transition-[background-color,color,opacity] duration-700 ease-[ease];
+	}
+
+	.stayilo-btn--filled {
+		@apply min-w-[148px] px-6 py-3 rounded-xl text-white;
+	}
+
+	.stayilo-btn--filled.stayilo-btn--active {
+		@apply bg-stayilo-ink;
+	}
+
+	.stayilo-btn--filled.stayilo-btn--active:hover:not(:disabled) {
+		@apply bg-[#1a1a1a];
+	}
+
+	.stayilo-btn--filled.stayilo-btn--inactive,
+	.stayilo-btn--filled:disabled {
+		@apply bg-[rgba(13,17,23,0.4)] cursor-not-allowed;
+	}
+
+	.stayilo-btn--text {
+		@apply min-w-[auto] px-1 py-2 rounded-none bg-transparent;
+	}
+
+	.stayilo-btn--text.stayilo-btn--active {
+		@apply text-stayilo-ink;
+	}
+
+	.stayilo-btn--text.stayilo-btn--inactive,
+	.stayilo-btn--text:disabled {
+		@apply text-[rgba(13,17,23,0.4)] cursor-not-allowed;
+	}
+
+	.stayilo-btn--back {
+		@apply !font-medium;
+	}
+
+	.stayilo-btn--back.stayilo-btn--active {
+		@apply !text-[#474C57];
+	}
+
+	.stayilo-btn--back.stayilo-btn--inactive,
+	.stayilo-btn--back:disabled {
+		@apply !text-[rgba(71,76,87,0.4)] cursor-not-allowed;
+	}
+
+	.stayilo-btn__label {
+		@apply whitespace-nowrap;
+	}
+
+	.stayilo-btn__icon {
+		@apply inline-flex items-center justify-center text-[20px];
+	}
+
+	.stayilo-btn__icon img,
+	.stayilo-btn__icon svg {
+		@apply block w-5 h-5;
+	}
+
+	.stayilo-btn--text .stayilo-btn__icon img,
+	.stayilo-btn--text .stayilo-btn__icon svg {
+		@apply w-4 h-4;
+	}
+
+	/* ---- Selectable option row (font picker, etc.) ---- */
+	.stayilo-option-row {
+		@apply grid grid-cols-[minmax(0,1fr)_auto_16px] items-center gap-3 w-full min-h-9 py-[11.5px] px-[15px] box-border border border-stayilo-ink-alpha-strong rounded-[12px] bg-transparent text-stayilo-ink text-left cursor-pointer transition-all duration-700 ease-[ease];
+	}
+
+	.stayilo-option-row:hover:not(:disabled) {
+		@apply border-[#0d11174d];
+	}
+
+	.stayilo-option-row--selected {
+		@apply border-stayilo-ink bg-stayilo-ink-alpha-soft;
+	}
+
+	.stayilo-option-row:focus-visible {
+		@apply outline-none;
+	}
+
+	.stayilo-option-row:disabled {
+		@apply cursor-not-allowed opacity-50;
+	}
+
+	/* ---- Soft mono input (auto-detected / hex fields) ---- */
+	.stayilo-input-soft {
+		@apply w-full min-w-0 min-h-12 py-[13px] px-4 box-border !border !border-stayilo-ink-alpha !rounded-xl !bg-stayilo-surface-soft !text-stayilo-ink font-mono text-sm font-normal leading-5 outline-none focus:!shadow-none focus:!outline-none disabled:cursor-not-allowed;
+	}
+
+	#stayilo-react-root input.stayilo-hex-field,
+	input.stayilo-hex-field {
+		height: auto !important;
+		min-height: 0 !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		border: 0 !important;
+		border-radius: 0 !important;
+		background: transparent !important;
+		box-shadow: none !important;
+	}
+
+	#stayilo-react-root .stayilo-text-field__input,
+	.stayilo-text-field__input {
+		box-sizing: border-box !important;
+		height: var(--stayilo-text-field-height, 48px) !important;
+		min-height: var(--stayilo-text-field-min-height, 48px) !important;
+		margin: 0 !important;
+		border: 1px solid #0d11171a !important;
+		border-radius: 12px !important;
+		background-color: #f7f8fa !important;
+		box-shadow: none !important;
+		color: #0d1117 !important;
+		font-size: 16px !important;
+		font-weight: 500 !important;
+		line-height: 24px !important;
+		padding: var(--stayilo-text-field-padding, 11px 16px) !important;
+	}
+
+	#stayilo-react-root .stayilo-text-field__input.stayilo-text-field__input--with-start,
+	.stayilo-text-field__input.stayilo-text-field__input--with-start {
+		padding-left: 48px !important;
+	}
+
+	/* Kill WP focus chrome only — keep Stayilo border (border:none made fields look borderless on focus). */
+	#stayilo-react-root .stayilo-text-field__input:hover,
+	#stayilo-react-root .stayilo-text-field__input:focus,
+	#stayilo-react-root .stayilo-text-field__input:focus-visible,
+	#stayilo-react-root .stayilo-text-field__input:active,
+	.stayilo-text-field__input:hover,
+	.stayilo-text-field__input:focus,
+	.stayilo-text-field__input:focus-visible,
+	.stayilo-text-field__input:active,
+	#stayilo-react-root .stayilo-input-soft:hover,
+	#stayilo-react-root .stayilo-input-soft:focus,
+	#stayilo-react-root .stayilo-input-soft:focus-visible,
+	#stayilo-react-root .stayilo-input-soft:active,
+	.stayilo-input-soft:hover,
+	.stayilo-input-soft:focus,
+	.stayilo-input-soft:focus-visible,
+	.stayilo-input-soft:active {
+		border: 1px solid #0d11171a !important;
+		outline: none !important;
+		box-shadow: none !important;
+		--tw-ring-shadow: 0 0 #0000 !important;
+		--tw-ring-offset-shadow: 0 0 #0000 !important;
+	}
+
+	#stayilo-react-root select.stayilo-text-field__input,
+	select.stayilo-text-field__input {
+		appearance: none !important;
+		-webkit-appearance: none !important;
+		-moz-appearance: none !important;
+		display: block !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		background: #f7f8fa none !important;
+		padding-right: 40px !important;
+	}
+
+	#stayilo-react-root select.stayilo-text-field__input::-ms-expand,
+	select.stayilo-text-field__input::-ms-expand {
+		display: none;
+	}
+
+	#stayilo-react-root button.stayilo-select-trigger,
+	#stayilo-react-root button.stayilo-select-trigger.stayilo-text-field__input,
+	button.stayilo-select-trigger,
+	button.stayilo-select-trigger.stayilo-text-field__input {
+		display: flex !important;
+		align-items: center !important;
+		width: 100% !important;
+		max-width: 100% !important;
+		margin: 0 !important;
+		padding-right: 40px !important;
+		cursor: pointer;
+		text-align: left !important;
+		box-shadow: none !important;
+	}
+
+	#stayilo-react-root button.stayilo-select-trigger:hover,
+	#stayilo-react-root button.stayilo-select-trigger:focus,
+	#stayilo-react-root button.stayilo-select-trigger:focus-visible,
+	#stayilo-react-root button.stayilo-select-trigger:active,
+	button.stayilo-select-trigger:hover,
+	button.stayilo-select-trigger:focus,
+	button.stayilo-select-trigger:focus-visible,
+	button.stayilo-select-trigger:active {
+		background-color: #f7f8fa !important;
+		border: 1px solid #0d11171a !important;
+		color: #000000 !important;
+		box-shadow: none !important;
+	}
+
+	#stayilo-react-root .stayilo-select-menu,
+	.stayilo-select-menu {
+		position: absolute;
+		top: calc( 100% + 4px );
+		left: 0;
+		right: 0;
+		z-index: 40;
+		display: grid;
+		grid-template-rows: 0fr;
+		box-sizing: border-box;
+		width: 100%;
+		max-width: 100%;
+		margin: 0 !important;
+		padding: 0 !important;
+		pointer-events: none;
+		filter:
+			drop-shadow( 0px 8px 8px rgba( 10, 13, 18, 0.03 ) )
+			drop-shadow( 0px 20px 24px rgba( 10, 13, 18, 0.08 ) );
+		transition: grid-template-rows 300ms ease-out;
+	}
+
+	#stayilo-react-root .stayilo-select-menu.is-open,
+	.stayilo-select-menu.is-open {
+		grid-template-rows: 1fr;
+		pointer-events: auto;
+	}
+
+	#stayilo-react-root .stayilo-select-menu__clip,
+	.stayilo-select-menu__clip {
+		min-height: 0;
+		overflow: hidden;
+	}
+
+	#stayilo-react-root .stayilo-select-menu__list,
+	.stayilo-select-menu__list {
+		max-height: 220px;
+		margin: 0 !important;
+		padding: 4px 0 !important;
+		overflow-x: hidden;
+		overflow-y: auto;
+		overflow-y: overlay;
+		list-style: none !important;
+		border: 1px solid #0d11171a;
+		border-radius: 12px;
+		background: #ffffff;
+		scrollbar-width: thin;
+		scrollbar-color: #d1d5db transparent;
+		scrollbar-gutter: auto;
+		-ms-overflow-style: auto;
+	}
+
+	#stayilo-react-root .stayilo-select-menu__list::-webkit-scrollbar,
+	.stayilo-select-menu__list::-webkit-scrollbar {
+		width: 6px;
+		height: 0;
+	}
+
+	#stayilo-react-root .stayilo-select-menu__list::-webkit-scrollbar-track,
+	.stayilo-select-menu__list::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	#stayilo-react-root .stayilo-select-menu__list::-webkit-scrollbar-thumb,
+	.stayilo-select-menu__list::-webkit-scrollbar-thumb {
+		background: #d1d5db;
+		border-radius: 99px;
+	}
+
+	#stayilo-react-root .stayilo-select-menu__item,
+	.stayilo-select-menu__item {
+		margin: 0 !important;
+		padding: 0 !important;
+		list-style: none !important;
+	}
+
+	#stayilo-react-root button.stayilo-select-menu__option,
+	button.stayilo-select-menu__option {
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		height: auto !important;
+		min-height: 0 !important;
+		margin: 0 !important;
+		padding: 10px 16px !important;
+		border: 0 !important;
+		border-radius: 0 !important;
+		background: #ffffff !important;
+		box-shadow: none !important;
+		color: #000000 !important;
+		font-size: 14px !important;
+		font-weight: 500 !important;
+		line-height: 18px !important;
+		text-align: left !important;
+		cursor: pointer;
+		white-space: normal;
+		word-break: break-word;
+	}
+
+	#stayilo-react-root button.stayilo-select-menu__option:hover,
+	#stayilo-react-root button.stayilo-select-menu__option:focus,
+	#stayilo-react-root button.stayilo-select-menu__option:focus-visible,
+	button.stayilo-select-menu__option:hover,
+	button.stayilo-select-menu__option:focus,
+	button.stayilo-select-menu__option:focus-visible {
+		background: #f0f1f5 !important;
+		color: #000000 !important;
+		box-shadow: none !important;
+	}
+
+	#stayilo-react-root button.stayilo-select-menu__option:active,
+	#stayilo-react-root button.stayilo-select-menu__option.is-selected,
+	#stayilo-react-root button.stayilo-select-menu__option.is-selected:hover,
+	#stayilo-react-root button.stayilo-select-menu__option.is-selected:focus,
+	#stayilo-react-root button.stayilo-select-menu__option.is-selected:focus-visible,
+	button.stayilo-select-menu__option:active,
+	button.stayilo-select-menu__option.is-selected,
+	button.stayilo-select-menu__option.is-selected:hover,
+	button.stayilo-select-menu__option.is-selected:focus,
+	button.stayilo-select-menu__option.is-selected:focus-visible {
+		background: #0d1117 !important;
+		color: #ffffff !important;
+		box-shadow: none !important;
+	}
+
+	/* ---- Text field states (override WP admin input styles) ---- */
+	#stayilo-react-root .stayilo-text-field__input--invalid,
+	#stayilo-react-root .stayilo-text-field__input--invalid:hover,
+	#stayilo-react-root .stayilo-text-field__input--invalid:focus,
+	#stayilo-react-root .stayilo-text-field__input--invalid:focus-visible,
+	#stayilo-react-root .stayilo-text-field__input--invalid:active,
+	.stayilo-text-field__input--invalid,
+	.stayilo-text-field__input--invalid:hover,
+	.stayilo-text-field__input--invalid:focus,
+	.stayilo-text-field__input--invalid:focus-visible,
+	.stayilo-text-field__input--invalid:active {
+		border: 1px solid #ff6467 !important;
+		background-color: #fef2f2 !important;
+		color: #ff6467 !important;
+	}
+
+	#stayilo-react-root .stayilo-text-field__input--success,
+	#stayilo-react-root .stayilo-text-field__input--success:hover,
+	#stayilo-react-root .stayilo-text-field__input--success:focus,
+	#stayilo-react-root .stayilo-text-field__input--success:focus-visible,
+	#stayilo-react-root .stayilo-text-field__input--success:active,
+	.stayilo-text-field__input--success,
+	.stayilo-text-field__input--success:hover,
+	.stayilo-text-field__input--success:focus,
+	.stayilo-text-field__input--success:focus-visible,
+	.stayilo-text-field__input--success:active {
+		border: 1px solid #16a34a !important;
+		background-color: #f0fdf4 !important;
+		color: #16a34a !important;
+	}
+
+	#stayilo-react-root .stayilo-layout-card__box--selected,
+	.stayilo-layout-card__box--selected {
+		border-color: #0d1117 !important;
+		background-color: rgba(13, 17, 23, 0.04) !important;
+	}
+
+	/* ---- Action card selected state ---- */
+	.stayilo-action-card--selected .stayilo-action-card__icon {
+		background-color: #0d1117 !important;
+		border-color: #0d1117 !important;
+	}
+
+	.stayilo-action-card--selected .stayilo-action-card__icon img,
+	.stayilo-action-card--selected .stayilo-action-card__icon svg {
+		filter: brightness(0) invert(1);
+	}
+
+	.stayilo-action-card--selected .stayilo-action-card__button {
+		background-color: #0d1117 !important;
+		border-color: #0d1117 !important;
+		color: #ffffff !important;
+	}
+
+	.stayilo-action-card--selected .stayilo-action-card__title {
+		color: #0d1117 !important;
+	}
+}
+
+/* Wording / portal copy fields — Inter 14/20, 10px radius (beats default mono field). */
+#stayilo-react-root .stayilo-text-field__input.stayilo-text-field__input--inter,
+.stayilo-text-field__input.stayilo-text-field__input--inter {
+	font-family: "DM Sans", ui-sans-serif, system-ui, sans-serif !important;
+	font-size: 14px !important;
+	font-weight: 400 !important;
+	line-height: 20px !important;
+	padding: 13px 16px !important;
+	color: #0d1117 !important;
+	border-radius: 10px !important;
+	background-color: #F0F1F5 !important;
+	min-height:0px !important;
+}
+
+/* Growth Rules fields — medium / black / 18px leading. */
+#stayilo-react-root .stayilo-text-field__input.stayilo-text-field__input--rules,
+.stayilo-text-field__input.stayilo-text-field__input--rules {
+	font-weight: 500 !important;
+	color: #000000 !important;
+	line-height: 18px !important;
+	min-height: 0px !important;
+	height: auto !important;
+	padding: 14.5px 16px !important;
+}
+
+/* Rules blocked-message field — 19px vertical padding. */
+#stayilo-react-root .stayilo-text-field__input.stayilo-text-field__input--rules.stayilo-text-field__input--rules-message,
+.stayilo-text-field__input.stayilo-text-field__input--rules.stayilo-text-field__input--rules-message {
+	padding-top: 18.5px !important;
+	padding-bottom: 18.5px !important;
+}
+
+/* Wizard back — WP admin button styles override @layer on #stayilo-react-root (paid/core setup). */
+#stayilo-react-root button.stayilo-btn.stayilo-btn--back,
+#stayilo-free-wizard-root button.stayilo-btn.stayilo-btn--back,
+.stayilo-setup button.stayilo-btn.stayilo-btn--back,
+button.stayilo-btn.stayilo-btn--back {
+	font-weight: 500 !important;
+	color: #474c57 !important;
+	font-size: 14px !important;
+	background: transparent !important;
+	border: none !important;
+	box-shadow: none !important;
+	line-height: 20px !important;
+}
+
+#stayilo-react-root button.stayilo-btn.stayilo-btn--back:hover,
+#stayilo-react-root button.stayilo-btn.stayilo-btn--back:focus,
+#stayilo-free-wizard-root button.stayilo-btn.stayilo-btn--back:hover,
+#stayilo-free-wizard-root button.stayilo-btn.stayilo-btn--back:focus,
+.stayilo-setup button.stayilo-btn.stayilo-btn--back:hover,
+.stayilo-setup button.stayilo-btn.stayilo-btn--back:focus,
+button.stayilo-btn.stayilo-btn--back:hover,
+button.stayilo-btn.stayilo-btn--back:focus {
+	color: #474c57 !important;
+	background: transparent !important;
+}
+
+#stayilo-react-root button.stayilo-btn.stayilo-btn--back:disabled,
+#stayilo-free-wizard-root button.stayilo-btn.stayilo-btn--back:disabled,
+.stayilo-setup button.stayilo-btn.stayilo-btn--back:disabled,
+button.stayilo-btn.stayilo-btn--back:disabled {
+	color: rgba(71, 76, 87, 0.4) !important;
+}
+
+/*
+ * Custom checkbox — WP admin native checkboxes break at custom size.
+ * Paid setup mounts on #stayilo-react-root and does not load free-core styles,
+ * so these rules live here (same override pattern as the wizard back button).
+ */
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox'],
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox'],
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox'],
+input.stayilo-subscriber-checkbox[type='checkbox'] {
+	appearance: none !important;
+	-webkit-appearance: none !important;
+	box-sizing: border-box !important;
+	margin: 0 !important;
+	width: 20px !important;
+	min-width: 20px !important;
+	max-width: 20px !important;
+	height: 20px !important;
+	min-height: 20px !important;
+	max-height: 20px !important;
+	padding: 0 !important;
+	border: 1px solid #d5d7da !important;
+	border-radius: 6px !important;
+	background-color: #fff !important;
+	background-image: none !important;
+	background-position: center !important;
+	background-repeat: no-repeat !important;
+	background-size: 12px 12px !important;
+	box-shadow: none !important;
+	cursor: pointer;
+	vertical-align: middle;
+}
+
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']:hover,
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']:focus,
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']:focus-visible,
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']:active,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']:hover,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']:focus,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']:focus-visible,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']:active,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']:hover,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']:focus,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']:focus-visible,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']:active,
+input.stayilo-subscriber-checkbox[type='checkbox']:hover,
+input.stayilo-subscriber-checkbox[type='checkbox']:focus,
+input.stayilo-subscriber-checkbox[type='checkbox']:focus-visible,
+input.stayilo-subscriber-checkbox[type='checkbox']:active {
+	border: 1px solid #d5d7da !important;
+	outline: none !important;
+	box-shadow: none !important;
+}
+
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']:checked,
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']:checked:hover,
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']:checked:focus,
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']:checked:active,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']:checked,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']:checked:hover,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']:checked:focus,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']:checked:active,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']:checked,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']:checked:hover,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']:checked:focus,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']:checked:active,
+input.stayilo-subscriber-checkbox[type='checkbox']:checked,
+input.stayilo-subscriber-checkbox[type='checkbox']:checked:hover,
+input.stayilo-subscriber-checkbox[type='checkbox']:checked:focus,
+input.stayilo-subscriber-checkbox[type='checkbox']:checked:active {
+	border-color: #101010 !important;
+	background-color: #101010 !important;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M2.5 9L6 12.5L14 4.5' stroke='%23fff' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+}
+
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']:focus-visible,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']:focus-visible,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']:focus-visible,
+input.stayilo-subscriber-checkbox[type='checkbox']:focus-visible {
+	outline: 2px solid #101010 !important;
+	outline-offset: 2px !important;
+}
+
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']::before,
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']::after,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']::before,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']::after,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']::before,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']::after,
+input.stayilo-subscriber-checkbox[type='checkbox']::before,
+input.stayilo-subscriber-checkbox[type='checkbox']::after {
+	display: none !important;
+	content: none !important;
+}
+
+#stayilo-react-root input.stayilo-subscriber-checkbox[type='checkbox']:disabled,
+#stayilo-free-wizard-root input.stayilo-subscriber-checkbox[type='checkbox']:disabled,
+#stayilo-free-admin-root input.stayilo-subscriber-checkbox[type='checkbox']:disabled,
+input.stayilo-subscriber-checkbox[type='checkbox']:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+@tailwind utilities;
+
+:root {
+	--stayilo-ink: #0d1117;
+	--stayilo-sidebar: #111827;
+	--stayilo-muted: #474c57;
+	--stayilo-border: #0D11171A;
+	--stayilo-surface: #f8fafc;
+	--stayilo-accent: #16a34a;
+	--stayilo-pro: #6366f1;
+    --stayilo-free:#7C8494;
+}
+
+@layer utilities {
+	.border-gradient-purple-blue {
+	  position: relative;
+	}
+	.border-gradient-purple-blue::before {
+	  content: '';
+	  position: absolute;
+	  inset: 0;
+	  border-radius: inherit;
+	  padding: 1px;
+	  background: linear-gradient(to right, #EFF6FF, #FAF5FF);
+	  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+	  -webkit-mask-composite: xor;
+			  mask-composite: exclude;
+	  pointer-events: none;
+	}
+  }

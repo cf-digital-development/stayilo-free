@@ -1,0 +1,30 @@
+{
+  "name": "@stayilo/design-system",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": ["*.css"],
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./styles/*": "./src/styles/*",
+    "./hooks/*": "./src/hooks/*.js",
+    "./assets/*": "./src/assets/*",
+    "./i18n": "./src/i18n.js",
+    "./portal-fonts": "./src/portal-fonts.js",
+    "./validation": "./src/validation/index.js",
+    "./validation/*": "./src/validation/*.js",
+    "./*": "./src/components/*/index.js"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "tailwindcss": "^3.4.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17"
+  },
+  "scripts": {
+    "build": "node -e \"console.log('@stayilo/design-system: source package, no bundle yet')\""
+  }
+}

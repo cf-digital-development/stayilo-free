@@ -1,0 +1,138 @@
+@layer components {
+	#portal-payment-methods {
+		@apply !max-w-[1080px] mx-auto flex flex-col gap-4;
+	}
+	.portal-payment-methods {
+		@apply flex flex-col gap-4 rounded-3xl bg-white p-5 sm:gap-6 sm:p-6;
+	}
+	.portal-payment-methods__list {
+		@apply flex flex-col gap-4 sm:gap-6;
+	}
+	.portal-payment-methods__add {
+		@apply !w-full justify-center;
+	}
+	.portal-payment-method {
+		@apply flex flex-col items-start justify-between gap-4 rounded-2xl border border-[#1010101A] bg-white p-5 sm:flex-row sm:items-center sm:gap-6 sm:p-6;
+	}
+	.portal-payment-method__main {
+		@apply flex w-full min-w-0 flex-1 flex-col items-start gap-2;
+	}
+	.portal-payment-method__heading {
+		@apply flex items-center gap-2;
+	}
+	.portal-payment-method__icon {
+		@apply inline-flex shrink-0;
+	}
+	.portal-payment-method__label {
+		@apply m-0 text-base font-normal leading-6 text-[#101010];
+	}
+	.portal-payment-method__number {
+		@apply m-0 text-sm font-semibold leading-5 text-[#101010] sm:text-xl sm:leading-7;
+	}
+	.portal-payment-method__default-btn {
+		@apply w-full !min-w-0 !rounded-[10px] border border-[#101010] !pr-3 !pl-4 !py-2 !text-sm sm:w-auto sm:!text-base;
+	}
+	.portal-payment-method__remove-btn {
+		@apply w-full shrink-0 !min-w-0 !rounded-[8px] border !border-[#FF1010] !pr-3  !pl-4 !py-[11px] !text-sm font-semibold leading-[100%] text-[#FF1010] sm:w-auto sm:!self-center sm:!text-base sm:!leading-6;
+	}
+	.portal-payment-badge {
+		@apply inline-flex w-full items-center justify-center rounded-[10px] px-5 py-2 text-sm font-bold leading-6 sm:w-auto sm:px-7 sm:py-2 sm:text-base;
+	}
+	.portal-payment-badge--default {
+		@apply w-full bg-[#047946] text-white sm:w-auto;
+	}
+	.portal-payment-history {
+		@apply overflow-hidden rounded-3xl bg-white p-5 sm:p-6;
+	}
+	.portal-payment-history__title {
+		@apply m-0 mb-4 text-base font-semibold leading-[100%] text-[#101010] sm:text-2xl sm:leading-6;
+	}
+	.portal-payment-history__table-wrap {
+		@apply w-full overflow-x-auto rounded-[16px] border border-[#EFEADA];
+	}
+	.portal-payment-history__table {
+		@apply w-full border-collapse text-left;
+	}
+	.portal-payment-history__table thead th {
+		@apply bg-[#EFEADA] px-4 py-3 text-sm font-medium leading-5 text-[#101010];
+	}
+	.portal-payment-history__table tbody td {
+		@apply border-b border-[#EFEADA] px-4 py-[13.5px] text-sm font-normal leading-5 text-[#101010] sm:text-base sm:leading-6;
+	}
+	.portal-payment-status {
+		@apply inline-flex w-auto min-w-[67px] max-w-[120px] items-center justify-center rounded-full px-2.5 py-[5px] text-center text-[12px] font-semibold leading-[100%];
+	}
+	.portal-payment-status--success {
+		@apply border border-[#93C3B1] bg-[#ECFDF3] text-[#047857];
+	}
+	.portal-payment-status--pending {
+		@apply border border-[#F59E0B4D] bg-[#FFFBEB] text-[#B45309];
+	}
+	.portal-payment-status--failed {
+		@apply border border-[#FF101033] bg-[#FF10101A] text-[#FF1010];
+	}
+
+	.portal-shell[data-template='classic'] #portal-payment-methods {
+		@apply gap-[40px];
+	}
+	.portal-shell[data-template='classic'] .portal-payment-methods {
+		@apply gap-[32px] rounded-none bg-transparent p-0 sm:gap-[32px] sm:p-0;
+	}
+	.portal-shell[data-template='classic'] .portal-payment-methods__list {
+		@apply grid grid-cols-1 gap-[10px] sm:grid-cols-2 sm:gap-[20px];
+	}
+	.portal-shell[data-template='classic'] .portal-payment-methods__list > [role='status'] {
+		@apply sm:col-span-2;
+	}
+	.portal-shell[data-template='classic'] .portal-payment-method {
+		@apply flex-row flex-wrap items-start justify-start gap-x-4 gap-y-4 rounded-[8px] border-0 p-5 sm:p-6;
+	}
+	.portal-shell[data-template='classic'] .portal-payment-method__main {
+		display: contents;
+	}
+	.portal-shell[data-template='classic'] .portal-payment-method__heading,
+	.portal-shell[data-template='classic'] .portal-payment-method__number {
+		@apply w-full;
+	}
+	.portal-shell[data-template='classic'] .portal-payment-method__label {
+		@apply text-[16px] font-[500] leading-[24px] text-[#101010];
+	}
+	.portal-shell[data-template='classic'] .portal-payment-method__number {
+		@apply font-bold text-[20px] leading-[28px] sm:text-[24px] sm:leading-[30px];
+	}
+	.portal-shell[data-template='classic'] .portal-payment-method__last4 {
+		@apply font-bold text-[20px] leading-[28px] sm:text-[24px] sm:leading-[30px];
+	}
+	.portal-shell[data-template='classic'] .portal-payment-badge {
+		@apply w-auto rounded-[4px] px-5 py-2 text-[16px] font-bold leading-[24px];
+	}
+	.portal-shell[data-template='classic'] .portal-payment-badge--default {
+		@apply w-auto;
+	}
+	.portal-shell[data-template='classic'] .portal-btn.portal-payment-method__default-btn {
+		@apply !w-auto !rounded-[4px] !border-[#101010] !px-3.5 !py-2 !text-[16px] !font-bold !leading-5;
+	}
+	.portal-shell[data-template='classic'] .portal-btn.portal-payment-method__remove-btn {
+		@apply !w-auto !self-start !rounded-[4px] !border-[#FF1010] !px-3.5 !py-2 !text-[16px] !font-bold !leading-5 !text-[#FF1010];
+	}
+	.portal-shell[data-template='classic'] .portal-btn.portal-payment-methods__add {
+		@apply !w-full !rounded-[4px] !py-3.5 !text-[18px] !font-bold !leading-5;
+		background: var(--stayilo-button, #007943);
+		color: #ffffff;
+	}
+	.portal-shell[data-template='classic'] .portal-payment-history {
+		@apply rounded-lg;
+	}
+	.portal-shell[data-template='classic'] .portal-payment-history__table-wrap {
+		@apply rounded-[8px];
+	}
+	.portal-shell[data-template='classic'] .portal-payment-history__table thead th {
+		@apply bg-[#FEEFDE] py-[14px] opacity-80;
+	}
+	.portal-shell[data-template='classic'] .portal-payment-history__table tbody td {
+		@apply border-[#EAE5DD] py-[14px];
+	}
+	.portal-shell[data-template='classic'] .portal-payment-status {
+		@apply rounded-[4px] font-[500];
+	}
+}

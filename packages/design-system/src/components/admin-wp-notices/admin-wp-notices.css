@@ -1,0 +1,25 @@
+/*
+ * Local dev only — WP admin notice host inside wizard StepHeader mocks.
+ * On the real Stayilo wp-admin screen, notices are suppressed via PHP + admin-notices.css.
+ */
+.stayilo-wp-notices {
+	width: 100%;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.stayilo-wp-notices:empty {
+	display: none;
+	margin: 0;
+}
+
+.stayilo-wp-notices .notice {
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	margin: 0 0 12px;
+}
+
+.stayilo-wp-notices .notice:last-child {
+	margin-bottom: 0;
+}
